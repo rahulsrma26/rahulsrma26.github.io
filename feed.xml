@@ -5,17 +5,192 @@
     <atom:link href="http://localhost:8080/feed.xml" rel="self" type="application/rss+xml"></atom:link>
     <link>http://localhost:8080</link>
     <description>Addicted to learning!</description>
-    <pubDate>Mon, 24 Mar 2014 05:30:00 +0630</pubDate>
+    <pubDate>Sat, 11 Nov 2017 05:30:00 +0630</pubDate>
     <generator>Wintersmith - https://github.com/jnordberg/wintersmith</generator>
     <language>en</language>
+    <item>
+      <title>Representing Matrix in C++</title>
+      <link>http://localhost:8080/articles/representing-matrix-in-cpp/</link>
+      <pubDate>Sat, 11 Nov 2017 05:30:00 +0630</pubDate>
+      <guid isPermaLink="true">http://localhost:8080/articles/representing-matrix-in-cpp/</guid>
+      <author></author>
+      <description>&lt;p&gt;Prerequisites: moderate knowledge of C++.
+&lt;br/&gt;
+Technologies:
+&lt;a href=&quot;https://en.wikipedia.org/wiki/C%2B%2B&quot; target=&quot;_blank&quot;&gt;C++&lt;/i&gt;&lt;/a&gt;
+&lt;a href=&quot;http://quick-bench.com/&quot; target=&quot;_blank&quot;&gt;Quick-Bench&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&quot;more&quot;&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;script
+  src=&quot;https://code.jquery.com/jquery-2.2.4.min.js&quot;
+  integrity=&quot;sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=&quot;
+  crossorigin=&quot;anonymous&quot;&gt;
+&lt;/script&gt;
+&lt;link href=&quot;/css/lightbox.min.css&quot; rel=&quot;stylesheet&quot;&gt;
+&lt;script src=&quot;/scripts/lightbox.min.js&quot;&gt;&lt;/script&gt;
+
+&lt;p&gt;This article shows a readable way of representing matrix without loosing performance in C++.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&quot;table-of-content&quot;&gt;Table of content&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;#the-problem&quot;&gt;The Problem&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#matrix-class&quot;&gt;Matrix Class&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#conclusion&quot;&gt;Conclusion&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h1 id=&quot;the-problem&quot;&gt;The Problem&lt;/h1&gt;
+
+&lt;p&gt;Most of the people, who has to deal with the matrices in C++, would be familiar with this problem.&lt;/p&gt;
+&lt;p&gt;I’m listing two of the most popular ways for representing matrix. One excels in readability while other in performance.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;First way is to use vector of vector.  &lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;lang-cpp&quot;&gt;  &lt;span class=&quot;built_in&quot;&gt;vector&lt;/span&gt;&amp;lt;&lt;span class=&quot;built_in&quot;&gt;vector&lt;/span&gt;&amp;lt;&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt;&amp;gt;&amp;gt; matrix(rows, &lt;span class=&quot;built_in&quot;&gt;vector&lt;/span&gt;&amp;lt;&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt;&amp;gt;(cols));
+  &lt;span class=&quot;comment&quot;&gt;// do stuff&lt;/span&gt;
+  &lt;span class=&quot;comment&quot;&gt;// access like matrix[y][x]&lt;/span&gt;
+  &lt;span class=&quot;comment&quot;&gt;// no need to free. RAII rocks.&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This is similar to using double pointer in C for dynamic 2D array.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;lang-cpp&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; **matrix = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt;*[rows];
+  &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt;(&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; i = &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;; i &amp;lt; rows; i++)
+      matrix[i] = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt;[cols];
+  &lt;span class=&quot;comment&quot;&gt;// do stuff&lt;/span&gt;
+  &lt;span class=&quot;comment&quot;&gt;// access like matrix[y][x]&lt;/span&gt;
+  &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt;(&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; i = &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;; i &amp;lt; rows; i++)
+      &lt;span class=&quot;keyword&quot;&gt;delete&lt;/span&gt; [] matrix[i];
+  &lt;span class=&quot;keyword&quot;&gt;delete&lt;/span&gt; [] matrix;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;It’s basically an array of arrays. every element of array matrix points to another array of integers. That’s why you can reference it two times. But, since every array is separately allocated, to access an array we first have to go to the element of outer array and then inner one. Also, there will be no guarantee that every row will be adjacent to each other in memory. They can be scattered across the heap.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Second way is to use C style array.  &lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;lang-cpp&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; matrix = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt;[rows*cols];
+  &lt;span class=&quot;comment&quot;&gt;// do stuff&lt;/span&gt;
+  &lt;span class=&quot;comment&quot;&gt;// access like matrix[y*cols+x]&lt;/span&gt;
+  &lt;span class=&quot;keyword&quot;&gt;delete&lt;/span&gt; [] matrix;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This will make a solid continuous chunk of memory in heap.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;performance&quot;&gt;Performance&lt;/h2&gt;
+&lt;p&gt;C style array access should perform better than vector style access. As, vector style has to refer two times to access an element the address of matrix can be saved in register by compiler by inner elements has to come from memory (most probably cache). The other problem is that, at the end of the row next row could be anywhere, and pre-fetcher can not predict next fetch.&lt;/p&gt;
+&lt;p&gt;It’s hard to measure the general performance since the use case varies a lot. But to get some idea I’m considering two types of algorithm with square and rectangular matrices. All the results are compiler on GCC 7.2 with c++14 and -O3 flags on linux x86 machine.
+For the simplicity sake we have fixed number of rows and columns but it can be easily changed to general inputs.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt; Sum of all elements &lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Let us take an example of calculating the sum of all the elements in a matrix. Here are our two popular approaches:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;lang-cpp&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// Vector style code for a square matrix&lt;/span&gt;
+&lt;span class=&quot;comment&quot;&gt;// Similar thing can be achieved in C by int**&lt;/span&gt;
+&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;Vector_sum&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(&lt;span class=&quot;built_in&quot;&gt;vector&lt;/span&gt;&amp;lt;&lt;span class=&quot;built_in&quot;&gt;vector&lt;/span&gt;&amp;lt;&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt;&amp;gt;&amp;gt;&amp;amp; matrix, &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; N)&lt;/span&gt; &lt;/span&gt;{
+    &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; sum = &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;
+    &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt;(&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; i = &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;; i &amp;lt; N; i++)
+        &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt;(&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; j = &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;; j &amp;lt; N; j++)
+            sum += matrix[i][j];
+    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; sum;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&quot;lang-cpp&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// C style code for a square matrix&lt;/span&gt;
+&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;C_style_sum&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt;* matrix, &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; N)&lt;/span&gt; &lt;/span&gt;{
+    &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; sum = &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;
+    &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt;(&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; i = &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;; i &amp;lt; N; i++)
+        &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt;(&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; j = &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;; j &amp;lt; N; j++)
+            sum += matrix[i * N + j];
+    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; sum;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Results for a square matrix of size 512*512
+&lt;a href=&quot;sum_square_1.png&quot; data-lightbox=&quot;sum_1&quot; data-title=&quot;Sum of elements (512x512)&quot;&gt;
+&lt;img src=&quot;/articles/representing-matrix-in-cpp/sum_square_1.png&quot; alt=&quot;sum benchmark&quot;&gt;&lt;/a&gt;
+See this benchmark on &lt;a href=&quot;http://quick-bench.com/GXUG06sZDLCrGsOogF5wmd2DOFU&quot; target=&quot;_blank&quot;&gt;quick-bench&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Results for a rectangular matrix of size 1024*256
+&lt;a href=&quot;sum_rectangle_1.png&quot; data-lightbox=&quot;sum_1&quot; data-title=&quot;Sum of elements (1024x256)&quot;&gt;
+&lt;img src=&quot;/articles/representing-matrix-in-cpp/sum_rectangle_1.png&quot; alt=&quot;sum benchmark&quot;&gt;&lt;/a&gt;
+See this benchmark on &lt;a href=&quot;http://quick-bench.com/ekNZpPxwiw4wYtqOV51vPF8CXUo&quot; target=&quot;_blank&quot;&gt;quick-bench&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;As you can see the difference is not much. I can live with that for most of the programs. However, transpose yields a complete different story.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt; Transpose of all elements &lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Let us also take an example of transposing a matrix. Which will have completely different access pattern then sum. Here are our two popular approaches:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;lang-cpp&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// Vector style code for a square matrix&lt;/span&gt;
+&lt;span class=&quot;comment&quot;&gt;// Similar thing can be achieved in C by int**&lt;/span&gt;
+&lt;span class=&quot;keyword&quot;&gt;using&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;namespace&lt;/span&gt; Matrix = &lt;span class=&quot;built_in&quot;&gt;vector&lt;/span&gt;&amp;lt;&lt;span class=&quot;built_in&quot;&gt;vector&lt;/span&gt;&amp;lt;&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt;&amp;gt;&amp;gt;;
+&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;Vector_transpose&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(Matrix&amp;amp; matrix1, Matrix&amp;amp; matrix2, &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; N)&lt;/span&gt; &lt;/span&gt;{
+    &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; sum = &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;
+    &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt;(&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; i = &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;; i &amp;lt; N; i++)
+        &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt;(&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; j = &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;; j &amp;lt; N; j++)
+            matrix[i][j] = matrix[j][i];
+    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; sum;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&quot;lang-cpp&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// C style code for a square matrix&lt;/span&gt;
+&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;C_style_transpose&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt;* matrix1, &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt;* matrix2, &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; N)&lt;/span&gt; &lt;/span&gt;{
+    &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; sum = &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;
+    &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt;(&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; i = &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;; i &amp;lt; N; i++)
+        &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt;(&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; j = &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;; j &amp;lt; N; j++)
+            matrix2[i * N + j] = matrix1[j * N + i];
+    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; sum;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Results for a square matrix of size 512*512
+&lt;a href=&quot;transpose_square_1.png&quot; data-lightbox=&quot;transpose_1&quot; data-title=&quot;Transpose of elements (512x512)&quot;&gt;
+&lt;img src=&quot;/articles/representing-matrix-in-cpp/transpose_square_1.png&quot; alt=&quot;sum benchmark&quot;&gt;&lt;/a&gt;
+See this benchmark on &lt;a href=&quot;http://quick-bench.com/0DVlD6PAcBQvMmfnjLlJpcSHcls&quot; target=&quot;_blank&quot;&gt;quick-bench&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Results for a rectangular matrix of size 1024*256
+&lt;a href=&quot;transpose_rectangle_1.png&quot; data-lightbox=&quot;transpose_1&quot; data-title=&quot;Transpose of elements (1024x256)&quot;&gt;
+&lt;img src=&quot;/articles/representing-matrix-in-cpp/transpose_rectangle_1.png&quot; alt=&quot;sum benchmark&quot;&gt;&lt;/a&gt;
+See this benchmark on &lt;a href=&quot;http://quick-bench.com/IyZq2RwP_RtZJpC4B8iwTSTSRwI&quot; target=&quot;_blank&quot;&gt;quick-bench&lt;/a&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h1 id=&quot;matrix-class&quot;&gt;Matrix Class&lt;/h1&gt;
+
+&lt;p&gt;We can write a custom template class that will allow us to access elements like vector. To achieve we need to overload the brackets operator.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;lang-cpp&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// e.g. a matrix of 5 rows and 3 cols&lt;/span&gt;
+&lt;span class=&quot;comment&quot;&gt;// matrix&amp;lt;int, 5, 3&amp;gt; x; &lt;/span&gt;
+&lt;span class=&quot;comment&quot;&gt;// can be accessed like x[row][col]&lt;/span&gt;
+
+&lt;span class=&quot;keyword&quot;&gt;template&lt;/span&gt;&amp;lt;&lt;span class=&quot;keyword&quot;&gt;typename&lt;/span&gt; T, &lt;span class=&quot;keyword&quot;&gt;size_t&lt;/span&gt; R, &lt;span class=&quot;keyword&quot;&gt;size_t&lt;/span&gt; C&amp;gt;
+&lt;span class=&quot;keyword&quot;&gt;class&lt;/span&gt; matrix {
+    T* data; &lt;span class=&quot;comment&quot;&gt;// can be changed to unique_ptr in C++1z&lt;/span&gt;
+&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt;:
+    matrix() : data(&lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; T[R*C]) {}
+
+    ~matrix(){ &lt;span class=&quot;keyword&quot;&gt;delete&lt;/span&gt; [] data; }
+
+    &lt;span class=&quot;keyword&quot;&gt;inline&lt;/span&gt; T* &lt;span class=&quot;keyword&quot;&gt;operator&lt;/span&gt;[](&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; row) {
+        &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &amp;amp;data[row * C];
+    }
+
+    &lt;span class=&quot;keyword&quot;&gt;inline&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;const&lt;/span&gt; T* &lt;span class=&quot;keyword&quot;&gt;operator&lt;/span&gt;[](&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; row) &lt;span class=&quot;keyword&quot;&gt;const&lt;/span&gt; {
+        &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &amp;amp;data[row * C];
+    }
+};
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Almost all the compilers today can optimize away the referencing and dereferencing of the same array. The assembly code generated by it is virtually same as the C style version.&lt;/p&gt;
+&lt;p&gt;So, how well it performs.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt; Sum of all elements &lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Results for a square matrix of size 512*512
+&lt;a href=&quot;sum_square_2.png&quot; data-lightbox=&quot;sum_2&quot; data-title=&quot;Sum of elements (512x512)&quot;&gt;
+&lt;img src=&quot;/articles/representing-matrix-in-cpp/sum_square_2.png&quot; alt=&quot;sum benchmark&quot;&gt;&lt;/a&gt;
+See this benchmark on &lt;a href=&quot;http://quick-bench.com/UODm6ylUQGqDCGbdxMIUvpqHrcA&quot; target=&quot;_blank&quot;&gt;quick-bench&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Results for a rectangular matrix of size 1024*256
+&lt;a href=&quot;sum_rectangle_2.png&quot; data-lightbox=&quot;sum_2&quot; data-title=&quot;Sum of elements (1024x256)&quot;&gt;
+&lt;img src=&quot;/articles/representing-matrix-in-cpp/sum_rectangle_2.png&quot; alt=&quot;sum benchmark&quot;&gt;&lt;/a&gt;
+See this benchmark on &lt;a href=&quot;http://quick-bench.com/-rGgWT2v0CZsUNbOtoTOCs9ybiE&quot; target=&quot;_blank&quot;&gt;quick-bench&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Separate code can be found &lt;a href=&quot;sum.cpp&quot; target=&quot;_blank&quot;&gt;here&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt; Transpose of all elements &lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Results for a square matrix of size 512*512
+&lt;a href=&quot;transpose_square_2.png&quot; data-lightbox=&quot;transpose_2&quot; data-title=&quot;Transpose of elements (512x512)&quot;&gt;
+&lt;img src=&quot;/articles/representing-matrix-in-cpp/transpose_square_2.png&quot; alt=&quot;sum benchmark&quot;&gt;&lt;/a&gt;
+See this benchmark on &lt;a href=&quot;http://quick-bench.com/VxtU_lR77Fjtm-vo9Vs8CmMDQl4&quot; target=&quot;_blank&quot;&gt;quick-bench&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Results for a rectangular matrix of size 1024*256
+&lt;a href=&quot;transpose_rectangle_2.png&quot; data-lightbox=&quot;transpose_2&quot; data-title=&quot;Transpose of elements (1024x256)&quot;&gt;
+&lt;img src=&quot;/articles/representing-matrix-in-cpp/transpose_rectangle_2.png&quot; alt=&quot;sum benchmark&quot;&gt;&lt;/a&gt;
+See this benchmark on &lt;a href=&quot;http://quick-bench.com/PXQl8uW3Dk1R_pBelXFlFCMRxEY&quot; target=&quot;_blank&quot;&gt;quick-bench&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Separate code can be found &lt;a href=&quot;transpose.cpp&quot; target=&quot;_blank&quot;&gt;here&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
     <item>
       <title>Falling matrix in HTML5 using javascript</title>
       <link>http://localhost:8080/articles/falling-matrix/</link>
       <pubDate>Mon, 24 Mar 2014 05:30:00 +0630</pubDate>
       <guid isPermaLink="true">http://localhost:8080/articles/falling-matrix/</guid>
       <author></author>
-      <description>&lt;p&gt;Prerequisites: basic knowledge of javascript and computer graphics.&lt;/p&gt;
-&lt;p&gt;Technologies:
+      <description>&lt;p&gt;Prerequisites: basic knowledge of javascript and computer graphics.
+&lt;br/&gt;
+Technologies:
 &lt;a href=&quot;https://en.wikipedia.org/wiki/HTML5&quot; target=&quot;_blank&quot;&gt;&lt;i class=&quot;fa fa-html5&quot;&gt;&lt;/i&gt;&lt;/a&gt;
 &lt;a href=&quot;https://jsfiddle.net/&quot; target=&quot;_blank&quot;&gt;&lt;i class=&quot;fa fa-jsfiddle&quot;&gt;&lt;/i&gt;&lt;/a&gt;
 &lt;a href=&quot;https://www.javascript.com/&quot; target=&quot;_blank&quot;&gt;js&lt;/a&gt;&lt;/p&gt;
@@ -188,7 +363,10 @@ Live demo with code: &lt;a href=&quot;https://jsfiddle.net/welcometors/tz38d5vg/
       <pubDate>Mon, 05 Sep 2011 05:30:00 +0630</pubDate>
       <guid isPermaLink="true">http://localhost:8080/articles/the-shadow/</guid>
       <author></author>
-      <description>&lt;script
+      <description>&lt;p&gt;This article contains my story of getting into art and drawings. Also contains most of my pencil drawings.&lt;/p&gt;
+&lt;p&gt;&lt;span class=&quot;more&quot;&gt;&lt;/span&gt;
+Jump to &lt;a href=&quot;#drawings&quot;&gt;drawings&lt;/a&gt;&lt;/p&gt;
+&lt;script
   src=&quot;https://code.jquery.com/jquery-2.2.4.min.js&quot;
   integrity=&quot;sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=&quot;
   crossorigin=&quot;anonymous&quot;&gt;
@@ -196,9 +374,6 @@ Live demo with code: &lt;a href=&quot;https://jsfiddle.net/welcometors/tz38d5vg/
 &lt;link href=&quot;/css/lightbox.min.css&quot; rel=&quot;stylesheet&quot;&gt;
 &lt;script src=&quot;/scripts/lightbox.min.js&quot;&gt;&lt;/script&gt;
 
-&lt;p&gt;This article contains my story of getting into art and drawings. Also contains most of my pencil drawings.&lt;/p&gt;
-&lt;p&gt;&lt;span class=&quot;more&quot;&gt;&lt;/span&gt;
-Jump to &lt;a href=&quot;#drawings&quot;&gt;drawings&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;Since my school-days, I always lean towards math and science. But art also kept me fascinated. I grew up with 90’s cartoons like Duck-Tales, The Mask, Dexter’s Lab etc. While watching those shows, I always wondered, how they are able to make those cartoons look evil or funny. Also, one of my uncle is an artist. Whenever he visit our home, I requested him to draw celebrities faces (usually Bollywood actor/actress). His drawings looked real. And he does that with whatever basic pencil/colors I had. Sometimes, I don’t even have the full set colors. Most of the time colors was missing from the set. At that time, I understood that you don’t need expensive stuff to make a good piece of art. &lt;/p&gt;
 &lt;p&gt;In my school, I was good at drawing but not in the top bracket. So, I never took it seriously. My grandfather was a civil engineer. At that time all the home designs are hand draws so calligraphy course was a must for a civil engineer. Fast forward to 8&lt;sup&gt;th&lt;/sup&gt; grade. I got a calligraphy book from him. I don’t remember the name as the cover got torn and missing. But, it was an amalgam of different types of styles old English, italics etc. It was like some sort of cheat sheet for calligraphy. He also gifted me Speedball calligraphy nibs and pen. I got into my new profound hobby. Book also had lessons on improving handwriting by giving exercises to develop muscle memory. Before this, I was slightly above average in terms of handwriting, but after one year I’m one of the best in my class (of 60). Every class has a class chart with the name of every student along with their roll number. At that time class chart was supposed to be made by student with best handwriting in the class. Head teachers of the class often boast about marks and handwriting of their class. Next year, I was getting requests from multiple teaches for their class chart. That gave me an unofficial acknowledgement that I was now one of best in entire grade (9 classes of same size).&lt;/p&gt;
 &lt;p&gt;I choose science stream after high-school as I cannot be separated from computer and maths. And all the hobbies are taken by large P.C.M. syllabus, programming and PC gaming. Fast forward to college, I started again by scratching random things on my notebook while attending boring classes. My college days are not so hectic, so I started sketching again after ages.  &lt;/p&gt;
