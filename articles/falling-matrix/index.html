@@ -54,7 +54,7 @@ Live demo with code: <a href="https://jsfiddle.net/welcometors/tz38d5vg/1/" targ
 <p><strong>Canvas</strong> object contains the properties related to output window like width, height etc.
 <strong>Context</strong> object will be used to call in-built functions for drawing, writing etc.</p>
 <p>Let us assume that our text string is “test”, which is falling vertically in our output screen.
-Also, we need multiple instances of it.<br>Let us assume that the coordinates of the top left corner of a text instance is <em>x</em> and <em>y</em>.
+Also, we need multiple instances of it.<br>Let us assume that the coordinates of the top left corner of a text instance is _x_ and _y_.
 See below:
 <img src="/articles/falling-matrix/screen.svg" alt="screen"></p>
 <p>I encapsulated one of them in a dotted box to showcase the top right coner of a single instance.
@@ -62,10 +62,10 @@ Since, we don’t have infinite memory for our infinitely falling matrix text in
 A clever trick is to change the coordinate back to the top when they cross the bottom of the screen.</p>
 <p><img src="/articles/falling-matrix/screenTransition.svg" alt="screenTransition"></p>
 <p>This way, we only need few instances to make our screen look full. 
-To avoid them form keep falling in the same column we can re-randomize <em>x</em> while changing <em>y</em> to top.  </p>
+To avoid them form keep falling in the same column we can re-randomize _x_ while changing _y_ to top.  </p>
 <p>If you have worked with any graphics library in the past then you will be familiar with the coordinate system of canvas. 
-Top left corner will be <em>(0,0)</em> and <em>x</em> will increase as you go right and <em>y</em> will increase as you go down. 
-We’ll be moving our text in range <em>(x,-screenHeight)</em> to <em>(x,+screenHeight)</em> for some randomized <em>x</em>.</p>
+Top left corner will be <em>(0,0)</em> and _x_ will increase as you go right and _y_ will increase as you go down. 
+We’ll be moving our text in range <em>(x,-screenHeight)</em> to <em>(x,+screenHeight)</em> for some randomized _x_.</p>
 <p>For moving text we are creating a class (called Bit) to manage them as an individual objects.</p>
 <pre><code class="lang-javascript"><span class="function"><span class="keyword">function</span> <span class="title">Bit</span> (<span class="params"></span>)</span>{
     <span class="comment">// x and y positions are initialized randomly</span>
@@ -239,7 +239,7 @@ Live demo with code: <a href="https://jsfiddle.net/welcometors/tz38d5vg/1/" targ
 
         </section>
         <section class="copy">
-          <p>&copy; 2017 Rahul Sharma &mdash; powered by&nbsp;<a href="https://github.com/jnordberg/wintersmith">Wintersmith</a>
+          <p>&copy; 2018 Rahul Sharma &mdash; powered by&nbsp;<a href="https://github.com/jnordberg/wintersmith">Wintersmith</a>
           </p>
         </section>
       </div>

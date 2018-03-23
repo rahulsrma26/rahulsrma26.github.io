@@ -474,7 +474,6 @@ indented from the left margin using up to three spaces);</li>
 in double or single quotes, or enclosed in parentheses.</li>
 </ul>
 <p>The following three link definitions are equivalent:</p>
-<p>  <a href="http://example.com/" title="Optional Title Here">foo</a>: <a href="http://example.com/">http://example.com/</a>  ‘Optional Title Here’</p>
 <p><strong>Note:</strong> There is a known bug in Markdown.pl 1.0.1 which prevents
 single quotes from being used to delimit link titles.</p>
 <p>The link URL may, optionally, be surrounded by angle brackets:</p>
@@ -574,7 +573,7 @@ escape it:</p>
 <pre><code>\*this text is surrounded by literal asterisks\*
 </code></pre><h3 id="code">Code</h3>
 
-<p>To indicate a span of code, wrap it with backtick quotes (<code>` </code>).
+<p>To indicate a span of code, wrap it with backtick quotes (<code>`</code>).
 Unlike a pre-formatted code block, a code span indicates code within a
 normal paragraph. For example:</p>
 <pre><code>Use the `printf()` function.
@@ -588,8 +587,8 @@ multiple backticks as the opening and closing delimiters:</p>
 </code></pre><p>The backtick delimiters surrounding a code span may include spaces –
 one after the opening, one before the closing. This allows you to place
 literal backtick characters at the beginning or end of a code span:</p>
-<p>  A single backtick in a code span: <code>` </code></p>
-<p>  A backtick-delimited string in a code span: <code>`foo` </code></p>
+<p>  A single backtick in a code span: <code>`</code></p>
+<p>  A backtick-delimited string in a code span: <code>`foo`</code></p>
 <p>will produce:</p>
   <p>A single backtick in a code span: <code>`</code></p>
 
@@ -652,7 +651,7 @@ spambots. For example, Markdown will turn this:</p>
 &amp;#115;&amp;#115;&amp;#64;&amp;#101;&amp;#120;&amp;#x61;&amp;#109;&amp;#x70;&amp;#x6C;e&amp;#x2E;&amp;#99;&amp;#111;
 &amp;#109;&quot;&gt;&amp;#x61;&amp;#x64;&amp;#x64;&amp;#x72;&amp;#x65;&amp;#115;&amp;#115;&amp;#64;&amp;#101;&amp;#120;&amp;#x61;
 &amp;#109;&amp;#x70;&amp;#x6C;e&amp;#x2E;&amp;#99;&amp;#111;&amp;#109;&lt;/a&gt;
-</code></pre><p>which will render in a browser as a clickable link to “address@example.com”.</p>
+</code></pre><p>which will render in a browser as a clickable link to “<a href="mailto:address@example.com">address@example.com</a>“.</p>
 <p>(This sort of entity-encoding trick will indeed fool many, if not
 most, address-harvesting bots, but it definitely won’t fool all of
 them. It’s better than nothing, but an address published in this way
@@ -722,7 +721,7 @@ _   underscore
 
         </section>
         <section class="copy">
-          <p>&copy; 2017 Rahul Sharma &mdash; powered by&nbsp;<a href="https://github.com/jnordberg/wintersmith">Wintersmith</a>
+          <p>&copy; 2018 Rahul Sharma &mdash; powered by&nbsp;<a href="https://github.com/jnordberg/wintersmith">Wintersmith</a>
           </p>
         </section>
       </div>
