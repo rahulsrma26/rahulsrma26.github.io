@@ -7,6 +7,7 @@ body {
   font-family: 'Lora', serif;
   font-size: 21px;
   line-height: 1.52;
+  color: #171717;
   background-color: #f8f8f8;
   text-rendering: optimizeLegibility;
 }
@@ -16,7 +17,7 @@ body {
   margin: 0 auto;
 }
 
-body, a {
+a {
   color: #171717;
 }
 
@@ -96,7 +97,6 @@ hr {
 
 .header a, .header a:hover {
   text-decoration: none;
-  color: #171717;
 }
 
 .header .author {

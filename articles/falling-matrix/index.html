@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="/css/layout.css">
     <link rel="stylesheet" href="/css/font-awesome.min.css">
   </head>
-  <body class="article-detail">
+  <body class="article-detail undefined">
     <header class="header">
       <div class="content-wrap">
         <h1>Falling animation in HTML5 using javascript</h1>
@@ -43,18 +43,16 @@ Technologies:
 <img src="/articles/falling-matrix/matrix.png" alt="matrix">
 Live demo with code: <a href="https://jsfiddle.net/welcometors/tz38d5vg/1/" target="_blank"><i class="fa fa-lg fa-jsfiddle"></i></a></p>
 <p>First we need to create an HTML5 canvas. A HTML5 canvas is used to draw graphics. Almost all of the flash graphics are pretty much replaced by canvas today.</p>
-<pre><code class="lang-HTML"><span class="tag">&lt;<span class="name">canvas</span> <span class="attr">id</span>=<span class="string">"background"</span> <span class="attr">width</span>=<span class="string">"512"</span> <span class="attr">height</span>=<span class="string">"360"</span>&gt;</span>
-<span class="tag">&lt;/<span class="name">canvas</span>&gt;</span>
-</code></pre>
+<pre><code class="language-HTML"><span class="tag">&lt;<span class="name">canvas</span> <span class="attr">id</span>=<span class="string">"background"</span> <span class="attr">width</span>=<span class="string">"512"</span> <span class="attr">height</span>=<span class="string">"360"</span>&gt;</span>
+<span class="tag">&lt;/<span class="name">canvas</span>&gt;</span></code></pre>
 <p>This will be served as an output screen for our animation.</p>
 <p>Now, we can access the canvas in javascript:</p>
-<pre><code class="lang-javascript"><span class="keyword">var</span> canvas = <span class="built_in">document</span>.getElementById(<span class="string">'background'</span>);
-<span class="keyword">var</span> context = canvas.getContext(<span class="string">'2d'</span>);
-</code></pre>
+<pre><code class="language-javascript"><span class="keyword">var</span> canvas = <span class="built_in">document</span>.getElementById(<span class="string">'background'</span>);
+<span class="keyword">var</span> context = canvas.getContext(<span class="string">'2d'</span>);</code></pre>
 <p><strong>Canvas</strong> object contains the properties related to output window like width, height etc.
 <strong>Context</strong> object will be used to call in-built functions for drawing, writing etc.</p>
 <p>Let us assume that our text string is “test”, which is falling vertically in our output screen.
-Also, we need multiple instances of it.<br>Let us assume that the coordinates of the top left corner of a text instance is _x_ and _y_.
+Also, we need multiple instances of it.<br>Let us assume that the coordinates of the top left corner of a text instance is <em>x</em> and <em>y</em>.
 See below:
 <img src="/articles/falling-matrix/screen.svg" alt="screen"></p>
 <p>I encapsulated one of them in a dotted box to showcase the top right coner of a single instance.
@@ -62,12 +60,12 @@ Since, we don’t have infinite memory for our infinitely falling matrix text in
 A clever trick is to change the coordinate back to the top when they cross the bottom of the screen.</p>
 <p><img src="/articles/falling-matrix/screenTransition.svg" alt="screenTransition"></p>
 <p>This way, we only need few instances to make our screen look full. 
-To avoid them form keep falling in the same column we can re-randomize _x_ while changing _y_ to top.  </p>
+To avoid them form keep falling in the same column we can re-randomize <em>x</em> while changing <em>y</em> to top.  </p>
 <p>If you have worked with any graphics library in the past then you will be familiar with the coordinate system of canvas. 
-Top left corner will be <em>(0,0)</em> and _x_ will increase as you go right and _y_ will increase as you go down. 
-We’ll be moving our text in range <em>(x,-screenHeight)</em> to <em>(x,+screenHeight)</em> for some randomized _x_.</p>
+Top left corner will be <em>(0,0)</em> and <em>x</em> will increase as you go right and <em>y</em> will increase as you go down. 
+We’ll be moving our text in range <em>(x,-screenHeight)</em> to <em>(x,+screenHeight)</em> for some randomized <em>x</em>.</p>
 <p>For moving text we are creating a class (called Bit) to manage them as an individual objects.</p>
-<pre><code class="lang-javascript"><span class="function"><span class="keyword">function</span> <span class="title">Bit</span> (<span class="params"></span>)</span>{
+<pre><code class="language-javascript"><span class="function"><span class="keyword">function</span> <span class="title">Bit</span> (<span class="params"></span>)</span>{
     <span class="comment">// x and y positions are initialized randomly</span>
     <span class="keyword">this</span>.xpos = <span class="built_in">Math</span>.random() * canvas.width;
     <span class="keyword">this</span>.ypos = <span class="built_in">Math</span>.random() * <span class="number">2</span> * canvas.height - canvas.height;
@@ -101,15 +99,13 @@ We’ll be moving our text in range <em>(x,-screenHeight)</em> to <em>(x,+screen
         <span class="keyword">else</span>
             <span class="keyword">this</span>.ypos += <span class="number">2</span>; <span class="comment">// drop text by 2 pixels down</span>
     };
-}
-</code></pre>
+}</code></pre>
 <p>For testing, we’ll create some of the <strong>Bit</strong> objects:</p>
-<pre><code class="lang-javascript"><span class="keyword">var</span> bits = <span class="keyword">new</span> <span class="built_in">Array</span>();
+<pre><code class="language-javascript"><span class="keyword">var</span> bits = <span class="keyword">new</span> <span class="built_in">Array</span>();
 <span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="number">50</span>; ++i)
-    bits.push(<span class="keyword">new</span> Bit());
-</code></pre>
+    bits.push(<span class="keyword">new</span> Bit());</code></pre>
 <p>Now, we need a function to redraw at every frame.</p>
-<pre><code class="lang-javascript"><span class="function"><span class="keyword">function</span> <span class="title">reDraw</span>(<span class="params"></span>)</span>{
+<pre><code class="language-javascript"><span class="function"><span class="keyword">function</span> <span class="title">reDraw</span>(<span class="params"></span>)</span>{
     <span class="comment">// before drawing clear entire screen</span>
     context.fillStyle = <span class="string">'black'</span>;
     context.fillRect(<span class="number">0</span>, <span class="number">0</span>, canvas.width, canvas.height);
@@ -123,8 +119,7 @@ We’ll be moving our text in range <em>(x,-screenHeight)</em> to <em>(x,+screen
 
 <span class="comment">// This will call 'reDraw' at every 33 milliseconds. </span>
 <span class="comment">// So, our animation will run at 30fps (1000/33 ≈ 30).</span>
-setInterval(reDraw, <span class="number">33</span>);
-</code></pre>
+setInterval(reDraw, <span class="number">33</span>);</code></pre>
 <p>Now, our code will run like this:
 <img src="/articles/falling-matrix/matrix_test.png" alt="matrix_test">
 Live demo with code: <a href="https://jsfiddle.net/welcometors/tz38d5vg/0/" target="_blank"><i class="fa fa-lg fa-jsfiddle"></i></a></p>
@@ -133,14 +128,13 @@ Live demo with code: <a href="https://jsfiddle.net/welcometors/tz38d5vg/0/" targ
 <p>Now, we need to add depth (i.e. some text are near and some are far) in our falling matrix. 
 This can be achieved by changing the text size, falling speed and brightness according to the depth.</p>
 <p>We need different colors and bunch of randomized symbols:</p>
-<pre><code class="lang-javascript"><span class="keyword">var</span> colors = [<span class="string">'#008800'</span>, <span class="string">'#00FF00'</span>, <span class="string">'#55FF55'</span>, <span class="string">'#BBFFBB'</span>];
+<pre><code class="language-javascript"><span class="keyword">var</span> colors = [<span class="string">'#008800'</span>, <span class="string">'#00FF00'</span>, <span class="string">'#55FF55'</span>, <span class="string">'#BBFFBB'</span>];
 <span class="keyword">var</span> words = [
     <span class="string">"昨天"</span>, <span class="string">"小时"</span>, <span class="string">"钟表"</span>, <span class="string">"漂亮"</span>, <span class="string">"常见"</span>, <span class="string">"說這"</span>,
     <span class="string">"안녕하"</span>, <span class="string">"그래서"</span>, <span class="string">"안녕하"</span>, <span class="string">"십니까"</span>, <span class="string">"洗手在"</span>,
-    <span class="string">"笑好玩儿"</span>, <span class="string">"么希奇的"</span>, <span class="string">"환영합니다"</span>, <span class="string">"好吃的食物"</span>];
-</code></pre>
+    <span class="string">"笑好玩儿"</span>, <span class="string">"么希奇的"</span>, <span class="string">"환영합니다"</span>, <span class="string">"好吃的食物"</span>];</code></pre>
 <p>We need to change our <strong>Bit</strong> class for depth (distance).</p>
-<pre><code class="lang-javascript"><span class="function"><span class="keyword">function</span> <span class="title">Bit</span> (<span class="params">distance</span>)</span>{
+<pre><code class="language-javascript"><span class="function"><span class="keyword">function</span> <span class="title">Bit</span> (<span class="params">distance</span>)</span>{
     <span class="comment">// size and speed are inversely proportional to distance</span>
     <span class="keyword">this</span>.speed = <span class="number">160</span> / distance;
     <span class="keyword">this</span>.fontSize = <span class="built_in">parseInt</span>(<span class="built_in">Math</span>.max(<span class="number">8</span>, <span class="built_in">Math</span>.min(<span class="number">4</span>*<span class="keyword">this</span>.speed, <span class="number">20</span>)));
@@ -184,18 +178,15 @@ This can be achieved by changing the text size, falling speed and brightness acc
         <span class="keyword">else</span> <span class="keyword">if</span>( chance &lt; <span class="number">.02</span>) <span class="comment">// change to previous word</span>
             <span class="keyword">this</span>.text = (<span class="keyword">this</span>.text - <span class="number">1</span> + words.length) % words.length;
     };
-}
-</code></pre>
+}</code></pre>
 <p>For the motion blur effect we just need to change one line in the <em>redraw()</em></p>
-<pre><code class="lang-javascript">    context.fillStyle = <span class="string">'rgba(0,0,0,0.4)'</span>;
-</code></pre>
+<pre><code class="language-javascript">    context.fillStyle = <span class="string">'rgba(0,0,0,0.4)'</span>;</code></pre>
 <p>Instead of putting an opaque black rectangle, we can put a transparent one. 
 As a result, previous frame will slowly fade away, frame by frame, instead of disappearing at once. 
 And on screen, it’ll look like text is leaving a trail behind. Which will serve as our fake motion blur.</p>
 <p>We can also change the canvas size programmatically to adapt to the window size.</p>
-<pre><code class="lang-javascript">context.canvas.width  = <span class="built_in">window</span>.innerWidth;
-context.canvas.height = <span class="built_in">window</span>.innerHeight;
-</code></pre>
+<pre><code class="language-javascript">context.canvas.width  = <span class="built_in">window</span>.innerWidth;
+context.canvas.height = <span class="built_in">window</span>.innerHeight;</code></pre>
 <p>Final results:
 <img src="/articles/falling-matrix/matrix.png" alt="matrix">
 Live demo with code: <a href="https://jsfiddle.net/welcometors/tz38d5vg/1/" target="_blank"><i class="fa fa-lg fa-jsfiddle"></i></a></p>
@@ -239,8 +230,7 @@ Live demo with code: <a href="https://jsfiddle.net/welcometors/tz38d5vg/1/" targ
 
         </section>
         <section class="copy">
-          <p>&copy; 2018 Rahul Sharma &mdash; powered by&nbsp;<a href="https://github.com/jnordberg/wintersmith">Wintersmith</a>
-          </p>
+          <p>&copy; 2019 Rahul Sharma &mdash; powered by&nbsp;<a href="https://github.com/jnordberg/wintersmith">Wintersmith</a></p>
         </section>
       </div>
     </footer>

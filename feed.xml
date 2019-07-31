@@ -43,29 +43,26 @@ Technologies:
 &lt;p&gt;I’m listing two of the most popular ways for representing matrix. One excels in readability while other in performance.&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;p&gt;First way is to use vector of vector.  &lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;lang-cpp&quot;&gt;  &lt;span class=&quot;built_in&quot;&gt;vector&lt;/span&gt;&amp;lt;&lt;span class=&quot;built_in&quot;&gt;vector&lt;/span&gt;&amp;lt;&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt;&amp;gt;&amp;gt; matrix(rows, &lt;span class=&quot;built_in&quot;&gt;vector&lt;/span&gt;&amp;lt;&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt;&amp;gt;(cols));
+&lt;pre&gt;&lt;code class=&quot;language-cpp&quot;&gt;  &lt;span class=&quot;built_in&quot;&gt;vector&lt;/span&gt;&amp;lt;&lt;span class=&quot;built_in&quot;&gt;vector&lt;/span&gt;&amp;lt;&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt;&amp;gt;&amp;gt; matrix(rows, &lt;span class=&quot;built_in&quot;&gt;vector&lt;/span&gt;&amp;lt;&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt;&amp;gt;(cols));
   &lt;span class=&quot;comment&quot;&gt;// do stuff&lt;/span&gt;
   &lt;span class=&quot;comment&quot;&gt;// access like matrix[y][x]&lt;/span&gt;
-  &lt;span class=&quot;comment&quot;&gt;// no need to free. RAII rocks.&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
+  &lt;span class=&quot;comment&quot;&gt;// no need to free. RAII rocks.&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;This is similar to using double pointer in C for dynamic 2D array.&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;lang-cpp&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; **matrix = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt;*[rows];
+&lt;pre&gt;&lt;code class=&quot;language-cpp&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; **matrix = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt;*[rows];
   &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt;(&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; i = &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;; i &amp;lt; rows; i++)
       matrix[i] = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt;[cols];
   &lt;span class=&quot;comment&quot;&gt;// do stuff&lt;/span&gt;
   &lt;span class=&quot;comment&quot;&gt;// access like matrix[y][x]&lt;/span&gt;
   &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt;(&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; i = &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;; i &amp;lt; rows; i++)
       &lt;span class=&quot;keyword&quot;&gt;delete&lt;/span&gt; [] matrix[i];
-  &lt;span class=&quot;keyword&quot;&gt;delete&lt;/span&gt; [] matrix;
-&lt;/code&gt;&lt;/pre&gt;
+  &lt;span class=&quot;keyword&quot;&gt;delete&lt;/span&gt; [] matrix;&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;It’s basically an array of arrays. every element of array matrix points to another array of integers. That’s why you can reference it two times. But, since every array is separately allocated, to access an array we first have to go to the element of outer array and then inner one. Also, there will be no guarantee that every row will be adjacent to each other in memory. They can be scattered across the heap.&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p&gt;Second way is to use C style array.  &lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;lang-cpp&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; matrix = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt;[rows*cols];
+&lt;pre&gt;&lt;code class=&quot;language-cpp&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; matrix = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt;[rows*cols];
   &lt;span class=&quot;comment&quot;&gt;// do stuff&lt;/span&gt;
   &lt;span class=&quot;comment&quot;&gt;// access like matrix[y*cols+x]&lt;/span&gt;
-  &lt;span class=&quot;keyword&quot;&gt;delete&lt;/span&gt; [] matrix;
-&lt;/code&gt;&lt;/pre&gt;
+  &lt;span class=&quot;keyword&quot;&gt;delete&lt;/span&gt; [] matrix;&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;This will make a solid continuous chunk of memory in heap.&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
@@ -73,9 +70,9 @@ Technologies:
 &lt;p&gt;C style array access should perform better than vector style access. As, vector style has to refer two times to access an element the address of matrix can be saved in register by compiler by inner elements has to come from memory (most probably cache). The other problem is that, at the end of the row next row could be anywhere, and pre-fetcher can not predict next fetch.&lt;/p&gt;
 &lt;p&gt;It’s hard to measure the general performance since the use case varies a lot. But to get some idea I’m considering two types of algorithm with square and rectangular matrices. All the results are compiler on GCC 7.2 with c++14 and -O3 flags on linux x86 machine.
 For the simplicity sake we have fixed number of rows and columns but it can be easily changed to general inputs.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt; Sum of all elements &lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;** Sum of all elements **&lt;/p&gt;
 &lt;p&gt;Let us take an example of calculating the sum of all the elements in a matrix. Here are our two popular approaches:&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;lang-cpp&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// Vector style code for a square matrix&lt;/span&gt;
+&lt;pre&gt;&lt;code class=&quot;language-cpp&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// Vector style code for a square matrix&lt;/span&gt;
 &lt;span class=&quot;comment&quot;&gt;// Similar thing can be achieved in C by int**&lt;/span&gt;
 &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;Vector_sum&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(&lt;span class=&quot;built_in&quot;&gt;vector&lt;/span&gt;&amp;lt;&lt;span class=&quot;built_in&quot;&gt;vector&lt;/span&gt;&amp;lt;&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt;&amp;gt;&amp;gt;&amp;amp; matrix, &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; N)&lt;/span&gt; &lt;/span&gt;{
     &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; sum = &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;
@@ -83,17 +80,15 @@ For the simplicity sake we have fixed number of rows and columns but it can be e
         &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt;(&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; j = &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;; j &amp;lt; N; j++)
             sum += matrix[i][j];
     &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; sum;
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code class=&quot;lang-cpp&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// C style code for a square matrix&lt;/span&gt;
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&quot;language-cpp&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// C style code for a square matrix&lt;/span&gt;
 &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;C_style_sum&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt;* matrix, &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; N)&lt;/span&gt; &lt;/span&gt;{
     &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; sum = &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;
     &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt;(&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; i = &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;; i &amp;lt; N; i++)
         &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt;(&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; j = &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;; j &amp;lt; N; j++)
             sum += matrix[i * N + j];
     &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; sum;
-}
-&lt;/code&gt;&lt;/pre&gt;
+}&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Results for a square matrix of size 512*512
 &lt;a href=&quot;sum_square_1.png&quot; data-lightbox=&quot;sum_1&quot; data-title=&quot;Sum of elements (512x512)&quot;&gt;
 &lt;img src=&quot;/articles/representing-matrix-in-cpp/sum_square_1.png&quot; alt=&quot;sum benchmark&quot;&gt;&lt;/a&gt;
@@ -103,9 +98,9 @@ See this benchmark on &lt;a href=&quot;http://quick-bench.com/GXUG06sZDLCrGsOogF
 &lt;img src=&quot;/articles/representing-matrix-in-cpp/sum_rectangle_1.png&quot; alt=&quot;sum benchmark&quot;&gt;&lt;/a&gt;
 See this benchmark on &lt;a href=&quot;http://quick-bench.com/ekNZpPxwiw4wYtqOV51vPF8CXUo&quot; target=&quot;_blank&quot;&gt;quick-bench&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;As you can see the difference is not much. I can live with that for most of the programs. However, transpose yields a complete different story.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt; Transpose of all elements &lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;** Transpose of all elements **&lt;/p&gt;
 &lt;p&gt;Let us also take an example of transposing a matrix. Which will have completely different access pattern then sum. Here are our two popular approaches:&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;lang-cpp&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// Vector style code for a square matrix&lt;/span&gt;
+&lt;pre&gt;&lt;code class=&quot;language-cpp&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// Vector style code for a square matrix&lt;/span&gt;
 &lt;span class=&quot;comment&quot;&gt;// Similar thing can be achieved in C by int**&lt;/span&gt;
 &lt;span class=&quot;keyword&quot;&gt;using&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;namespace&lt;/span&gt; Matrix = &lt;span class=&quot;built_in&quot;&gt;vector&lt;/span&gt;&amp;lt;&lt;span class=&quot;built_in&quot;&gt;vector&lt;/span&gt;&amp;lt;&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt;&amp;gt;&amp;gt;;
 &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;Vector_transpose&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(Matrix&amp;amp; matrix1, Matrix&amp;amp; matrix2, &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; N)&lt;/span&gt; &lt;/span&gt;{
@@ -114,17 +109,15 @@ See this benchmark on &lt;a href=&quot;http://quick-bench.com/ekNZpPxwiw4wYtqOV5
         &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt;(&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; j = &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;; j &amp;lt; N; j++)
             matrix[i][j] = matrix[j][i];
     &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; sum;
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code class=&quot;lang-cpp&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// C style code for a square matrix&lt;/span&gt;
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&quot;language-cpp&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// C style code for a square matrix&lt;/span&gt;
 &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;C_style_transpose&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt;* matrix1, &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt;* matrix2, &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; N)&lt;/span&gt; &lt;/span&gt;{
     &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; sum = &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;
     &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt;(&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; i = &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;; i &amp;lt; N; i++)
         &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt;(&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; j = &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;; j &amp;lt; N; j++)
             matrix2[i * N + j] = matrix1[j * N + i];
     &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; sum;
-}
-&lt;/code&gt;&lt;/pre&gt;
+}&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Results for a square matrix of size 512*512
 &lt;a href=&quot;transpose_square_1.png&quot; data-lightbox=&quot;transpose_1&quot; data-title=&quot;Transpose of elements (512x512)&quot;&gt;
 &lt;img src=&quot;/articles/representing-matrix-in-cpp/transpose_square_1.png&quot; alt=&quot;sum benchmark&quot;&gt;&lt;/a&gt;
@@ -137,7 +130,7 @@ See this benchmark on &lt;a href=&quot;http://quick-bench.com/IyZq2RwP_RtZJpC4B8
 &lt;h1 id=&quot;matrix-class&quot;&gt;Matrix Class&lt;/h1&gt;
 
 &lt;p&gt;We can write a custom template class that will allow us to access elements like vector. To achieve we need to overload the brackets operator.&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;lang-cpp&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// e.g. a matrix of 5 rows and 3 cols&lt;/span&gt;
+&lt;pre&gt;&lt;code class=&quot;language-cpp&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// e.g. a matrix of 5 rows and 3 cols&lt;/span&gt;
 &lt;span class=&quot;comment&quot;&gt;// matrix&amp;lt;int, 5, 3&amp;gt; x; &lt;/span&gt;
 &lt;span class=&quot;comment&quot;&gt;// can be accessed like x[row][col]&lt;/span&gt;
 
@@ -157,11 +150,10 @@ See this benchmark on &lt;a href=&quot;http://quick-bench.com/IyZq2RwP_RtZJpC4B8
         &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &amp;amp;data[row * C];
     }
 };
-
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Almost all the compilers today can optimize away the referencing and dereferencing of the same array. The assembly code generated by it is virtually same as the C style version.&lt;/p&gt;
 &lt;p&gt;So, how well it performs.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt; Sum of all elements &lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;** Sum of all elements **&lt;/p&gt;
 &lt;p&gt;Results for a square matrix of size 512*512
 &lt;a href=&quot;sum_square_2.png&quot; data-lightbox=&quot;sum_2&quot; data-title=&quot;Sum of elements (512x512)&quot;&gt;
 &lt;img src=&quot;/articles/representing-matrix-in-cpp/sum_square_2.png&quot; alt=&quot;sum benchmark&quot;&gt;&lt;/a&gt;
@@ -171,7 +163,7 @@ See this benchmark on &lt;a href=&quot;http://quick-bench.com/UODm6ylUQGqDCGbdxM
 &lt;img src=&quot;/articles/representing-matrix-in-cpp/sum_rectangle_2.png&quot; alt=&quot;sum benchmark&quot;&gt;&lt;/a&gt;
 See this benchmark on &lt;a href=&quot;http://quick-bench.com/-rGgWT2v0CZsUNbOtoTOCs9ybiE&quot; target=&quot;_blank&quot;&gt;quick-bench&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;Separate code can be found &lt;a href=&quot;sum.cpp&quot; target=&quot;_blank&quot;&gt;here&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt; Transpose of all elements &lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;** Transpose of all elements **&lt;/p&gt;
 &lt;p&gt;Results for a square matrix of size 512*512
 &lt;a href=&quot;transpose_square_2.png&quot; data-lightbox=&quot;transpose_2&quot; data-title=&quot;Transpose of elements (512x512)&quot;&gt;
 &lt;img src=&quot;/articles/representing-matrix-in-cpp/transpose_square_2.png&quot; alt=&quot;sum benchmark&quot;&gt;&lt;/a&gt;
@@ -200,18 +192,16 @@ Technologies:
 &lt;img src=&quot;/articles/falling-matrix/matrix.png&quot; alt=&quot;matrix&quot;&gt;
 Live demo with code: &lt;a href=&quot;https://jsfiddle.net/welcometors/tz38d5vg/1/&quot; target=&quot;_blank&quot;&gt;&lt;i class=&quot;fa fa-lg fa-jsfiddle&quot;&gt;&lt;/i&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;First we need to create an HTML5 canvas. A HTML5 canvas is used to draw graphics. Almost all of the flash graphics are pretty much replaced by canvas today.&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;lang-HTML&quot;&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;canvas&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;id&lt;/span&gt;=&lt;span class=&quot;string&quot;&gt;&quot;background&quot;&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;width&lt;/span&gt;=&lt;span class=&quot;string&quot;&gt;&quot;512&quot;&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;height&lt;/span&gt;=&lt;span class=&quot;string&quot;&gt;&quot;360&quot;&lt;/span&gt;&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;canvas&lt;/span&gt;&amp;gt;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&quot;language-HTML&quot;&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;canvas&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;id&lt;/span&gt;=&lt;span class=&quot;string&quot;&gt;&quot;background&quot;&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;width&lt;/span&gt;=&lt;span class=&quot;string&quot;&gt;&quot;512&quot;&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;height&lt;/span&gt;=&lt;span class=&quot;string&quot;&gt;&quot;360&quot;&lt;/span&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;canvas&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;This will be served as an output screen for our animation.&lt;/p&gt;
 &lt;p&gt;Now, we can access the canvas in javascript:&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;lang-javascript&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; canvas = &lt;span class=&quot;built_in&quot;&gt;document&lt;/span&gt;.getElementById(&lt;span class=&quot;string&quot;&gt;'background'&lt;/span&gt;);
-&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; context = canvas.getContext(&lt;span class=&quot;string&quot;&gt;'2d'&lt;/span&gt;);
-&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&quot;language-javascript&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; canvas = &lt;span class=&quot;built_in&quot;&gt;document&lt;/span&gt;.getElementById(&lt;span class=&quot;string&quot;&gt;'background'&lt;/span&gt;);
+&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; context = canvas.getContext(&lt;span class=&quot;string&quot;&gt;'2d'&lt;/span&gt;);&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;strong&gt;Canvas&lt;/strong&gt; object contains the properties related to output window like width, height etc.
 &lt;strong&gt;Context&lt;/strong&gt; object will be used to call in-built functions for drawing, writing etc.&lt;/p&gt;
 &lt;p&gt;Let us assume that our text string is “test”, which is falling vertically in our output screen.
-Also, we need multiple instances of it.&lt;br&gt;Let us assume that the coordinates of the top left corner of a text instance is _x_ and _y_.
+Also, we need multiple instances of it.&lt;br&gt;Let us assume that the coordinates of the top left corner of a text instance is &lt;em&gt;x&lt;/em&gt; and &lt;em&gt;y&lt;/em&gt;.
 See below:
 &lt;img src=&quot;/articles/falling-matrix/screen.svg&quot; alt=&quot;screen&quot;&gt;&lt;/p&gt;
 &lt;p&gt;I encapsulated one of them in a dotted box to showcase the top right coner of a single instance.
@@ -219,12 +209,12 @@ Since, we don’t have infinite memory for our infinitely falling matrix text in
 A clever trick is to change the coordinate back to the top when they cross the bottom of the screen.&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;/articles/falling-matrix/screenTransition.svg&quot; alt=&quot;screenTransition&quot;&gt;&lt;/p&gt;
 &lt;p&gt;This way, we only need few instances to make our screen look full. 
-To avoid them form keep falling in the same column we can re-randomize _x_ while changing _y_ to top.  &lt;/p&gt;
+To avoid them form keep falling in the same column we can re-randomize &lt;em&gt;x&lt;/em&gt; while changing &lt;em&gt;y&lt;/em&gt; to top.  &lt;/p&gt;
 &lt;p&gt;If you have worked with any graphics library in the past then you will be familiar with the coordinate system of canvas. 
-Top left corner will be &lt;em&gt;(0,0)&lt;/em&gt; and _x_ will increase as you go right and _y_ will increase as you go down. 
-We’ll be moving our text in range &lt;em&gt;(x,-screenHeight)&lt;/em&gt; to &lt;em&gt;(x,+screenHeight)&lt;/em&gt; for some randomized _x_.&lt;/p&gt;
+Top left corner will be &lt;em&gt;(0,0)&lt;/em&gt; and &lt;em&gt;x&lt;/em&gt; will increase as you go right and &lt;em&gt;y&lt;/em&gt; will increase as you go down. 
+We’ll be moving our text in range &lt;em&gt;(x,-screenHeight)&lt;/em&gt; to &lt;em&gt;(x,+screenHeight)&lt;/em&gt; for some randomized &lt;em&gt;x&lt;/em&gt;.&lt;/p&gt;
 &lt;p&gt;For moving text we are creating a class (called Bit) to manage them as an individual objects.&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;lang-javascript&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;Bit&lt;/span&gt; (&lt;span class=&quot;params&quot;&gt;&lt;/span&gt;)&lt;/span&gt;{
+&lt;pre&gt;&lt;code class=&quot;language-javascript&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;Bit&lt;/span&gt; (&lt;span class=&quot;params&quot;&gt;&lt;/span&gt;)&lt;/span&gt;{
     &lt;span class=&quot;comment&quot;&gt;// x and y positions are initialized randomly&lt;/span&gt;
     &lt;span class=&quot;keyword&quot;&gt;this&lt;/span&gt;.xpos = &lt;span class=&quot;built_in&quot;&gt;Math&lt;/span&gt;.random() * canvas.width;
     &lt;span class=&quot;keyword&quot;&gt;this&lt;/span&gt;.ypos = &lt;span class=&quot;built_in&quot;&gt;Math&lt;/span&gt;.random() * &lt;span class=&quot;number&quot;&gt;2&lt;/span&gt; * canvas.height - canvas.height;
@@ -258,15 +248,13 @@ We’ll be moving our text in range &lt;em&gt;(x,-screenHeight)&lt;/em&gt; to &l
         &lt;span class=&quot;keyword&quot;&gt;else&lt;/span&gt;
             &lt;span class=&quot;keyword&quot;&gt;this&lt;/span&gt;.ypos += &lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;; &lt;span class=&quot;comment&quot;&gt;// drop text by 2 pixels down&lt;/span&gt;
     };
-}
-&lt;/code&gt;&lt;/pre&gt;
+}&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;For testing, we’ll create some of the &lt;strong&gt;Bit&lt;/strong&gt; objects:&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;lang-javascript&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; bits = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;built_in&quot;&gt;Array&lt;/span&gt;();
+&lt;pre&gt;&lt;code class=&quot;language-javascript&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; bits = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;built_in&quot;&gt;Array&lt;/span&gt;();
 &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt;(&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; i = &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;; i &amp;lt; &lt;span class=&quot;number&quot;&gt;50&lt;/span&gt;; ++i)
-    bits.push(&lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; Bit());
-&lt;/code&gt;&lt;/pre&gt;
+    bits.push(&lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; Bit());&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Now, we need a function to redraw at every frame.&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;lang-javascript&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;reDraw&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;&lt;/span&gt;)&lt;/span&gt;{
+&lt;pre&gt;&lt;code class=&quot;language-javascript&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;reDraw&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;&lt;/span&gt;)&lt;/span&gt;{
     &lt;span class=&quot;comment&quot;&gt;// before drawing clear entire screen&lt;/span&gt;
     context.fillStyle = &lt;span class=&quot;string&quot;&gt;'black'&lt;/span&gt;;
     context.fillRect(&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;, canvas.width, canvas.height);
@@ -280,8 +268,7 @@ We’ll be moving our text in range &lt;em&gt;(x,-screenHeight)&lt;/em&gt; to &l
 
 &lt;span class=&quot;comment&quot;&gt;// This will call 'reDraw' at every 33 milliseconds. &lt;/span&gt;
 &lt;span class=&quot;comment&quot;&gt;// So, our animation will run at 30fps (1000/33 ≈ 30).&lt;/span&gt;
-setInterval(reDraw, &lt;span class=&quot;number&quot;&gt;33&lt;/span&gt;);
-&lt;/code&gt;&lt;/pre&gt;
+setInterval(reDraw, &lt;span class=&quot;number&quot;&gt;33&lt;/span&gt;);&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Now, our code will run like this:
 &lt;img src=&quot;/articles/falling-matrix/matrix_test.png&quot; alt=&quot;matrix_test&quot;&gt;
 Live demo with code: &lt;a href=&quot;https://jsfiddle.net/welcometors/tz38d5vg/0/&quot; target=&quot;_blank&quot;&gt;&lt;i class=&quot;fa fa-lg fa-jsfiddle&quot;&gt;&lt;/i&gt;&lt;/a&gt;&lt;/p&gt;
@@ -290,14 +277,13 @@ Live demo with code: &lt;a href=&quot;https://jsfiddle.net/welcometors/tz38d5vg/
 &lt;p&gt;Now, we need to add depth (i.e. some text are near and some are far) in our falling matrix. 
 This can be achieved by changing the text size, falling speed and brightness according to the depth.&lt;/p&gt;
 &lt;p&gt;We need different colors and bunch of randomized symbols:&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;lang-javascript&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; colors = [&lt;span class=&quot;string&quot;&gt;'#008800'&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;'#00FF00'&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;'#55FF55'&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;'#BBFFBB'&lt;/span&gt;];
+&lt;pre&gt;&lt;code class=&quot;language-javascript&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; colors = [&lt;span class=&quot;string&quot;&gt;'#008800'&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;'#00FF00'&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;'#55FF55'&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;'#BBFFBB'&lt;/span&gt;];
 &lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; words = [
     &lt;span class=&quot;string&quot;&gt;&quot;昨天&quot;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&quot;小时&quot;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&quot;钟表&quot;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&quot;漂亮&quot;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&quot;常见&quot;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&quot;說這&quot;&lt;/span&gt;,
     &lt;span class=&quot;string&quot;&gt;&quot;안녕하&quot;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&quot;그래서&quot;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&quot;안녕하&quot;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&quot;십니까&quot;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&quot;洗手在&quot;&lt;/span&gt;,
-    &lt;span class=&quot;string&quot;&gt;&quot;笑好玩儿&quot;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&quot;么希奇的&quot;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&quot;환영합니다&quot;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&quot;好吃的食物&quot;&lt;/span&gt;];
-&lt;/code&gt;&lt;/pre&gt;
+    &lt;span class=&quot;string&quot;&gt;&quot;笑好玩儿&quot;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&quot;么希奇的&quot;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&quot;환영합니다&quot;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&quot;好吃的食物&quot;&lt;/span&gt;];&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;We need to change our &lt;strong&gt;Bit&lt;/strong&gt; class for depth (distance).&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;lang-javascript&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;Bit&lt;/span&gt; (&lt;span class=&quot;params&quot;&gt;distance&lt;/span&gt;)&lt;/span&gt;{
+&lt;pre&gt;&lt;code class=&quot;language-javascript&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;Bit&lt;/span&gt; (&lt;span class=&quot;params&quot;&gt;distance&lt;/span&gt;)&lt;/span&gt;{
     &lt;span class=&quot;comment&quot;&gt;// size and speed are inversely proportional to distance&lt;/span&gt;
     &lt;span class=&quot;keyword&quot;&gt;this&lt;/span&gt;.speed = &lt;span class=&quot;number&quot;&gt;160&lt;/span&gt; / distance;
     &lt;span class=&quot;keyword&quot;&gt;this&lt;/span&gt;.fontSize = &lt;span class=&quot;built_in&quot;&gt;parseInt&lt;/span&gt;(&lt;span class=&quot;built_in&quot;&gt;Math&lt;/span&gt;.max(&lt;span class=&quot;number&quot;&gt;8&lt;/span&gt;, &lt;span class=&quot;built_in&quot;&gt;Math&lt;/span&gt;.min(&lt;span class=&quot;number&quot;&gt;4&lt;/span&gt;*&lt;span class=&quot;keyword&quot;&gt;this&lt;/span&gt;.speed, &lt;span class=&quot;number&quot;&gt;20&lt;/span&gt;)));
@@ -341,18 +327,15 @@ This can be achieved by changing the text size, falling speed and brightness acc
         &lt;span class=&quot;keyword&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt;( chance &amp;lt; &lt;span class=&quot;number&quot;&gt;.02&lt;/span&gt;) &lt;span class=&quot;comment&quot;&gt;// change to previous word&lt;/span&gt;
             &lt;span class=&quot;keyword&quot;&gt;this&lt;/span&gt;.text = (&lt;span class=&quot;keyword&quot;&gt;this&lt;/span&gt;.text - &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt; + words.length) % words.length;
     };
-}
-&lt;/code&gt;&lt;/pre&gt;
+}&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;For the motion blur effect we just need to change one line in the &lt;em&gt;redraw()&lt;/em&gt;&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;lang-javascript&quot;&gt;    context.fillStyle = &lt;span class=&quot;string&quot;&gt;'rgba(0,0,0,0.4)'&lt;/span&gt;;
-&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&quot;language-javascript&quot;&gt;    context.fillStyle = &lt;span class=&quot;string&quot;&gt;'rgba(0,0,0,0.4)'&lt;/span&gt;;&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Instead of putting an opaque black rectangle, we can put a transparent one. 
 As a result, previous frame will slowly fade away, frame by frame, instead of disappearing at once. 
 And on screen, it’ll look like text is leaving a trail behind. Which will serve as our fake motion blur.&lt;/p&gt;
 &lt;p&gt;We can also change the canvas size programmatically to adapt to the window size.&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;lang-javascript&quot;&gt;context.canvas.width  = &lt;span class=&quot;built_in&quot;&gt;window&lt;/span&gt;.innerWidth;
-context.canvas.height = &lt;span class=&quot;built_in&quot;&gt;window&lt;/span&gt;.innerHeight;
-&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&quot;language-javascript&quot;&gt;context.canvas.width  = &lt;span class=&quot;built_in&quot;&gt;window&lt;/span&gt;.innerWidth;
+context.canvas.height = &lt;span class=&quot;built_in&quot;&gt;window&lt;/span&gt;.innerHeight;&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Final results:
 &lt;img src=&quot;/articles/falling-matrix/matrix.png&quot; alt=&quot;matrix&quot;&gt;
 Live demo with code: &lt;a href=&quot;https://jsfiddle.net/welcometors/tz38d5vg/1/&quot; target=&quot;_blank&quot;&gt;&lt;i class=&quot;fa fa-lg fa-jsfiddle&quot;&gt;&lt;/i&gt;&lt;/a&gt;&lt;/p&gt;
@@ -490,6 +473,7 @@ You can challenge your programming skills along with mathematical skills on
     &lt;tr&gt;&lt;td&gt;&lt;a href=&quot;#q41&quot;&gt;Q41&lt;/a&gt;&lt;/td&gt;&lt;td&gt;&lt;a href=&quot;#q42&quot;&gt;Q42&lt;/a&gt;&lt;/td&gt;&lt;td&gt;&lt;a href=&quot;#q43&quot;&gt;Q43&lt;/a&gt;&lt;/td&gt;&lt;td&gt;&lt;a href=&quot;#q44&quot;&gt;Q44&lt;/a&gt;&lt;/td&gt;&lt;td&gt;&lt;a href=&quot;#q45&quot;&gt;Q45&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;
     &lt;tr&gt;&lt;td&gt;&lt;a href=&quot;#q46&quot;&gt;Q46&lt;/a&gt;&lt;/td&gt;&lt;td&gt;&lt;a href=&quot;#q47&quot;&gt;Q47&lt;/a&gt;&lt;/td&gt;&lt;td&gt;&lt;a href=&quot;#q48&quot;&gt;Q48&lt;/a&gt;&lt;/td&gt;&lt;td&gt;&lt;a href=&quot;#q49&quot;&gt;Q49&lt;/a&gt;&lt;/td&gt;&lt;td&gt;&lt;a href=&quot;#q50&quot;&gt;Q50&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;
     &lt;tr&gt;&lt;td&gt;&lt;a href=&quot;#q51&quot;&gt;Q51&lt;/a&gt;&lt;/td&gt;&lt;td&gt;&lt;a href=&quot;#q52&quot;&gt;Q52&lt;/a&gt;&lt;/td&gt;&lt;td&gt;&lt;a href=&quot;#q53&quot;&gt;Q53&lt;/a&gt;&lt;/td&gt;&lt;td&gt;&lt;a href=&quot;#q54&quot;&gt;Q54&lt;/a&gt;&lt;/td&gt;&lt;td&gt;&lt;a href=&quot;#q55&quot;&gt;Q55&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;
+    &lt;!--&lt;tr&gt;&lt;td&gt;&lt;a href=&quot;#q&quot;&gt;Q&lt;/a&gt;&lt;/td&gt;&lt;td&gt;&lt;a href=&quot;#q&quot;&gt;Q&lt;/a&gt;&lt;/td&gt;&lt;td&gt;&lt;a href=&quot;#q&quot;&gt;Q&lt;/a&gt;&lt;/td&gt;&lt;td&gt;&lt;a href=&quot;#q&quot;&gt;Q&lt;/a&gt;&lt;/td&gt;&lt;td&gt;&lt;a href=&quot;#q&quot;&gt;Q&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;--&gt;
 &lt;/table&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;http://localhost:8080/&quot;&gt;Home&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
@@ -549,8 +533,7 @@ You can challenge your programming skills along with mathematical skills on
 &lt;p&gt;We know that mouse pointer movements are more frequent than keyboard ticks. So its obvious that its data transfer rate is higher than keyboard.
 Delaying a CPU temperature sensor could have serious consequences, overheat can damage CPU circuitry.
 From the above information we can conclude that priorities are:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;CPU temperature sensor &amp;gt; Hard Disk &amp;gt; Mouse &amp;gt; Keyboard
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;i class=&quot;fa fa-angle-double-up&quot;&gt;&lt;/i&gt;
+&lt;pre&gt;&lt;code&gt;CPU temperature sensor &amp;gt; Hard Disk &amp;gt; Mouse &amp;gt; Keyboard&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;i class=&quot;fa fa-angle-double-up&quot;&gt;&lt;/i&gt;
 &lt;a href=&quot;#index&quot;&gt;Index&lt;/a&gt;&lt;/p&gt;
 &lt;hr&gt;
 &lt;h3 id=&quot;q3&quot;&gt;&lt;b&gt;Question 3&lt;/b&gt;&lt;/h3&gt;
@@ -634,9 +617,9 @@ $$ \mathit{Effort} = 2.8 \times {40}^{1.2} = 234.2 $$&lt;/p&gt;
 
 &lt;p&gt;Let the time taken to switch between user and kernel modes of execution be t1 while the time taken to switch between two processes be t2. Which of the following is &lt;strong&gt;TRUE&lt;/strong&gt;?&lt;/p&gt;
 &lt;ol type=&quot;A&quot;&gt;
-  &lt;li&gt;t1 &amp;gt; t2&lt;/li&gt;
+  &lt;li&gt;t1 &gt; t2&lt;/li&gt;
   &lt;li&gt;t1 = t2&lt;/li&gt;
-  &lt;li&gt;&lt;b&gt;t1 &amp;lt; t2&lt;/b&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;b&gt;t1 &lt; t2&lt;/b&gt;&lt;/li&gt;
   &lt;li&gt;nothing can be said about the relationship between t1 and t2&lt;/li&gt;
 &lt;/ol&gt;
 
@@ -656,36 +639,42 @@ $$ \mathit{Effort} = 2.8 \times {40}^{1.2} = 234.2 $$&lt;/p&gt;
 &lt;table&gt;
 &lt;thead&gt;
 &lt;tr&gt;
-&lt;th style=&quot;text-align:left&quot;&gt;Parameter&lt;/th&gt;
-&lt;th style=&quot;text-align:right&quot;&gt;Language L1&lt;/th&gt;
-&lt;th style=&quot;text-align:right&quot;&gt;Language L2&lt;/th&gt;
+&lt;th align=&quot;left&quot;&gt;Parameter&lt;/th&gt;
+&lt;th align=&quot;right&quot;&gt;Language L1&lt;/th&gt;
+&lt;th align=&quot;right&quot;&gt;Language L2&lt;/th&gt;
 &lt;/tr&gt;
 &lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;Man years needed for development&lt;/td&gt;
-&lt;td style=&quot;text-align:right&quot;&gt;LOC/10,000&lt;/td&gt;
-&lt;td style=&quot;text-align:right&quot;&gt;LOC/10,000&lt;/td&gt;
+&lt;tbody&gt;&lt;tr&gt;
+&lt;td align=&quot;left&quot;&gt;Man years needed for development&lt;/td&gt;
+&lt;td align=&quot;right&quot;&gt;LOC/10,000&lt;/td&gt;
+&lt;td align=&quot;right&quot;&gt;LOC/10,000&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;Development cost per man year&lt;/td&gt;
-&lt;td style=&quot;text-align:right&quot;&gt;₹ 10,00,000&lt;/td&gt;
-&lt;td style=&quot;text-align:right&quot;&gt;₹ 7,50,000&lt;/td&gt;
+&lt;td align=&quot;left&quot;&gt;Development cost per man year&lt;/td&gt;
+&lt;td align=&quot;right&quot;&gt;₹ 10,00,000&lt;/td&gt;
+&lt;td align=&quot;right&quot;&gt;₹ 7,50,000&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;Maintenance time&lt;/td&gt;
-&lt;td style=&quot;text-align:right&quot;&gt;5 years&lt;/td&gt;
-&lt;td style=&quot;text-align:right&quot;&gt;5 years&lt;/td&gt;
+&lt;td align=&quot;left&quot;&gt;Maintenance time&lt;/td&gt;
+&lt;td align=&quot;right&quot;&gt;5 years&lt;/td&gt;
+&lt;td align=&quot;right&quot;&gt;5 years&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;Cost of maintenance per year&lt;/td&gt;
-&lt;td style=&quot;text-align:right&quot;&gt;₹ 1,00,000&lt;/td&gt;
-&lt;td style=&quot;text-align:right&quot;&gt;₹ 50,000&lt;/td&gt;
+&lt;td align=&quot;left&quot;&gt;Cost of maintenance per year&lt;/td&gt;
+&lt;td align=&quot;right&quot;&gt;₹ 1,00,000&lt;/td&gt;
+&lt;td align=&quot;right&quot;&gt;₹ 50,000&lt;/td&gt;
 &lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;p&gt;&lt;br/&gt;
-Total cost of the project includes the cost of development and maintenance. What is the LOC for L1 for which the total cost of the project using L1 is equal to the cost of project using L2?&lt;/p&gt;
+&lt;tr&gt;
+&lt;td align=&quot;left&quot;&gt;&lt;br/&gt;&lt;/td&gt;
+&lt;td align=&quot;right&quot;&gt;&lt;/td&gt;
+&lt;td align=&quot;right&quot;&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align=&quot;left&quot;&gt;Total cost of the project includes the cost of development and maintenance. What is the LOC for L1 for which the total cost of the project using L1 is equal to the cost of project using L2?&lt;/td&gt;
+&lt;td align=&quot;right&quot;&gt;&lt;/td&gt;
+&lt;td align=&quot;right&quot;&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;&lt;/table&gt;
 &lt;ol type=&quot;A&quot;&gt;
   &lt;li&gt;4000&lt;/li&gt;
   &lt;li&gt;&lt;b&gt;5000&lt;/b&gt;&lt;/li&gt;
@@ -726,8 +715,7 @@ Hence, $ 𝓍 = 5000 $&lt;/p&gt;
 &lt;p&gt;– &lt;cite&gt;Forouzan (Data Communications and Networking)&lt;/cite&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;It’s now clear that&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;m1:SMTP       m2:POP or IMAP      m3:HTTP
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;i class=&quot;fa fa-angle-double-up&quot;&gt;&lt;/i&gt;
+&lt;pre&gt;&lt;code&gt;m1:SMTP       m2:POP or IMAP      m3:HTTP&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;i class=&quot;fa fa-angle-double-up&quot;&gt;&lt;/i&gt;
 &lt;a href=&quot;#index&quot;&gt;Index&lt;/a&gt;&lt;/p&gt;
 &lt;hr&gt;
 &lt;h3 id=&quot;q10&quot;&gt;&lt;b&gt;Question 10&lt;/b&gt;&lt;/h3&gt;
@@ -840,10 +828,9 @@ $$&lt;/p&gt;
 &lt;h3 id=&quot;q16&quot;&gt;&lt;b&gt;Question 16&lt;/b&gt;&lt;/h3&gt;
 
 &lt;p&gt;What does the following fragment of C program print?&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;lang-C&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;char&lt;/span&gt; c[] = &lt;span class=&quot;string&quot;&gt;&quot;GATE2011&quot;&lt;/span&gt;;
+&lt;pre&gt;&lt;code class=&quot;language-C&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;char&lt;/span&gt; c[] = &lt;span class=&quot;string&quot;&gt;&quot;GATE2011&quot;&lt;/span&gt;;
 &lt;span class=&quot;keyword&quot;&gt;char&lt;/span&gt; *p = c;
-&lt;span class=&quot;built_in&quot;&gt;printf&lt;/span&gt;(&lt;span class=&quot;string&quot;&gt;&quot;%s&quot;&lt;/span&gt;, p + p[&lt;span class=&quot;number&quot;&gt;3&lt;/span&gt;] - p[&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;]);
-&lt;/code&gt;&lt;/pre&gt;
+&lt;span class=&quot;built_in&quot;&gt;printf&lt;/span&gt;(&lt;span class=&quot;string&quot;&gt;&quot;%s&quot;&lt;/span&gt;, p + p[&lt;span class=&quot;number&quot;&gt;3&lt;/span&gt;] - p[&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;]);&lt;/code&gt;&lt;/pre&gt;
 &lt;ol type=&quot;A&quot;&gt;
   &lt;li&gt;GATE2011&lt;/li&gt;
   &lt;li&gt;E2011&lt;/li&gt;
@@ -1018,7 +1005,8 @@ Solving using &lt;strong&gt;K-map&lt;/strong&gt; answer is $(P + \bar{Q}.\bar{R}
 &lt;h3 id=&quot;q26&quot;&gt;&lt;b&gt;Question 26&lt;/b&gt;&lt;/h3&gt;
 
 &lt;p&gt;Consider evaluating the following expression tree on a machine with load-store architecture in which memory can be accessed only through load and store instructions. The variables a,b,c,d and e initially stored in memory. The binary operators used in this expression tree can be evaluate by the machine only when the operands are in registers. The instructions produce results only in a register. If no intermediate results can be stored in memory, what is the minimum number of registers needed to evaluate this expression?&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;img/gate2011Q26.png&quot; alt=&quot;Q26&quot; style=&quot;width: 250px;&quot;/&gt;&lt;/p&gt;
+&lt;img src=&quot;img/gate2011Q26.png&quot; alt=&quot;Q26&quot; style=&quot;width: 250px;&quot;/&gt;
+
 &lt;ol type=&quot;A&quot;&gt;
   &lt;li&gt;2&lt;/li&gt;
   &lt;li&gt;9&lt;/li&gt;
@@ -1037,31 +1025,37 @@ Solving using &lt;strong&gt;K-map&lt;/strong&gt; answer is $(P + \bar{Q}.\bar{R}
 &lt;table&gt;
 &lt;thead&gt;
 &lt;tr&gt;
-&lt;th style=&quot;text-align:left&quot;&gt;Process&lt;/th&gt;
-&lt;th style=&quot;text-align:right&quot;&gt;Arrival Time&lt;/th&gt;
-&lt;th style=&quot;text-align:right&quot;&gt;Burst Time&lt;/th&gt;
+&lt;th align=&quot;left&quot;&gt;Process&lt;/th&gt;
+&lt;th align=&quot;right&quot;&gt;Arrival Time&lt;/th&gt;
+&lt;th align=&quot;right&quot;&gt;Burst Time&lt;/th&gt;
 &lt;/tr&gt;
 &lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;P0&lt;/td&gt;
-&lt;td style=&quot;text-align:right&quot;&gt;0 ms&lt;/td&gt;
-&lt;td style=&quot;text-align:right&quot;&gt;9 ms&lt;/td&gt;
+&lt;tbody&gt;&lt;tr&gt;
+&lt;td align=&quot;left&quot;&gt;P0&lt;/td&gt;
+&lt;td align=&quot;right&quot;&gt;0 ms&lt;/td&gt;
+&lt;td align=&quot;right&quot;&gt;9 ms&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;P1&lt;/td&gt;
-&lt;td style=&quot;text-align:right&quot;&gt;1 ms&lt;/td&gt;
-&lt;td style=&quot;text-align:right&quot;&gt;4 ms&lt;/td&gt;
+&lt;td align=&quot;left&quot;&gt;P1&lt;/td&gt;
+&lt;td align=&quot;right&quot;&gt;1 ms&lt;/td&gt;
+&lt;td align=&quot;right&quot;&gt;4 ms&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;P2&lt;/td&gt;
-&lt;td style=&quot;text-align:right&quot;&gt;2 ms&lt;/td&gt;
-&lt;td style=&quot;text-align:right&quot;&gt;9 ms&lt;/td&gt;
+&lt;td align=&quot;left&quot;&gt;P2&lt;/td&gt;
+&lt;td align=&quot;right&quot;&gt;2 ms&lt;/td&gt;
+&lt;td align=&quot;right&quot;&gt;9 ms&lt;/td&gt;
 &lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;p&gt;&lt;br/&gt;
-The pre-emptive shortest job first scheduling algorithm is used. Scheduling is carried out only at arrival or completion of processes. What is the average waiting time for the three processes?&lt;/p&gt;
+&lt;tr&gt;
+&lt;td align=&quot;left&quot;&gt;&lt;br/&gt;&lt;/td&gt;
+&lt;td align=&quot;right&quot;&gt;&lt;/td&gt;
+&lt;td align=&quot;right&quot;&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align=&quot;left&quot;&gt;The pre-emptive shortest job first scheduling algorithm is used. Scheduling is carried out only at arrival or completion of processes. What is the average waiting time for the three processes?&lt;/td&gt;
+&lt;td align=&quot;right&quot;&gt;&lt;/td&gt;
+&lt;td align=&quot;right&quot;&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;&lt;/table&gt;
 &lt;ol type=&quot;A&quot;&gt;
   &lt;li&gt;&lt;b&gt;5.0 ms&lt;/b&gt;&lt;/li&gt;
   &lt;li&gt;4.33 ms&lt;/li&gt;
@@ -1129,8 +1123,7 @@ $$\Rightarrow σ_y = a σ_x$$&lt;/p&gt;
 &lt;p&gt;Consider a database table T containing two columns X and Y each of type integer. After the creation of the table, one record (X=1, Y=1) is inserted in the table.&lt;/p&gt;
 &lt;p&gt;Let MX and My denote the respective maximum values of X and Y among all records in the table at any point in time. Using MX and MY, new record is inserted in the table 128 times with X and Y values being MX+1, 2.MY+1 respectively. It may be noted that each time after the insertion, values of MX and MY change.&lt;/p&gt;
 &lt;p&gt;What will be the output of the following SQL query after the steps mentioned above are carried out?&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;SELECT Y FROM T WHERE X=7;
-&lt;/code&gt;&lt;/pre&gt;&lt;ol type=&quot;A&quot;&gt;
+&lt;pre&gt;&lt;code&gt;SELECT Y FROM T WHERE X=7;&lt;/code&gt;&lt;/pre&gt;&lt;ol type=&quot;A&quot;&gt;
   &lt;li&gt;&lt;b&gt;127&lt;/b&gt;&lt;/li&gt;
   &lt;li&gt;255&lt;/li&gt;
   &lt;li&gt;129&lt;/li&gt;
@@ -1187,33 +1180,31 @@ $$P(x) = ¬(x=1) ∧ ∀y(∃z(x=y.z) ⇒ (y=x) ∨ (y=1))$$&lt;/p&gt;
 &lt;table&gt;
 &lt;thead&gt;
 &lt;tr&gt;
-&lt;th style=&quot;text-align:left&quot;&gt;Operator&lt;/th&gt;
-&lt;th style=&quot;text-align:right&quot;&gt;Precedence&lt;/th&gt;
+&lt;th align=&quot;left&quot;&gt;Operator&lt;/th&gt;
+&lt;th align=&quot;right&quot;&gt;Precedence&lt;/th&gt;
 &lt;/tr&gt;
 &lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;$¬$&lt;/td&gt;
-&lt;td style=&quot;text-align:right&quot;&gt;1&lt;/td&gt;
+&lt;tbody&gt;&lt;tr&gt;
+&lt;td align=&quot;left&quot;&gt;$¬$&lt;/td&gt;
+&lt;td align=&quot;right&quot;&gt;1&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;$\wedge$&lt;/td&gt;
-&lt;td style=&quot;text-align:right&quot;&gt;2&lt;/td&gt;
+&lt;td align=&quot;left&quot;&gt;$\wedge$&lt;/td&gt;
+&lt;td align=&quot;right&quot;&gt;2&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;$\vee$&lt;/td&gt;
-&lt;td style=&quot;text-align:right&quot;&gt;3&lt;/td&gt;
+&lt;td align=&quot;left&quot;&gt;$\vee$&lt;/td&gt;
+&lt;td align=&quot;right&quot;&gt;3&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;$\rightarrow$&lt;/td&gt;
-&lt;td style=&quot;text-align:right&quot;&gt;4&lt;/td&gt;
+&lt;td align=&quot;left&quot;&gt;$\rightarrow$&lt;/td&gt;
+&lt;td align=&quot;right&quot;&gt;4&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;$\leftrightarrow$&lt;/td&gt;
-&lt;td style=&quot;text-align:right&quot;&gt;5&lt;/td&gt;
+&lt;td align=&quot;left&quot;&gt;$\leftrightarrow$&lt;/td&gt;
+&lt;td align=&quot;right&quot;&gt;5&lt;/td&gt;
 &lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
+&lt;/tbody&gt;&lt;/table&gt;
 &lt;blockquote&gt;
 &lt;p&gt;– &lt;cite&gt;Kenneth H Rosen (Discrete Mathematics &amp;amp; Its Applications)&lt;/cite&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -1248,8 +1239,7 @@ LOOP: Load a byte from device
       Store in memory at address given by address register
       Increment the address register
       Decrement the count
-      If count != 0 go to LOOP
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Assume that each statement in this program is equivalent to machine instruction which takes one clock cycle to execute if it is a non-load/store instruction. The load-store instructions take two clock cycles to execute.&lt;/p&gt;
+      If count != 0 go to LOOP&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Assume that each statement in this program is equivalent to machine instruction which takes one clock cycle to execute if it is a non-load/store instruction. The load-store instructions take two clock cycles to execute.&lt;/p&gt;
 &lt;p&gt;The designer of the system also has an alternate approach of using DMA controller to implement the same transfer. The DMA controller requires 20 clock cycles for initialization and other overheads. Each DMA transfer cycle takes two clock cycles to transfer one byte of data from the device to the memory.&lt;/p&gt;
 &lt;p&gt;What is the approximate speedup when the DMA controller based design is used in place of the interrupt driven program based input-output?&lt;/p&gt;
 &lt;ol type=&quot;A&quot;&gt;
@@ -1267,19 +1257,17 @@ LOOP: Load a byte from device                                                2
       Store in memory at address given by address register                   2
       Increment the address register                                         1
       Decrement the count                                                    1
-      If count != 0 go to LOOP                                               1
-&lt;/code&gt;&lt;/pre&gt;&lt;pre&gt;&lt;code&gt;Interrrupt driven transfer time = 1+1+500×(2+2+1+1+1) = 3502
+      If count != 0 go to LOOP                                               1&lt;/code&gt;&lt;/pre&gt;&lt;pre&gt;&lt;code&gt;Interrrupt driven transfer time = 1+1+500×(2+2+1+1+1) = 3502
 DMA based transfer time = 20+500×2 = 1020
-Speedup = 3502/1020 ≈ 3.4
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;i class=&quot;fa fa-angle-double-up&quot;&gt;&lt;/i&gt;
+Speedup = 3502/1020 ≈ 3.4&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;i class=&quot;fa fa-angle-double-up&quot;&gt;&lt;/i&gt;
 &lt;a href=&quot;#index&quot;&gt;Index&lt;/a&gt;&lt;/p&gt;
 &lt;hr&gt;
 &lt;h3 id=&quot;q35&quot;&gt;&lt;b&gt;Question 35&lt;/b&gt;&lt;/h3&gt;
 
 &lt;p&gt;Consider the languages L1, L2 and L3 as given below.
-$$L1 = \{ 0^p 1^q \, | \, p,q ∈ N \},$$
-$$L2 = \{ 0^p 1^q \, | \, p,q ∈ N \, \textrm{and} \, p=q \} \text{and}$$
-$$L3 = \{ 0^p 1^q 0^r \, | \, p,q,r ∈ N \, \textrm{and} \, p=q=r \}.$$
+$$L1 = \{ 0^p 1^q , | , p,q ∈ N \},$$
+$$L2 = \{ 0^p 1^q , | , p,q ∈ N , \textrm{and} , p=q \} \text{and}$$
+$$L3 = \{ 0^p 1^q 0^r , | , p,q,r ∈ N , \textrm{and} , p=q=r \}.$$
 Which of the following statements is &lt;strong&gt;NOT TRUE&lt;/strong&gt;?&lt;/p&gt;
 &lt;ol type=&quot;A&quot;&gt;
   &lt;li&gt;Push Down Automata (PDA) can be used to recognize L1 and L2&lt;/li&gt;
@@ -1296,8 +1284,10 @@ $$ S → AB $$
 $$ A → 0A|ε $$
 $$ B → 1B|ε $$&lt;/p&gt;
 &lt;p&gt;L3 is not CFL, can be proved using pumping lemma (refer to Ullman). But L3 is Recursive.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;img/gate2011A35b.png&quot; alt=&quot;A35b&quot; style=&quot;width: 400px;&quot;/&gt;
-Every regular language is also a CFL. So PDA can be used to recognized L1 and L2.&lt;br&gt;As a CFL and Regular language is also a Recursive language. Hence, turing machine can be used to recognize L1, L2 and L3.&lt;/p&gt;
+&lt;img src=&quot;img/gate2011A35b.png&quot; alt=&quot;A35b&quot; style=&quot;width: 400px;&quot;/&gt;
+Every regular language is also a CFL. So PDA can be used to recognized L1 and L2.  
+As a CFL and Regular language is also a Recursive language. Hence, turing machine can be used to recognize L1, L2 and L3.
+
 &lt;p&gt;&lt;i class=&quot;fa fa-angle-double-up&quot;&gt;&lt;/i&gt;
 &lt;a href=&quot;#index&quot;&gt;Index&lt;/a&gt;&lt;/p&gt;
 &lt;hr&gt;
@@ -1316,38 +1306,43 @@ Every regular language is also a CFL. So PDA can be used to recognized L1 and L2
 &lt;table&gt;
 &lt;thead&gt;
 &lt;tr&gt;
-&lt;th style=&quot;text-align:left&quot;&gt;Borrower&lt;/th&gt;
-&lt;th style=&quot;text-align:left&quot;&gt;Bank_Manager&lt;/th&gt;
-&lt;th style=&quot;text-align:right&quot;&gt;Load_Amount&lt;/th&gt;
+&lt;th align=&quot;left&quot;&gt;Borrower&lt;/th&gt;
+&lt;th align=&quot;left&quot;&gt;Bank_Manager&lt;/th&gt;
+&lt;th align=&quot;right&quot;&gt;Load_Amount&lt;/th&gt;
 &lt;/tr&gt;
 &lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;Ramesh&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;Sundarajan&lt;/td&gt;
-&lt;td style=&quot;text-align:right&quot;&gt;10000.00&lt;/td&gt;
+&lt;tbody&gt;&lt;tr&gt;
+&lt;td align=&quot;left&quot;&gt;Ramesh&lt;/td&gt;
+&lt;td align=&quot;left&quot;&gt;Sundarajan&lt;/td&gt;
+&lt;td align=&quot;right&quot;&gt;10000.00&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;Suresh&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;Ramgopal&lt;/td&gt;
-&lt;td style=&quot;text-align:right&quot;&gt;5000.00&lt;/td&gt;
+&lt;td align=&quot;left&quot;&gt;Suresh&lt;/td&gt;
+&lt;td align=&quot;left&quot;&gt;Ramgopal&lt;/td&gt;
+&lt;td align=&quot;right&quot;&gt;5000.00&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;Mahesh&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;Sundarajan&lt;/td&gt;
-&lt;td style=&quot;text-align:right&quot;&gt;7000.00&lt;/td&gt;
+&lt;td align=&quot;left&quot;&gt;Mahesh&lt;/td&gt;
+&lt;td align=&quot;left&quot;&gt;Sundarajan&lt;/td&gt;
+&lt;td align=&quot;right&quot;&gt;7000.00&lt;/td&gt;
 &lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;p&gt;&lt;br/&gt;
-What is the output of the following SQL query?&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;lang-SQL&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;SELECT&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;count&lt;/span&gt;(*)
+&lt;tr&gt;
+&lt;td align=&quot;left&quot;&gt;&lt;br/&gt;&lt;/td&gt;
+&lt;td align=&quot;left&quot;&gt;&lt;/td&gt;
+&lt;td align=&quot;right&quot;&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align=&quot;left&quot;&gt;What is the output of the following SQL query?&lt;/td&gt;
+&lt;td align=&quot;left&quot;&gt;&lt;/td&gt;
+&lt;td align=&quot;right&quot;&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;&lt;/table&gt;
+&lt;pre&gt;&lt;code class=&quot;language-SQL&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;SELECT&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;count&lt;/span&gt;(*)
 &lt;span class=&quot;keyword&quot;&gt;FROM&lt;/span&gt;(
    (&lt;span class=&quot;keyword&quot;&gt;SELECT&lt;/span&gt; Borrower,Bank_Manager &lt;span class=&quot;keyword&quot;&gt;FROM&lt;/span&gt; Loan_Recordx) &lt;span class=&quot;keyword&quot;&gt;AS&lt;/span&gt; S
    &lt;span class=&quot;keyword&quot;&gt;NATURAL&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;JOIN&lt;/span&gt;
    (&lt;span class=&quot;keyword&quot;&gt;SELECT&lt;/span&gt; Bank_Manager,Loan_Amount &lt;span class=&quot;keyword&quot;&gt;FROM&lt;/span&gt; Loan_Records) &lt;span class=&quot;keyword&quot;&gt;AS&lt;/span&gt; T
-);
-&lt;/code&gt;&lt;/pre&gt;
+);&lt;/code&gt;&lt;/pre&gt;
 &lt;ol type=&quot;A&quot;&gt;
   &lt;li&gt;3&lt;/li&gt;
   &lt;li&gt;9&lt;/li&gt;
@@ -1360,165 +1355,198 @@ What is the output of the following SQL query?&lt;/p&gt;
 &lt;table&gt;
 &lt;thead&gt;
 &lt;tr&gt;
-&lt;th style=&quot;text-align:left&quot;&gt;Borrower&lt;/th&gt;
-&lt;th style=&quot;text-align:right&quot;&gt;Bank_Manager&lt;/th&gt;
+&lt;th align=&quot;left&quot;&gt;Borrower&lt;/th&gt;
+&lt;th align=&quot;right&quot;&gt;Bank_Manager&lt;/th&gt;
 &lt;/tr&gt;
 &lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;Ramesh&lt;/td&gt;
-&lt;td style=&quot;text-align:right&quot;&gt;Sundarajan&lt;/td&gt;
+&lt;tbody&gt;&lt;tr&gt;
+&lt;td align=&quot;left&quot;&gt;Ramesh&lt;/td&gt;
+&lt;td align=&quot;right&quot;&gt;Sundarajan&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;Suresh&lt;/td&gt;
-&lt;td style=&quot;text-align:right&quot;&gt;Ramgopal&lt;/td&gt;
+&lt;td align=&quot;left&quot;&gt;Suresh&lt;/td&gt;
+&lt;td align=&quot;right&quot;&gt;Ramgopal&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;Mahesh&lt;/td&gt;
-&lt;td style=&quot;text-align:right&quot;&gt;Sundarajan&lt;/td&gt;
+&lt;td align=&quot;left&quot;&gt;Mahesh&lt;/td&gt;
+&lt;td align=&quot;right&quot;&gt;Sundarajan&lt;/td&gt;
 &lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;p&gt;&lt;br/&gt;
-Table &lt;strong&gt;T&lt;/strong&gt; is&lt;/p&gt;
+&lt;tr&gt;
+&lt;td align=&quot;left&quot;&gt;&lt;br/&gt;&lt;/td&gt;
+&lt;td align=&quot;right&quot;&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align=&quot;left&quot;&gt;Table &lt;strong&gt;T&lt;/strong&gt; is&lt;/td&gt;
+&lt;td align=&quot;right&quot;&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;&lt;/table&gt;
 &lt;table&gt;
 &lt;thead&gt;
 &lt;tr&gt;
-&lt;th style=&quot;text-align:left&quot;&gt;Bank_Manager&lt;/th&gt;
-&lt;th style=&quot;text-align:right&quot;&gt;Load_Amount&lt;/th&gt;
+&lt;th align=&quot;left&quot;&gt;Bank_Manager&lt;/th&gt;
+&lt;th align=&quot;right&quot;&gt;Load_Amount&lt;/th&gt;
 &lt;/tr&gt;
 &lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;Sundarajan&lt;/td&gt;
-&lt;td style=&quot;text-align:right&quot;&gt;10000.00&lt;/td&gt;
+&lt;tbody&gt;&lt;tr&gt;
+&lt;td align=&quot;left&quot;&gt;Sundarajan&lt;/td&gt;
+&lt;td align=&quot;right&quot;&gt;10000.00&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;Ramgopal&lt;/td&gt;
-&lt;td style=&quot;text-align:right&quot;&gt;5000.00&lt;/td&gt;
+&lt;td align=&quot;left&quot;&gt;Ramgopal&lt;/td&gt;
+&lt;td align=&quot;right&quot;&gt;5000.00&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;Sundarajan&lt;/td&gt;
-&lt;td style=&quot;text-align:right&quot;&gt;7000.00&lt;/td&gt;
+&lt;td align=&quot;left&quot;&gt;Sundarajan&lt;/td&gt;
+&lt;td align=&quot;right&quot;&gt;7000.00&lt;/td&gt;
 &lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;p&gt;&lt;br/&gt;
-Now join is evaluated as 
-$$ Π_{Borrower,Bank\_Manager,Loan\_Amount}(σ_{S.Bank\_Manager=T.Bank\_Manager}(S \times T)) $$&lt;/p&gt;
+&lt;tr&gt;
+&lt;td align=&quot;left&quot;&gt;&lt;br/&gt;&lt;/td&gt;
+&lt;td align=&quot;right&quot;&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align=&quot;left&quot;&gt;Now join is evaluated as&lt;/td&gt;
+&lt;td align=&quot;right&quot;&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align=&quot;left&quot;&gt;$$ Π_{Borrower,Bank\_Manager,Loan\_Amount}(σ_{S.Bank\_Manager=T.Bank\_Manager}(S \times T)) $$&lt;/td&gt;
+&lt;td align=&quot;right&quot;&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;&lt;/table&gt;
 &lt;p&gt;Table $ \mathbf{S \times T} $ is&lt;/p&gt;
 &lt;table&gt;
 &lt;thead&gt;
 &lt;tr&gt;
-&lt;th style=&quot;text-align:left&quot;&gt;Borrower&lt;/th&gt;
-&lt;th style=&quot;text-align:left&quot;&gt;S.Bank_Manager&lt;/th&gt;
-&lt;th style=&quot;text-align:left&quot;&gt;T.Bank_Manager&lt;/th&gt;
-&lt;th style=&quot;text-align:right&quot;&gt;Load_Amount&lt;/th&gt;
+&lt;th align=&quot;left&quot;&gt;Borrower&lt;/th&gt;
+&lt;th align=&quot;left&quot;&gt;S.Bank_Manager&lt;/th&gt;
+&lt;th align=&quot;left&quot;&gt;T.Bank_Manager&lt;/th&gt;
+&lt;th align=&quot;right&quot;&gt;Load_Amount&lt;/th&gt;
 &lt;/tr&gt;
 &lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;Ramesh&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;Sundarajan&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;Sundarajan&lt;/td&gt;
-&lt;td style=&quot;text-align:right&quot;&gt;10000.00&lt;/td&gt;
+&lt;tbody&gt;&lt;tr&gt;
+&lt;td align=&quot;left&quot;&gt;Ramesh&lt;/td&gt;
+&lt;td align=&quot;left&quot;&gt;Sundarajan&lt;/td&gt;
+&lt;td align=&quot;left&quot;&gt;Sundarajan&lt;/td&gt;
+&lt;td align=&quot;right&quot;&gt;10000.00&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;Ramesh&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;Sundarajan&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;Ramgopal&lt;/td&gt;
-&lt;td style=&quot;text-align:right&quot;&gt;5000.00&lt;/td&gt;
+&lt;td align=&quot;left&quot;&gt;Ramesh&lt;/td&gt;
+&lt;td align=&quot;left&quot;&gt;Sundarajan&lt;/td&gt;
+&lt;td align=&quot;left&quot;&gt;Ramgopal&lt;/td&gt;
+&lt;td align=&quot;right&quot;&gt;5000.00&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;Ramesh&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;Sundarajan&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;Sundarajan&lt;/td&gt;
-&lt;td style=&quot;text-align:right&quot;&gt;7000.00&lt;/td&gt;
+&lt;td align=&quot;left&quot;&gt;Ramesh&lt;/td&gt;
+&lt;td align=&quot;left&quot;&gt;Sundarajan&lt;/td&gt;
+&lt;td align=&quot;left&quot;&gt;Sundarajan&lt;/td&gt;
+&lt;td align=&quot;right&quot;&gt;7000.00&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;Suresh&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;Ramgopal&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;Sundarajan&lt;/td&gt;
-&lt;td style=&quot;text-align:right&quot;&gt;10000.00&lt;/td&gt;
+&lt;td align=&quot;left&quot;&gt;Suresh&lt;/td&gt;
+&lt;td align=&quot;left&quot;&gt;Ramgopal&lt;/td&gt;
+&lt;td align=&quot;left&quot;&gt;Sundarajan&lt;/td&gt;
+&lt;td align=&quot;right&quot;&gt;10000.00&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;Suresh&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;Ramgopal&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;Ramgopal&lt;/td&gt;
-&lt;td style=&quot;text-align:right&quot;&gt;5000.00&lt;/td&gt;
+&lt;td align=&quot;left&quot;&gt;Suresh&lt;/td&gt;
+&lt;td align=&quot;left&quot;&gt;Ramgopal&lt;/td&gt;
+&lt;td align=&quot;left&quot;&gt;Ramgopal&lt;/td&gt;
+&lt;td align=&quot;right&quot;&gt;5000.00&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;Suresh&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;Ramgopal&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;Sundarajan&lt;/td&gt;
-&lt;td style=&quot;text-align:right&quot;&gt;7000.00&lt;/td&gt;
+&lt;td align=&quot;left&quot;&gt;Suresh&lt;/td&gt;
+&lt;td align=&quot;left&quot;&gt;Ramgopal&lt;/td&gt;
+&lt;td align=&quot;left&quot;&gt;Sundarajan&lt;/td&gt;
+&lt;td align=&quot;right&quot;&gt;7000.00&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;Mahesh&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;Sundarajan&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;Sundarajan&lt;/td&gt;
-&lt;td style=&quot;text-align:right&quot;&gt;10000.00&lt;/td&gt;
+&lt;td align=&quot;left&quot;&gt;Mahesh&lt;/td&gt;
+&lt;td align=&quot;left&quot;&gt;Sundarajan&lt;/td&gt;
+&lt;td align=&quot;left&quot;&gt;Sundarajan&lt;/td&gt;
+&lt;td align=&quot;right&quot;&gt;10000.00&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;Mahesh&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;Sundarajan&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;Ramgopal&lt;/td&gt;
-&lt;td style=&quot;text-align:right&quot;&gt;5000.00&lt;/td&gt;
+&lt;td align=&quot;left&quot;&gt;Mahesh&lt;/td&gt;
+&lt;td align=&quot;left&quot;&gt;Sundarajan&lt;/td&gt;
+&lt;td align=&quot;left&quot;&gt;Ramgopal&lt;/td&gt;
+&lt;td align=&quot;right&quot;&gt;5000.00&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;Mahesh&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;Sundarajan&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;Sundarajan&lt;/td&gt;
-&lt;td style=&quot;text-align:right&quot;&gt;7000.00&lt;/td&gt;
+&lt;td align=&quot;left&quot;&gt;Mahesh&lt;/td&gt;
+&lt;td align=&quot;left&quot;&gt;Sundarajan&lt;/td&gt;
+&lt;td align=&quot;left&quot;&gt;Sundarajan&lt;/td&gt;
+&lt;td align=&quot;right&quot;&gt;7000.00&lt;/td&gt;
 &lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;p&gt;&lt;br/&gt;
-Final rows after Project operator has been applied&lt;/p&gt;
+&lt;tr&gt;
+&lt;td align=&quot;left&quot;&gt;&lt;br/&gt;&lt;/td&gt;
+&lt;td align=&quot;left&quot;&gt;&lt;/td&gt;
+&lt;td align=&quot;left&quot;&gt;&lt;/td&gt;
+&lt;td align=&quot;right&quot;&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align=&quot;left&quot;&gt;Final rows after Project operator has been applied&lt;/td&gt;
+&lt;td align=&quot;left&quot;&gt;&lt;/td&gt;
+&lt;td align=&quot;left&quot;&gt;&lt;/td&gt;
+&lt;td align=&quot;right&quot;&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;&lt;/table&gt;
 &lt;table&gt;
 &lt;thead&gt;
 &lt;tr&gt;
-&lt;th style=&quot;text-align:left&quot;&gt;Borrower&lt;/th&gt;
-&lt;th style=&quot;text-align:left&quot;&gt;Bank_Manager&lt;/th&gt;
-&lt;th style=&quot;text-align:right&quot;&gt;Load_Amount&lt;/th&gt;
+&lt;th align=&quot;left&quot;&gt;Borrower&lt;/th&gt;
+&lt;th align=&quot;left&quot;&gt;Bank_Manager&lt;/th&gt;
+&lt;th align=&quot;right&quot;&gt;Load_Amount&lt;/th&gt;
 &lt;/tr&gt;
 &lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;Ramesh&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;Sundarajan&lt;/td&gt;
-&lt;td style=&quot;text-align:right&quot;&gt;10000.00&lt;/td&gt;
+&lt;tbody&gt;&lt;tr&gt;
+&lt;td align=&quot;left&quot;&gt;Ramesh&lt;/td&gt;
+&lt;td align=&quot;left&quot;&gt;Sundarajan&lt;/td&gt;
+&lt;td align=&quot;right&quot;&gt;10000.00&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;Ramesh&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;Sundarajan&lt;/td&gt;
-&lt;td style=&quot;text-align:right&quot;&gt;7000.00&lt;/td&gt;
+&lt;td align=&quot;left&quot;&gt;Ramesh&lt;/td&gt;
+&lt;td align=&quot;left&quot;&gt;Sundarajan&lt;/td&gt;
+&lt;td align=&quot;right&quot;&gt;7000.00&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;Suresh&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;Ramgopal&lt;/td&gt;
-&lt;td style=&quot;text-align:right&quot;&gt;5000.00&lt;/td&gt;
+&lt;td align=&quot;left&quot;&gt;Suresh&lt;/td&gt;
+&lt;td align=&quot;left&quot;&gt;Ramgopal&lt;/td&gt;
+&lt;td align=&quot;right&quot;&gt;5000.00&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;Mahesh&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;Sundarajan&lt;/td&gt;
-&lt;td style=&quot;text-align:right&quot;&gt;10000.00&lt;/td&gt;
+&lt;td align=&quot;left&quot;&gt;Mahesh&lt;/td&gt;
+&lt;td align=&quot;left&quot;&gt;Sundarajan&lt;/td&gt;
+&lt;td align=&quot;right&quot;&gt;10000.00&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;Mahesh&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;Sundarajan&lt;/td&gt;
-&lt;td style=&quot;text-align:right&quot;&gt;7000.00&lt;/td&gt;
+&lt;td align=&quot;left&quot;&gt;Mahesh&lt;/td&gt;
+&lt;td align=&quot;left&quot;&gt;Sundarajan&lt;/td&gt;
+&lt;td align=&quot;right&quot;&gt;7000.00&lt;/td&gt;
 &lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;p&gt;&lt;br/&gt;
-&lt;i class=&quot;fa fa-angle-double-up&quot;&gt;&lt;/i&gt;
-&lt;a href=&quot;#index&quot;&gt;Index&lt;/a&gt;&lt;/p&gt;
-&lt;hr&gt;
+&lt;tr&gt;
+&lt;td align=&quot;left&quot;&gt;&lt;br/&gt;&lt;/td&gt;
+&lt;td align=&quot;left&quot;&gt;&lt;/td&gt;
+&lt;td align=&quot;right&quot;&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align=&quot;left&quot;&gt;&lt;i class=&quot;fa fa-angle-double-up&quot;&gt;&lt;/i&gt;&lt;/td&gt;
+&lt;td align=&quot;left&quot;&gt;&lt;/td&gt;
+&lt;td align=&quot;right&quot;&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align=&quot;left&quot;&gt;&lt;a href=&quot;#index&quot;&gt;Index&lt;/a&gt;&lt;/td&gt;
+&lt;td align=&quot;left&quot;&gt;&lt;/td&gt;
+&lt;td align=&quot;right&quot;&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align=&quot;left&quot;&gt;* * *&lt;/td&gt;
+&lt;td align=&quot;left&quot;&gt;&lt;/td&gt;
+&lt;td align=&quot;right&quot;&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;&lt;/table&gt;
 &lt;h3 id=&quot;q38&quot;&gt;&lt;b&gt;Question 38&lt;/b&gt;&lt;/h3&gt;
 
 &lt;p&gt;The following is the comment written for a C function.&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;lang-C&quot;&gt;&lt;span class=&quot;comment&quot;&gt;/*  This function computes the roots of a quadratic equation
+&lt;pre&gt;&lt;code class=&quot;language-C&quot;&gt;&lt;span class=&quot;comment&quot;&gt;/*  This function computes the roots of a quadratic equation
     a.x^2 + b.x + c = 0. The function stores two real roots
     in *root1 and *root2 and returns the status of validity
     of roots. It handles four different kinds of cases.
@@ -1532,10 +1560,10 @@ Final rows after Project operator has been applied&lt;/p&gt;
     The function also ensures root1 &amp;gt;= root2
     int get_QuadRoots( float a, float b, float c,
         float *root1, float *root2);
-*/&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
+*/&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;A software test engineer is assigned the job of doing black box testing. He comes up with the following test cases, many of which are redundant.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;img/gate2011Q38.png&quot; alt=&quot;Q38&quot; style=&quot;width: 25em;&quot;/&gt;&lt;/p&gt;
+&lt;img src=&quot;img/gate2011Q38.png&quot; alt=&quot;Q38&quot; style=&quot;width: 25em;&quot;/&gt;
+
 &lt;p&gt;Which one of the following option provide the set of non-redundant tests using equivalence class partitioning approach from input perspective for black box testing?&lt;/p&gt;
 &lt;ol type=&quot;A&quot;&gt;
   &lt;li&gt;T1, T2, T3, T6&lt;/li&gt;
@@ -1559,8 +1587,7 @@ Final rows after Project operator has been applied&lt;/p&gt;
 &lt;h2 id=&quot;explanation-&quot;&gt;Explanation:&lt;/h2&gt;
 &lt;pre&gt;&lt;code&gt;(B) accepts &amp;#39;b&amp;#39; which is not accepted by D
 (C) is not a DFA as q has two edges going for b
-(D) accepts &amp;#39;bba&amp;#39; which is not accepted by D
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;i class=&quot;fa fa-angle-double-up&quot;&gt;&lt;/i&gt;
+(D) accepts &amp;#39;bba&amp;#39; which is not accepted by D&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;i class=&quot;fa fa-angle-double-up&quot;&gt;&lt;/i&gt;
 &lt;a href=&quot;#index&quot;&gt;Index&lt;/a&gt;&lt;/p&gt;
 &lt;hr&gt;
 &lt;h3 id=&quot;q40&quot;&gt;&lt;b&gt;Question 40&lt;/b&gt;&lt;/h3&gt;
@@ -1583,8 +1610,7 @@ Average Latency = (60/rpm)/2 = 5 ms
 Average access time = Average latency + Average seek time 
                     = 5 ms + 10 ms = 15 ms
 As there the copy time is neglected time to load 1 library is 15 ms
-Time to load 100 libraries = 100 × 15 ms = 1.5 s
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;i class=&quot;fa fa-angle-double-up&quot;&gt;&lt;/i&gt;
+Time to load 100 libraries = 100 × 15 ms = 1.5 s&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;i class=&quot;fa fa-angle-double-up&quot;&gt;&lt;/i&gt;
 &lt;a href=&quot;#index&quot;&gt;Index&lt;/a&gt;&lt;/p&gt;
 &lt;hr&gt;
 &lt;h3 id=&quot;q41&quot;&gt;&lt;b&gt;Question 41&lt;/b&gt;&lt;/h3&gt;
@@ -1610,12 +1636,11 @@ comprising of the following.&lt;/p&gt;
 Block size = 32 bytes
 Number of cache lines 
     = Cache size / Block size 
-    = (8 × 1024 bytes)/32 = 256
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;img src=&quot;img/gate2011A41.png&quot; alt=&quot;A41&quot; style=&quot;width: 15em;&quot;/&gt;&lt;/p&gt;
+    = (8 × 1024 bytes)/32 = 256&lt;/code&gt;&lt;/pre&gt;&lt;img src=&quot;img/gate2011A41.png&quot; alt=&quot;A41&quot; style=&quot;width: 15em;&quot;/&gt;
+
 &lt;pre&gt;&lt;code&gt;total bits required to store meta-data of 1 line 
     = 1 + 1 + 19 = 21 bits
-total memory required = 21 × 256 = 5376 bits
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;i class=&quot;fa fa-angle-double-up&quot;&gt;&lt;/i&gt;
+total memory required = 21 × 256 = 5376 bits&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;i class=&quot;fa fa-angle-double-up&quot;&gt;&lt;/i&gt;
 &lt;a href=&quot;#index&quot;&gt;Index&lt;/a&gt;&lt;/p&gt;
 &lt;hr&gt;
 &lt;h3 id=&quot;q42&quot;&gt;&lt;b&gt;Question 42&lt;/b&gt;&lt;/h3&gt;
@@ -1632,7 +1657,8 @@ $$ L = \{ a^{nk} \, | \, k &amp;gt; 0, \, \textrm{and} \, n \, \textrm{is a posi
 
 &lt;h2 id=&quot;explanation-&quot;&gt;Explanation:&lt;/h2&gt;
 &lt;p&gt;This language is same is $(aaa \ldots n \, \textrm{times})^{+}$&lt;br&gt;The DFA of the language is given as&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;img/gate2011A42.png&quot; alt=&quot;A42&quot; style=&quot;width: 25em;&quot;/&gt;&lt;/p&gt;
+&lt;img src=&quot;img/gate2011A42.png&quot; alt=&quot;A42&quot; style=&quot;width: 25em;&quot;/&gt;
+
 &lt;p&gt;&lt;i class=&quot;fa fa-angle-double-up&quot;&gt;&lt;/i&gt;
 &lt;a href=&quot;#index&quot;&gt;Index&lt;/a&gt;&lt;/p&gt;
 &lt;hr&gt;
@@ -1670,10 +1696,7 @@ $$ \textrm{Speed-up} = 30/12 = 2.5 $$&lt;/p&gt;
 &lt;p&gt;Consider the matrix as given below.&lt;/p&gt;
 &lt;p&gt;$$
 \begin{bmatrix}
-1 &amp;amp; 2 &amp;amp; 3 \\
-0 &amp;amp; 4 &amp;amp; 7 \\
-0 &amp;amp; 0 &amp;amp; 3 \\
-\end{bmatrix}
+1 &amp;amp; 2 &amp;amp; 3 \&lt;br&gt;0 &amp;amp; 4 &amp;amp; 7 \&lt;br&gt;0 &amp;amp; 0 &amp;amp; 3 \&lt;br&gt;\end{bmatrix}
 $$&lt;/p&gt;
 &lt;p&gt;Which one of the following options provides the &lt;strong&gt;CORRECT&lt;/strong&gt; values of the eigenvalues of the matrix?&lt;/p&gt;
 &lt;ol type=&quot;A&quot;&gt;
@@ -1766,8 +1789,8 @@ can &lt;a href=&quot;http://localhost:8080/projects/markdown/syntax.text&quot;&g
 document should be publishable as-is, as plain text, without looking
 like it’s been marked up with tags or formatting instructions. While
 Markdown’s syntax has been influenced by several existing text-to-HTML
-filters – including &lt;a href=&quot;http://docutils.sourceforge.net/mirror/setext.html&quot;&gt;Setext&lt;/a&gt;, &lt;a href=&quot;http://www.aaronsw.com/2002/atx/&quot;&gt;atx&lt;/a&gt;, &lt;a href=&quot;http://textism.com/tools/textile/&quot;&gt;Textile&lt;/a&gt;, &lt;a href=&quot;http://docutils.sourceforge.net/rst.html&quot;&gt;reStructuredText&lt;/a&gt;,
-&lt;a href=&quot;http://www.triptico.com/software/grutatxt.html&quot;&gt;Grutatext&lt;/a&gt;, and &lt;a href=&quot;http://ettext.taint.org/doc/&quot;&gt;EtText&lt;/a&gt; – the single biggest source of
+filters – including [Setext] &lt;a href=&quot;http://docutils.sourceforge.net/mirror/setext.html&quot;&gt;1&lt;/a&gt;, [atx] &lt;a href=&quot;http://www.aaronsw.com/2002/atx/&quot;&gt;2&lt;/a&gt;, [Textile] &lt;a href=&quot;http://textism.com/tools/textile/&quot;&gt;3&lt;/a&gt;, [reStructuredText] &lt;a href=&quot;http://docutils.sourceforge.net/rst.html&quot;&gt;4&lt;/a&gt;,
+[Grutatext] &lt;a href=&quot;http://www.triptico.com/software/grutatxt.html&quot;&gt;5&lt;/a&gt;, and [EtText] &lt;a href=&quot;http://ettext.taint.org/doc/&quot;&gt;6&lt;/a&gt; – the single biggest source of
 inspiration for Markdown’s syntax is the format of plain text email.&lt;/p&gt;
 &lt;p&gt;To this end, Markdown’s syntax is comprised entirely of punctuation
 characters, which punctuation characters have been carefully chosen so
@@ -1805,8 +1828,7 @@ to add extra (unwanted) &lt;code&gt;&amp;lt;p&amp;gt;&lt;/code&gt; tags around H
     &amp;lt;/tr&amp;gt;
 &amp;lt;/table&amp;gt;
 
-This is another regular paragraph.
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Note that Markdown formatting syntax is not processed within block-level
+This is another regular paragraph.&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Note that Markdown formatting syntax is not processed within block-level
 HTML tags. E.g., you can’t use Markdown-style &lt;code&gt;*emphasis*&lt;/code&gt; inside an
 HTML block.&lt;/p&gt;
 &lt;p&gt;Span-level HTML tags – e.g. &lt;code&gt;&amp;lt;span&amp;gt;&lt;/code&gt;, &lt;code&gt;&amp;lt;cite&amp;gt;&lt;/code&gt;, or &lt;code&gt;&amp;lt;del&amp;gt;&lt;/code&gt; – can be
@@ -1826,10 +1848,8 @@ characters, you must escape them as entities, e.g. &lt;code&gt;&amp;amp;lt;&lt;/
 &lt;p&gt;Ampersands in particular are bedeviling for web writers. If you want to
 write about ‘AT&amp;amp;T’, you need to write ‘&lt;code&gt;AT&amp;amp;amp;T&lt;/code&gt;‘. You even need to
 escape ampersands within URLs. Thus, if you want to link to:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;http://images.google.com/images?num=30&amp;amp;q=larry+bird
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;you need to encode the URL as:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;http://images.google.com/images?num=30&amp;amp;amp;q=larry+bird
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;in your anchor tag &lt;code&gt;href&lt;/code&gt; attribute. Needless to say, this is easy to
+&lt;pre&gt;&lt;code&gt;http://images.google.com/images?num=30&amp;amp;q=larry+bird&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;you need to encode the URL as:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;http://images.google.com/images?num=30&amp;amp;amp;q=larry+bird&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;in your anchor tag &lt;code&gt;href&lt;/code&gt; attribute. Needless to say, this is easy to
 forget, and is probably the single most common source of HTML validation
 errors in otherwise well-marked-up web sites.&lt;/p&gt;
 &lt;p&gt;Markdown allows you to use these characters naturally, taking care of
@@ -1837,18 +1857,13 @@ all the necessary escaping for you. If you use an ampersand as part of
 an HTML entity, it remains unchanged; otherwise it will be translated
 into &lt;code&gt;&amp;amp;amp;&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;So, if you want to include a copyright symbol in your article, you can write:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;&amp;amp;copy;
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;and Markdown will leave it alone. But if you write:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;AT&amp;amp;T
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Markdown will translate it to:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;AT&amp;amp;amp;T
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Similarly, because Markdown supports &lt;a href=&quot;#html&quot;&gt;inline HTML&lt;/a&gt;, if you use
+&lt;pre&gt;&lt;code&gt;&amp;amp;copy;&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;and Markdown will leave it alone. But if you write:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;AT&amp;amp;T&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Markdown will translate it to:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;AT&amp;amp;amp;T&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Similarly, because Markdown supports &lt;a href=&quot;#html&quot;&gt;inline HTML&lt;/a&gt;, if you use
 angle brackets as delimiters for HTML tags, Markdown will treat them as
 such. But if you write:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;4 &amp;lt; 5
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Markdown will translate it to:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;4 &amp;amp;lt; 5
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;However, inside Markdown code spans and blocks, angle brackets and
+&lt;pre&gt;&lt;code&gt;4 &amp;lt; 5&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Markdown will translate it to:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;4 &amp;amp;lt; 5&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;However, inside Markdown code spans and blocks, angle brackets and
 ampersands are &lt;em&gt;always&lt;/em&gt; encoded automatically. This makes it easy to use
 Markdown to write about HTML code. (As opposed to raw HTML, which is a
 terrible format for writing about HTML syntax, because every single &lt;code&gt;&amp;lt;&lt;/code&gt;
@@ -1876,23 +1891,21 @@ Markdown’s email-style &lt;a href=&quot;#blockquote&quot;&gt;blockquoting&lt;/
 work best – and look better – when you format them with hard breaks.&lt;/p&gt;
 &lt;h3 id=&quot;header&quot;&gt;Headers&lt;/h3&gt;
 
-&lt;p&gt;Markdown supports two styles of headers, &lt;a href=&quot;http://docutils.sourceforge.net/mirror/setext.html&quot;&gt;Setext&lt;/a&gt; and &lt;a href=&quot;http://www.aaronsw.com/2002/atx/&quot;&gt;atx&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Markdown supports two styles of headers, [Setext] &lt;a href=&quot;http://docutils.sourceforge.net/mirror/setext.html&quot;&gt;1&lt;/a&gt; and [atx] &lt;a href=&quot;http://www.aaronsw.com/2002/atx/&quot;&gt;2&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;Setext-style headers are “underlined” using equal signs (for first-level
 headers) and dashes (for second-level headers). For example:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;This is an H1
 =============
 
 This is an H2
--------------
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Any number of underlining &lt;code&gt;=&lt;/code&gt;‘s or &lt;code&gt;-&lt;/code&gt;‘s will work.&lt;/p&gt;
+-------------&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Any number of underlining &lt;code&gt;=&lt;/code&gt;‘s or &lt;code&gt;-&lt;/code&gt;‘s will work.&lt;/p&gt;
 &lt;p&gt;Atx-style headers use 1-6 hash characters at the start of the line,
 corresponding to header levels 1-6. For example:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;# This is an H1
 
 ## This is an H2
 
-###### This is an H6
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Optionally, you may “close” atx-style headers. This is purely
+###### This is an H6&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Optionally, you may “close” atx-style headers. This is purely
 cosmetic – you can use this if you think it looks better. The
 closing hashes don’t even need to match the number of hashes
 used to open the header. (The number of opening hashes
@@ -1901,8 +1914,7 @@ determines the header level.) :&lt;/p&gt;
 
 ## This is an H2 ##
 
-### This is an H3 ######
-&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&quot;blockquote&quot;&gt;Blockquotes&lt;/h3&gt;
+### This is an H3 ######&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&quot;blockquote&quot;&gt;Blockquotes&lt;/h3&gt;
 
 &lt;p&gt;Markdown uses email-style &lt;code&gt;&amp;gt;&lt;/code&gt; characters for blockquoting. If you’re
 familiar with quoting passages of text in an email message, then you
@@ -1913,23 +1925,20 @@ wrap the text and put a &lt;code&gt;&amp;gt;&lt;/code&gt; before every line:&lt;
 &amp;gt; Vestibulum enim wisi, viverra nec, fringilla in, laoreet vitae, risus.
 &amp;gt;
 &amp;gt; Donec sit amet nisl. Aliquam semper ipsum sit amet velit. Suspendisse
-&amp;gt; id sem consectetuer libero luctus adipiscing.
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Markdown allows you to be lazy and only put the &lt;code&gt;&amp;gt;&lt;/code&gt; before the first
+&amp;gt; id sem consectetuer libero luctus adipiscing.&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Markdown allows you to be lazy and only put the &lt;code&gt;&amp;gt;&lt;/code&gt; before the first
 line of a hard-wrapped paragraph:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;&amp;gt; This is a blockquote with two paragraphs. Lorem ipsum dolor sit amet,
 consectetuer adipiscing elit. Aliquam hendrerit mi posuere lectus.
 Vestibulum enim wisi, viverra nec, fringilla in, laoreet vitae, risus.
 
 &amp;gt; Donec sit amet nisl. Aliquam semper ipsum sit amet velit. Suspendisse
-id sem consectetuer libero luctus adipiscing.
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Blockquotes can be nested (i.e. a blockquote-in-a-blockquote) by
+id sem consectetuer libero luctus adipiscing.&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Blockquotes can be nested (i.e. a blockquote-in-a-blockquote) by
 adding additional levels of &lt;code&gt;&amp;gt;&lt;/code&gt;:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;&amp;gt; This is the first level of quoting.
 &amp;gt;
 &amp;gt; &amp;gt; This is nested blockquote.
 &amp;gt;
-&amp;gt; Back to the first level.
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Blockquotes can contain other Markdown elements, including headers, lists,
+&amp;gt; Back to the first level.&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Blockquotes can contain other Markdown elements, including headers, lists,
 and code blocks:&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;h2 id=&quot;this-is-a-header-&quot;&gt;This is a header.&lt;/h2&gt;
@@ -1938,8 +1947,7 @@ and code blocks:&lt;/p&gt;
 &lt;li&gt;This is the second list item.&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;Here’s some example code:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;return shell_exec(&amp;quot;echo $input | $markdown_script&amp;quot;);
-&lt;/code&gt;&lt;/pre&gt;&lt;/blockquote&gt;
+&lt;pre&gt;&lt;code&gt;return shell_exec(&amp;quot;echo $input | $markdown_script&amp;quot;);&lt;/code&gt;&lt;/pre&gt;&lt;/blockquote&gt;
 &lt;p&gt;Any decent text editor should make email-style quoting easy. For
 example, with BBEdit, you can make a selection and choose Increase
 Quote Level from the Text menu.&lt;/p&gt;
@@ -1950,36 +1958,29 @@ Quote Level from the Text menu.&lt;/p&gt;
 – as list markers:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;*   Red
 *   Green
-*   Blue
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;is equivalent to:&lt;/p&gt;
+*   Blue&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;is equivalent to:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;+   Red
 +   Green
-+   Blue
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;and:&lt;/p&gt;
++   Blue&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;and:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;-   Red
 -   Green
--   Blue
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Ordered lists use numbers followed by periods:&lt;/p&gt;
+-   Blue&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Ordered lists use numbers followed by periods:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;1.  Bird
 2.  McHale
-3.  Parish
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;It’s important to note that the actual numbers you use to mark the
+3.  Parish&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;It’s important to note that the actual numbers you use to mark the
 list have no effect on the HTML output Markdown produces. The HTML
 Markdown produces from the above list is:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;&amp;lt;ol&amp;gt;
 &amp;lt;li&amp;gt;Bird&amp;lt;/li&amp;gt;
 &amp;lt;li&amp;gt;McHale&amp;lt;/li&amp;gt;
 &amp;lt;li&amp;gt;Parish&amp;lt;/li&amp;gt;
-&amp;lt;/ol&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;If you instead wrote the list in Markdown like this:&lt;/p&gt;
+&amp;lt;/ol&amp;gt;&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;If you instead wrote the list in Markdown like this:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;1.  Bird
 1.  McHale
-1.  Parish
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;or even:&lt;/p&gt;
+1.  Parish&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;or even:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;3. Bird
 1. McHale
-8. Parish
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;you’d get the exact same HTML output. The point is, if you want to,
+8. Parish&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;you’d get the exact same HTML output. The point is, if you want to,
 you can use ordinal numbers in your ordered Markdown lists, so that
 the numbers in your source match the numbers in your published HTML.
 But if you want to be lazy, you don’t have to.&lt;/p&gt;
@@ -1994,32 +1995,26 @@ or a tab.&lt;/p&gt;
     Aliquam hendrerit mi posuere lectus. Vestibulum enim wisi,
     viverra nec, fringilla in, laoreet vitae, risus.
 *   Donec sit amet nisl. Aliquam semper ipsum sit amet velit.
-    Suspendisse id sem consectetuer libero luctus adipiscing.
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;But if you want to be lazy, you don’t have to:&lt;/p&gt;
+    Suspendisse id sem consectetuer libero luctus adipiscing.&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;But if you want to be lazy, you don’t have to:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;*   Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
 Aliquam hendrerit mi posuere lectus. Vestibulum enim wisi,
 viverra nec, fringilla in, laoreet vitae, risus.
 *   Donec sit amet nisl. Aliquam semper ipsum sit amet velit.
-Suspendisse id sem consectetuer libero luctus adipiscing.
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;If list items are separated by blank lines, Markdown will wrap the
+Suspendisse id sem consectetuer libero luctus adipiscing.&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;If list items are separated by blank lines, Markdown will wrap the
 items in &lt;code&gt;&amp;lt;p&amp;gt;&lt;/code&gt; tags in the HTML output. For example, this input:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;*   Bird
-*   Magic
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;will turn into:&lt;/p&gt;
+*   Magic&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;will turn into:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;&amp;lt;ul&amp;gt;
 &amp;lt;li&amp;gt;Bird&amp;lt;/li&amp;gt;
 &amp;lt;li&amp;gt;Magic&amp;lt;/li&amp;gt;
-&amp;lt;/ul&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;But this:&lt;/p&gt;
+&amp;lt;/ul&amp;gt;&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;But this:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;*   Bird
 
-*   Magic
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;will turn into:&lt;/p&gt;
+*   Magic&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;will turn into:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;&amp;lt;ul&amp;gt;
 &amp;lt;li&amp;gt;&amp;lt;p&amp;gt;Bird&amp;lt;/p&amp;gt;&amp;lt;/li&amp;gt;
 &amp;lt;li&amp;gt;&amp;lt;p&amp;gt;Magic&amp;lt;/p&amp;gt;&amp;lt;/li&amp;gt;
-&amp;lt;/ul&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;List items may consist of multiple paragraphs. Each subsequent
+&amp;lt;/ul&amp;gt;&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;List items may consist of multiple paragraphs. Each subsequent
 paragraph in a list item must be indented by either 4 spaces
 or one tab:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;1.  This is a list item with two paragraphs. Lorem ipsum dolor
@@ -2030,8 +2025,7 @@ or one tab:&lt;/p&gt;
     vitae, risus. Donec sit amet nisl. Aliquam semper ipsum
     sit amet velit.
 
-2.  Suspendisse id sem consectetuer libero luctus adipiscing.
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;It looks nice if you indent every line of the subsequent
+2.  Suspendisse id sem consectetuer libero luctus adipiscing.&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;It looks nice if you indent every line of the subsequent
 paragraphs, but here again, Markdown will allow you to be
 lazy:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;*   This is a list item with two paragraphs.
@@ -2040,25 +2034,20 @@ lazy:&lt;/p&gt;
 only required to indent the first line. Lorem ipsum dolor
 sit amet, consectetuer adipiscing elit.
 
-*   Another item in the same list.
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;To put a blockquote within a list item, the blockquote’s &lt;code&gt;&amp;gt;&lt;/code&gt;
+*   Another item in the same list.&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;To put a blockquote within a list item, the blockquote’s &lt;code&gt;&amp;gt;&lt;/code&gt;
 delimiters need to be indented:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;*   A list item with a blockquote:
 
     &amp;gt; This is a blockquote
-    &amp;gt; inside a list item.
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;To put a code block within a list item, the code block needs
+    &amp;gt; inside a list item.&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;To put a code block within a list item, the code block needs
 to be indented &lt;em&gt;twice&lt;/em&gt; – 8 spaces or two tabs:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;*   A list item with a code block:
 
-        &amp;lt;code goes here&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;It’s worth noting that it’s possible to trigger an ordered list by
+        &amp;lt;code goes here&amp;gt;&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;It’s worth noting that it’s possible to trigger an ordered list by
 accident, by writing something like this:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;1986. What a great season.
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;In other words, a &lt;em&gt;number-period-space&lt;/em&gt; sequence at the beginning of a
+&lt;pre&gt;&lt;code&gt;1986. What a great season.&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;In other words, a &lt;em&gt;number-period-space&lt;/em&gt; sequence at the beginning of a
 line. To avoid this, you can backslash-escape the period:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;1986\. What a great season.
-&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&quot;precode&quot;&gt;Code Blocks&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;1986\. What a great season.&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&quot;precode&quot;&gt;Code Blocks&lt;/h3&gt;
 
 &lt;p&gt;Pre-formatted code blocks are used for writing about programming or
 markup source code. Rather than forming normal paragraphs, the lines
@@ -2068,27 +2057,23 @@ in both &lt;code&gt;&amp;lt;pre&amp;gt;&lt;/code&gt; and &lt;code&gt;&amp;lt;cod
 block by at least 4 spaces or 1 tab. For example, given this input:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;This is a normal paragraph:
 
-    This is a code block.
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Markdown will generate:&lt;/p&gt;
+    This is a code block.&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Markdown will generate:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;&amp;lt;p&amp;gt;This is a normal paragraph:&amp;lt;/p&amp;gt;
 
 &amp;lt;pre&amp;gt;&amp;lt;code&amp;gt;This is a code block.
-&amp;lt;/code&amp;gt;&amp;lt;/pre&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;One level of indentation – 4 spaces or 1 tab – is removed from each
+&amp;lt;/code&amp;gt;&amp;lt;/pre&amp;gt;&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;One level of indentation – 4 spaces or 1 tab – is removed from each
 line of the code block. For example, this:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;Here is an example of AppleScript:
 
     tell application &amp;quot;Foo&amp;quot;
         beep
-    end tell
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;will turn into:&lt;/p&gt;
+    end tell&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;will turn into:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;&amp;lt;p&amp;gt;Here is an example of AppleScript:&amp;lt;/p&amp;gt;
 
 &amp;lt;pre&amp;gt;&amp;lt;code&amp;gt;tell application &amp;quot;Foo&amp;quot;
     beep
 end tell
-&amp;lt;/code&amp;gt;&amp;lt;/pre&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;A code block continues until it reaches a line that is not indented
+&amp;lt;/code&amp;gt;&amp;lt;/pre&amp;gt;&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;A code block continues until it reaches a line that is not indented
 (or the end of the article).&lt;/p&gt;
 &lt;p&gt;Within a code block, ampersands (&lt;code&gt;&amp;amp;&lt;/code&gt;) and angle brackets (&lt;code&gt;&amp;lt;&lt;/code&gt; and &lt;code&gt;&amp;gt;&lt;/code&gt;)
 are automatically converted into HTML entities. This makes it very
@@ -2097,13 +2082,11 @@ it and indent it, and Markdown will handle the hassle of encoding the
 ampersands and angle brackets. For example, this:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;    &amp;lt;div class=&amp;quot;footer&amp;quot;&amp;gt;
         &amp;amp;copy; 2004 Foo Corporation
-    &amp;lt;/div&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;will turn into:&lt;/p&gt;
+    &amp;lt;/div&amp;gt;&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;will turn into:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;&amp;lt;pre&amp;gt;&amp;lt;code&amp;gt;&amp;amp;lt;div class=&amp;quot;footer&amp;quot;&amp;amp;gt;
     &amp;amp;amp;copy; 2004 Foo Corporation
 &amp;amp;lt;/div&amp;amp;gt;
-&amp;lt;/code&amp;gt;&amp;lt;/pre&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Regular Markdown syntax is not processed within code blocks. E.g.,
+&amp;lt;/code&amp;gt;&amp;lt;/pre&amp;gt;&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Regular Markdown syntax is not processed within code blocks. E.g.,
 asterisks are just literal asterisks within a code block. This means
 it’s also easy to use Markdown to write about Markdown’s own syntax.&lt;/p&gt;
 &lt;h3 id=&quot;hr&quot;&gt;Horizontal Rules&lt;/h3&gt;
@@ -2120,8 +2103,7 @@ following lines will produce a horizontal rule:&lt;/p&gt;
 
 - - -
 
----------------------------------------
-&lt;/code&gt;&lt;/pre&gt;&lt;hr&gt;
+---------------------------------------&lt;/code&gt;&lt;/pre&gt;&lt;hr&gt;
 &lt;h2 id=&quot;span&quot;&gt;Span Elements&lt;/h2&gt;
 
 &lt;h3 id=&quot;link&quot;&gt;Links&lt;/h3&gt;
@@ -2134,25 +2116,19 @@ put the URL where you want the link to point, along with an &lt;em&gt;optional&l
 title for the link, surrounded in quotes. For example:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;This is [an example](http://example.com/ &amp;quot;Title&amp;quot;) inline link.
 
-[This link](http://example.net/) has no title attribute.
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Will produce:&lt;/p&gt;
+[This link](http://example.net/) has no title attribute.&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Will produce:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;&amp;lt;p&amp;gt;This is &amp;lt;a href=&amp;quot;http://example.com/&amp;quot; title=&amp;quot;Title&amp;quot;&amp;gt;
 an example&amp;lt;/a&amp;gt; inline link.&amp;lt;/p&amp;gt;
 
 &amp;lt;p&amp;gt;&amp;lt;a href=&amp;quot;http://example.net/&amp;quot;&amp;gt;This link&amp;lt;/a&amp;gt; has no
-title attribute.&amp;lt;/p&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;If you’re referring to a local resource on the same server, you can
+title attribute.&amp;lt;/p&amp;gt;&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;If you’re referring to a local resource on the same server, you can
 use relative paths:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;See my [About](/about/) page for details.
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Reference-style links use a second set of square brackets, inside
+&lt;pre&gt;&lt;code&gt;See my [About](/about/) page for details.&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Reference-style links use a second set of square brackets, inside
 which you place a label of your choosing to identify the link:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;This is [an example][id] reference-style link.
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;You can optionally use a space to separate the sets of brackets:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;This is [an example] [id] reference-style link.
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Then, anywhere in the document, you define your link label like this,
+&lt;pre&gt;&lt;code&gt;This is [an example][id] reference-style link.&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;You can optionally use a space to separate the sets of brackets:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;This is [an example] [id] reference-style link.&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Then, anywhere in the document, you define your link label like this,
 on a line by itself:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;[id]: http://example.com/  &amp;quot;Optional Title Here&amp;quot;
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;That is:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;[id]: http://example.com/  &amp;quot;Optional Title Here&amp;quot;&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;That is:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Square brackets containing the link identifier (optionally
 indented from the left margin using up to three spaces);&lt;/li&gt;
@@ -2166,12 +2142,10 @@ in double or single quotes, or enclosed in parentheses.&lt;/li&gt;
 &lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; There is a known bug in Markdown.pl 1.0.1 which prevents
 single quotes from being used to delimit link titles.&lt;/p&gt;
 &lt;p&gt;The link URL may, optionally, be surrounded by angle brackets:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;[id]: &amp;lt;http://example.com/&amp;gt;  &amp;quot;Optional Title Here&amp;quot;
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;You can put the title attribute on the next line and use extra spaces
+&lt;pre&gt;&lt;code&gt;[id]: &amp;lt;http://example.com/&amp;gt;  &amp;quot;Optional Title Here&amp;quot;&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;You can put the title attribute on the next line and use extra spaces
 or tabs for padding, which tends to look better with longer URLs:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;[id]: http://example.com/longish/path/to/resource/here
-    &amp;quot;Optional Title Here&amp;quot;
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Link definitions are only used for creating links during Markdown
+    &amp;quot;Optional Title Here&amp;quot;&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Link definitions are only used for creating links during Markdown
 processing, and are stripped from your document in the HTML output.&lt;/p&gt;
 &lt;p&gt;Link definition names may consist of letters, numbers, spaces, and
 punctuation – but they are &lt;em&gt;not&lt;/em&gt; case sensitive. E.g. these two
@@ -2199,25 +2173,21 @@ document, sort of like footnotes.&lt;/p&gt;
 
   [1]: http://google.com/        &amp;quot;Google&amp;quot;
   [2]: http://search.yahoo.com/  &amp;quot;Yahoo Search&amp;quot;
-  [3]: http://search.msn.com/    &amp;quot;MSN Search&amp;quot;
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Using the implicit link name shortcut, you could instead write:&lt;/p&gt;
+  [3]: http://search.msn.com/    &amp;quot;MSN Search&amp;quot;&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Using the implicit link name shortcut, you could instead write:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;I get 10 times more traffic from [Google][] than from
 [Yahoo][] or [MSN][].
 
   [google]: http://google.com/        &amp;quot;Google&amp;quot;
   [yahoo]:  http://search.yahoo.com/  &amp;quot;Yahoo Search&amp;quot;
-  [msn]:    http://search.msn.com/    &amp;quot;MSN Search&amp;quot;
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Both of the above examples will produce the following HTML output:&lt;/p&gt;
+  [msn]:    http://search.msn.com/    &amp;quot;MSN Search&amp;quot;&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Both of the above examples will produce the following HTML output:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;&amp;lt;p&amp;gt;I get 10 times more traffic from &amp;lt;a href=&amp;quot;http://google.com/&amp;quot;
 title=&amp;quot;Google&amp;quot;&amp;gt;Google&amp;lt;/a&amp;gt; than from
 &amp;lt;a href=&amp;quot;http://search.yahoo.com/&amp;quot; title=&amp;quot;Yahoo Search&amp;quot;&amp;gt;Yahoo&amp;lt;/a&amp;gt;
-or &amp;lt;a href=&amp;quot;http://search.msn.com/&amp;quot; title=&amp;quot;MSN Search&amp;quot;&amp;gt;MSN&amp;lt;/a&amp;gt;.&amp;lt;/p&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;For comparison, here is the same paragraph written using
+or &amp;lt;a href=&amp;quot;http://search.msn.com/&amp;quot; title=&amp;quot;MSN Search&amp;quot;&amp;gt;MSN&amp;lt;/a&amp;gt;.&amp;lt;/p&amp;gt;&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;For comparison, here is the same paragraph written using
 Markdown’s inline link style:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;I get 10 times more traffic from [Google](http://google.com/ &amp;quot;Google&amp;quot;)
 than from [Yahoo](http://search.yahoo.com/ &amp;quot;Yahoo Search&amp;quot;) or
-[MSN](http://search.msn.com/ &amp;quot;MSN Search&amp;quot;).
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;The point of reference-style links is not that they’re easier to
+[MSN](http://search.msn.com/ &amp;quot;MSN Search&amp;quot;).&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;The point of reference-style links is not that they’re easier to
 write. The point is that with reference-style links, your document
 source is vastly more readable. Compare the above examples: using
 reference-style links, the paragraph itself is only 81 characters
@@ -2241,39 +2211,31 @@ _single underscores_
 
 **double asterisks**
 
-__double underscores__
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;will produce:&lt;/p&gt;
+__double underscores__&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;will produce:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;&amp;lt;em&amp;gt;single asterisks&amp;lt;/em&amp;gt;
 
 &amp;lt;em&amp;gt;single underscores&amp;lt;/em&amp;gt;
 
 &amp;lt;strong&amp;gt;double asterisks&amp;lt;/strong&amp;gt;
 
-&amp;lt;strong&amp;gt;double underscores&amp;lt;/strong&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;You can use whichever style you prefer; the lone restriction is that
+&amp;lt;strong&amp;gt;double underscores&amp;lt;/strong&amp;gt;&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;You can use whichever style you prefer; the lone restriction is that
 the same character must be used to open and close an emphasis span.&lt;/p&gt;
 &lt;p&gt;Emphasis can be used in the middle of a word:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;un*frigging*believable
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;But if you surround an &lt;code&gt;*&lt;/code&gt; or &lt;code&gt;_&lt;/code&gt; with spaces, it’ll be treated as a
+&lt;pre&gt;&lt;code&gt;un*frigging*believable&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;But if you surround an &lt;code&gt;*&lt;/code&gt; or &lt;code&gt;_&lt;/code&gt; with spaces, it’ll be treated as a
 literal asterisk or underscore.&lt;/p&gt;
 &lt;p&gt;To produce a literal asterisk or underscore at a position where it
 would otherwise be used as an emphasis delimiter, you can backslash
 escape it:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;\*this text is surrounded by literal asterisks\*
-&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&quot;code&quot;&gt;Code&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;\*this text is surrounded by literal asterisks\*&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&quot;code&quot;&gt;Code&lt;/h3&gt;
 
 &lt;p&gt;To indicate a span of code, wrap it with backtick quotes (&lt;code&gt;`&lt;/code&gt;).
 Unlike a pre-formatted code block, a code span indicates code within a
 normal paragraph. For example:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;Use the `printf()` function.
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;will produce:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;&amp;lt;p&amp;gt;Use the &amp;lt;code&amp;gt;printf()&amp;lt;/code&amp;gt; function.&amp;lt;/p&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;To include a literal backtick character within a code span, you can use
+&lt;pre&gt;&lt;code&gt;Use the `printf()` function.&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;will produce:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;&amp;lt;p&amp;gt;Use the &amp;lt;code&amp;gt;printf()&amp;lt;/code&amp;gt; function.&amp;lt;/p&amp;gt;&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;To include a literal backtick character within a code span, you can use
 multiple backticks as the opening and closing delimiters:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;``There is a literal backtick (`) here.``
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;which will produce this:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;&amp;lt;p&amp;gt;&amp;lt;code&amp;gt;There is a literal backtick (`) here.&amp;lt;/code&amp;gt;&amp;lt;/p&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;The backtick delimiters surrounding a code span may include spaces –
+&lt;pre&gt;&lt;code&gt;``There is a literal backtick (`) here.``&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;which will produce this:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;&amp;lt;p&amp;gt;&amp;lt;code&amp;gt;There is a literal backtick (`) here.&amp;lt;/code&amp;gt;&amp;lt;/p&amp;gt;&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;The backtick delimiters surrounding a code span may include spaces –
 one after the opening, one before the closing. This allows you to place
 literal backtick characters at the beginning or end of a code span:&lt;/p&gt;
 &lt;p&gt;  A single backtick in a code span: &lt;code&gt;`&lt;/code&gt;&lt;/p&gt;
@@ -2281,20 +2243,16 @@ literal backtick characters at the beginning or end of a code span:&lt;/p&gt;
 &lt;p&gt;will produce:&lt;/p&gt;
   &lt;p&gt;A single backtick in a code span: &lt;code&gt;`&lt;/code&gt;&lt;/p&gt;
 
-  &lt;p&gt;A backtick-delimited string in a code span: &lt;code&gt;&lt;code&gt;foo&lt;/code&gt;&lt;/code&gt;&lt;/p&gt;
+  &lt;p&gt;A backtick-delimited string in a code span: &lt;code&gt;`foo`&lt;/code&gt;&lt;/p&gt;
 
 &lt;p&gt;With a code span, ampersands and angle brackets are encoded as HTML
 entities automatically, which makes it easy to include example HTML
 tags. Markdown will turn this:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;Please don&amp;#39;t use any `&amp;lt;blink&amp;gt;` tags.
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;into:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;&amp;lt;p&amp;gt;Please don&amp;#39;t use any &amp;lt;code&amp;gt;&amp;amp;lt;blink&amp;amp;gt;&amp;lt;/code&amp;gt; tags.&amp;lt;/p&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;You can write this:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;`&amp;amp;#8212;` is the decimal-encoded equivalent of `&amp;amp;mdash;`.
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;to produce:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Please don&amp;#39;t use any `&amp;lt;blink&amp;gt;` tags.&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;into:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;&amp;lt;p&amp;gt;Please don&amp;#39;t use any &amp;lt;code&amp;gt;&amp;amp;lt;blink&amp;amp;gt;&amp;lt;/code&amp;gt; tags.&amp;lt;/p&amp;gt;&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;You can write this:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;`&amp;amp;#8212;` is the decimal-encoded equivalent of `&amp;amp;mdash;`.&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;to produce:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;&amp;lt;p&amp;gt;&amp;lt;code&amp;gt;&amp;amp;amp;#8212;&amp;lt;/code&amp;gt; is the decimal-encoded
-equivalent of &amp;lt;code&amp;gt;&amp;amp;amp;mdash;&amp;lt;/code&amp;gt;.&amp;lt;/p&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&quot;img&quot;&gt;Images&lt;/h3&gt;
+equivalent of &amp;lt;code&amp;gt;&amp;amp;amp;mdash;&amp;lt;/code&amp;gt;.&amp;lt;/p&amp;gt;&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&quot;img&quot;&gt;Images&lt;/h3&gt;
 
 &lt;p&gt;Admittedly, it’s fairly difficult to devise a “natural” syntax for
 placing images into a plain text document format.&lt;/p&gt;
@@ -2303,8 +2261,7 @@ for links, allowing for two styles: &lt;em&gt;inline&lt;/em&gt; and &lt;em&gt;re
 &lt;p&gt;Inline image syntax looks like this:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;![Alt text](/path/to/img.jpg)
 
-![Alt text](/path/to/img.jpg &amp;quot;Optional title&amp;quot;)
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;That is:&lt;/p&gt;
+![Alt text](/path/to/img.jpg &amp;quot;Optional title&amp;quot;)&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;That is:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;An exclamation mark: &lt;code&gt;!&lt;/code&gt;;&lt;/li&gt;
 &lt;li&gt;followed by a set of square brackets, containing the &lt;code&gt;alt&lt;/code&gt;
@@ -2314,11 +2271,9 @@ the image, and an optional &lt;code&gt;title&lt;/code&gt; attribute enclosed in 
 or single quotes.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;Reference-style image syntax looks like this:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;![Alt text][id]
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Where “id” is the name of a defined image reference. Image references
+&lt;pre&gt;&lt;code&gt;![Alt text][id]&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Where “id” is the name of a defined image reference. Image references
 are defined using syntax identical to link references:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;[id]: url/to/image  &amp;quot;Optional title attribute&amp;quot;
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;As of this writing, Markdown has no syntax for specifying the
+&lt;pre&gt;&lt;code&gt;[id]: url/to/image  &amp;quot;Optional title attribute&amp;quot;&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;As of this writing, Markdown has no syntax for specifying the
 dimensions of an image; if this is important to you, you can simply
 use regular HTML &lt;code&gt;&amp;lt;img&amp;gt;&lt;/code&gt; tags.&lt;/p&gt;
 &lt;hr&gt;
@@ -2327,20 +2282,16 @@ use regular HTML &lt;code&gt;&amp;lt;img&amp;gt;&lt;/code&gt; tags.&lt;/p&gt;
 &lt;h3 id=&quot;autolink&quot;&gt;Automatic Links&lt;/h3&gt;
 
 &lt;p&gt;Markdown supports a shortcut style for creating “automatic” links for URLs and email addresses: simply surround the URL or email address with angle brackets. What this means is that if you want to show the actual text of a URL or email address, and also have it be a clickable link, you can do this:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;&amp;lt;http://example.com/&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Markdown will turn this into:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;&amp;lt;a href=&amp;quot;http://example.com/&amp;quot;&amp;gt;http://example.com/&amp;lt;/a&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Automatic links for email addresses work similarly, except that
+&lt;pre&gt;&lt;code&gt;&amp;lt;http://example.com/&amp;gt;&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Markdown will turn this into:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;&amp;lt;a href=&amp;quot;http://example.com/&amp;quot;&amp;gt;http://example.com/&amp;lt;/a&amp;gt;&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Automatic links for email addresses work similarly, except that
 Markdown will also perform a bit of randomized decimal and hex
 entity-encoding to help obscure your address from address-harvesting
 spambots. For example, Markdown will turn this:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;&amp;lt;address@example.com&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;into something like this:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;&amp;lt;address@example.com&amp;gt;&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;into something like this:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;&amp;lt;a href=&amp;quot;&amp;amp;#x6D;&amp;amp;#x61;i&amp;amp;#x6C;&amp;amp;#x74;&amp;amp;#x6F;:&amp;amp;#x61;&amp;amp;#x64;&amp;amp;#x64;&amp;amp;#x72;&amp;amp;#x65;
 &amp;amp;#115;&amp;amp;#115;&amp;amp;#64;&amp;amp;#101;&amp;amp;#120;&amp;amp;#x61;&amp;amp;#109;&amp;amp;#x70;&amp;amp;#x6C;e&amp;amp;#x2E;&amp;amp;#99;&amp;amp;#111;
 &amp;amp;#109;&amp;quot;&amp;gt;&amp;amp;#x61;&amp;amp;#x64;&amp;amp;#x64;&amp;amp;#x72;&amp;amp;#x65;&amp;amp;#115;&amp;amp;#115;&amp;amp;#64;&amp;amp;#101;&amp;amp;#120;&amp;amp;#x61;
-&amp;amp;#109;&amp;amp;#x70;&amp;amp;#x6C;e&amp;amp;#x2E;&amp;amp;#99;&amp;amp;#111;&amp;amp;#109;&amp;lt;/a&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;which will render in a browser as a clickable link to “&lt;a href=&quot;mailto:address@example.com&quot;&gt;address@example.com&lt;/a&gt;“.&lt;/p&gt;
+&amp;amp;#109;&amp;amp;#x70;&amp;amp;#x6C;e&amp;amp;#x2E;&amp;amp;#99;&amp;amp;#111;&amp;amp;#109;&amp;lt;/a&amp;gt;&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;which will render in a browser as a clickable link to “&lt;a href=&quot;mailto:address@example.com&quot;&gt;address@example.com&lt;/a&gt;“.&lt;/p&gt;
 &lt;p&gt;(This sort of entity-encoding trick will indeed fool many, if not
 most, address-harvesting bots, but it definitely won’t fool all of
 them. It’s better than nothing, but an address published in this way
@@ -2352,8 +2303,7 @@ characters which would otherwise have special meaning in Markdown’s
 formatting syntax. For example, if you wanted to surround a word
 with literal asterisks (instead of an HTML &lt;code&gt;&amp;lt;em&amp;gt;&lt;/code&gt; tag), you can use
 backslashes before the asterisks, like this:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;\*literal asterisks\*
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Markdown provides backslash escapes for the following characters:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;\*literal asterisks\*&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Markdown provides backslash escapes for the following characters:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;\   backslash
 `   backtick
 *   asterisk
@@ -2361,8 +2311,7 @@ _   underscore
 {}  curly braces
 []  square brackets
 ()  parentheses
-#   hash mark
-&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+#   hash mark&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
 &lt;li&gt;plus sign&lt;/li&gt;
 &lt;/ul&gt;
 &lt;ul&gt;
