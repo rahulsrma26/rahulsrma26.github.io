@@ -57,10 +57,10 @@ Technologies:
 <hr>
 <h1 id="the-problem">The Problem</h1>
 
-<p>Most of the people, who has to deal with the matrices in C++, would be familiar with this problem.</p>
+<p>Most of people, who has to deal with the matrices in C++, would be familiar with this problem.</p>
 <p>I’m listing two of the most popular ways for representing matrix. One excels in readability while other in performance.</p>
 <ul>
-<li><p>First way is to use vector of vector.  </p>
+<li><p>First way is to use vector of vector.</p>
 <pre><code class="language-cpp">  <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; matrix(rows, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;(cols));
   <span class="comment">// do stuff</span>
   <span class="comment">// access like matrix[y][x]</span>
@@ -74,21 +74,21 @@ Technologies:
   <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; rows; i++)
       <span class="keyword">delete</span> [] matrix[i];
   <span class="keyword">delete</span> [] matrix;</code></pre>
-<p>It’s basically an array of arrays. every element of array matrix points to another array of integers. That’s why you can reference it two times. But, since every array is separately allocated, to access an array we first have to go to the element of outer array and then inner one. Also, there will be no guarantee that every row will be adjacent to each other in memory. They can be scattered across the heap.</p>
+<p>It’s basically an array of arrays. Every element of outer array points to another array of integers. That’s why you can reference it two times. But, since every array is separately allocated, to access the array we must have to go to the elements of outer array first and then inner ones. Also, there will be no guarantee that every row will be adjacent to each other in memory. They can be scattered across the heap.</p>
 </li>
-<li><p>Second way is to use C style array.  </p>
+<li><p>Second way is to use C style array.</p>
 <pre><code class="language-cpp">  <span class="keyword">int</span> matrix = <span class="keyword">new</span> <span class="keyword">int</span>[rows*cols];
   <span class="comment">// do stuff</span>
   <span class="comment">// access like matrix[y*cols+x]</span>
   <span class="keyword">delete</span> [] matrix;</code></pre>
-<p>This will make a solid continuous chunk of memory in heap.</p>
+<p>This will make a solid continuous chunk of memory in heap. So, it’ll have a better access time and pattern.</p>
 </li>
 </ul>
 <h2 id="performance">Performance</h2>
-<p>C style array access should perform better than vector style access. As, vector style has to refer two times to access an element the address of matrix can be saved in register by compiler by inner elements has to come from memory (most probably cache). The other problem is that, at the end of the row next row could be anywhere, and pre-fetcher can not predict next fetch.</p>
+<p>C style array access should perform better than vector style access. As, vector style has to refer two times to access an element, the address of matrix (outer array) can be saved in register but elements has to come from memory (or cache). The other problem is that, at the end of a row next row could be anywhere, and pre-fetcher can not predict next fetch.</p>
 <p>It’s hard to measure the general performance since the use case varies a lot. But to get some idea I’m considering two types of algorithm with square and rectangular matrices. All the results are compiler on GCC 7.2 with c++14 and -O3 flags on linux x86 machine.
 For the simplicity sake we have fixed number of rows and columns but it can be easily changed to general inputs.</p>
-<p>** Sum of all elements **</p>
+<h2 id="sum-of-all-elements">Sum of all elements</h2>
 <p>Let us take an example of calculating the sum of all the elements in a matrix. Here are our two popular approaches:</p>
 <pre><code class="language-cpp"><span class="comment">// Vector style code for a square matrix</span>
 <span class="comment">// Similar thing can be achieved in C by int**</span>
@@ -116,7 +116,7 @@ See this benchmark on <a href="http://quick-bench.com/GXUG06sZDLCrGsOogF5wmd2DOF
 <img src="/articles/representing-matrix-in-cpp/sum_rectangle_1.png" alt="sum benchmark"></a>
 See this benchmark on <a href="http://quick-bench.com/ekNZpPxwiw4wYtqOV51vPF8CXUo" target="_blank">quick-bench</a></p>
 <p>As you can see the difference is not much. I can live with that for most of the programs. However, transpose yields a complete different story.</p>
-<p>** Transpose of all elements **</p>
+<h2 id="transpose-of-all-elements">Transpose of all elements</h2>
 <p>Let us also take an example of transposing a matrix. Which will have completely different access pattern then sum. Here are our two popular approaches:</p>
 <pre><code class="language-cpp"><span class="comment">// Vector style code for a square matrix</span>
 <span class="comment">// Similar thing can be achieved in C by int**</span>
@@ -149,7 +149,7 @@ See this benchmark on <a href="http://quick-bench.com/IyZq2RwP_RtZJpC4B8iwTSTSRw
 
 <p>We can write a custom template class that will allow us to access elements like vector. To achieve we need to overload the brackets operator.</p>
 <pre><code class="language-cpp"><span class="comment">// e.g. a matrix of 5 rows and 3 cols</span>
-<span class="comment">// matrix&lt;int, 5, 3&gt; x; </span>
+<span class="comment">// matrix&lt;int, 5, 3&gt; x;</span>
 <span class="comment">// can be accessed like x[row][col]</span>
 
 <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T, <span class="keyword">size_t</span> R, <span class="keyword">size_t</span> C&gt;
@@ -171,7 +171,7 @@ See this benchmark on <a href="http://quick-bench.com/IyZq2RwP_RtZJpC4B8iwTSTSRw
 </code></pre>
 <p>Almost all the compilers today can optimize away the referencing and dereferencing of the same array. The assembly code generated by it is virtually same as the C style version.</p>
 <p>So, how well it performs.</p>
-<p>** Sum of all elements **</p>
+<h2 id="sum-of-all-elements">Sum of all elements</h2>
 <p>Results for a square matrix of size 512*512
 <a href="sum_square_2.png" data-lightbox="sum_2" data-title="Sum of elements (512x512)">
 <img src="/articles/representing-matrix-in-cpp/sum_square_2.png" alt="sum benchmark"></a>
@@ -181,7 +181,7 @@ See this benchmark on <a href="http://quick-bench.com/UODm6ylUQGqDCGbdxMIUvpqHrc
 <img src="/articles/representing-matrix-in-cpp/sum_rectangle_2.png" alt="sum benchmark"></a>
 See this benchmark on <a href="http://quick-bench.com/-rGgWT2v0CZsUNbOtoTOCs9ybiE" target="_blank">quick-bench</a></p>
 <p>Separate code can be found <a href="sum.cpp" target="_blank">here</a></p>
-<p>** Transpose of all elements **</p>
+<h2 id="transpose-of-all-elements">Transpose of all elements</h2>
 <p>Results for a square matrix of size 512*512
 <a href="transpose_square_2.png" data-lightbox="transpose_2" data-title="Transpose of elements (512x512)">
 <img src="/articles/representing-matrix-in-cpp/transpose_square_2.png" alt="sum benchmark"></a>
