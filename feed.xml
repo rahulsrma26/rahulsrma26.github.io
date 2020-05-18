@@ -150,7 +150,7 @@ Technologies:
 &lt;p&gt;It’s basically an array of arrays. Every element of outer array points to another array of integers. That’s why you can reference it two times. But, since every array is separately allocated, to access the array we must have to go to the elements of outer array first and then inner ones. Also, there will be no guarantee that every row will be adjacent to each other in memory. They can be scattered across the heap.&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p&gt;Second way is to use C style array.&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-cpp&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; matrix = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt;[rows*cols];
+&lt;pre&gt;&lt;code class=&quot;language-cpp&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt;* matrix = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt;[rows*cols];
   &lt;span class=&quot;comment&quot;&gt;// do stuff&lt;/span&gt;
   &lt;span class=&quot;comment&quot;&gt;// access like matrix[y*cols+x]&lt;/span&gt;
   &lt;span class=&quot;keyword&quot;&gt;delete&lt;/span&gt; [] matrix;&lt;/code&gt;&lt;/pre&gt;
