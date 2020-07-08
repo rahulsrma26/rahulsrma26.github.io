@@ -1,0 +1,11 @@
+{
+  "name": "rahulsbackyard",
+  "version": "0.0.0",
+  "author": "Rahul Sharma",
+  "license": "MIT",
+  "dependencies": {
+    "moment": "~2.19.3",
+    "underscore": "1.4.x"
+  },
+  "private": "true"
+}

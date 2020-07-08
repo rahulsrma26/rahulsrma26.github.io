@@ -1,0 +1,13 @@
+
+extends layout
+
+block menu
+  +menu(page.title)
+
+block content
+  article.article
+    section.content!= page.html
+
+block prepend footer
+  div
+    h6(style="font-weight:normal;color:#8e8e8e")= "last update: " + page.date
