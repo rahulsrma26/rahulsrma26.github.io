@@ -30,7 +30,7 @@ template: menupage.pug
 
 <div>
     <h1 class="noMargin">RAHUL SHARMA</h1>
-    <h5 class="noMargin">DL Scientist by profession, graphics and system developer by soul and RL enthusiast by heart</h5>
+    <h5 class="noMargin">DeepLearning Scientist by profession, graphics and system developer by soul and RL enthusiast by heart</h5>
     <p></P>
     <p>
     Welcome to my site. I’m a Scientist who started as a Software Developer in Microsoft. I started programming from very young age. My early programs are in C++ for DOS and in VB6 for Windows 9x. My early projects on DOS includes my own graphics library for VESA SVGA, a ray-tracing engine, 'wav' music player with visualizations, GUI library and Checkers game with AI.
@@ -40,9 +40,11 @@ template: menupage.pug
 <div class="floatClear">
 </div>
 
-As I started doing mini-projects of my own from 2003, I've worked on many languages and technologies. I've a professional experience in C++, Python, C#, Java and Javascript. However, I've also worked on C, Kotlin, Basic, Assembly(x86), Matlab and ActionScript for some of my own projects. Computer graphics and AI are my favorite fields. Sometimes, I code on hackerrank and projecteuler.
+As I started doing mini-projects of my own from 2003, I've worked on many languages and technologies. I've a professional experience in C++, Python, C#, Java and Javascript. However, I've also worked in C, Kotlin, Basic, Assembly(x86), Matlab and ActionScript for some of my own projects. Computer graphics and AI are my favorite fields. Sometimes, I code on hackerrank and projecteuler.
 
 Apart from computers and maths my hobbies are drawing, cycling, reading, gaming and watching IMDB top rated movies, TV shows and anime. I enjoy music of almost all the genres. Apart from that I'm interested in painting, playing music and learning new things.
+
+This site is created using WinterSmith in node-js and deployed using github actions. Check my github repositories for more details.
 
 <p></P>
 
