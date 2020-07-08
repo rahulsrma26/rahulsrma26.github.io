@@ -5,13 +5,13 @@
     <atom:link href="http://localhost:8080/feed.xml" rel="self" type="application/rss+xml"></atom:link>
     <link>http://localhost:8080</link>
     <description>Addicted to learning!</description>
-    <pubDate>Tue, 12 Jun 2018 05:30:00 +0630</pubDate>
+    <pubDate>Tue, 12 Jun 2018 00:00:00 +0000</pubDate>
     <generator>Wintersmith - https://github.com/jnordberg/wintersmith</generator>
     <language>en</language>
     <item>
       <title>Pride &amp; Patience (dragonball z painting)</title>
       <link>http://localhost:8080/articles/pride-and-patience/</link>
-      <pubDate>Tue, 12 Jun 2018 05:30:00 +0630</pubDate>
+      <pubDate>Tue, 12 Jun 2018 00:00:00 +0000</pubDate>
       <guid isPermaLink="true">http://localhost:8080/articles/pride-and-patience/</guid>
       <author></author>
       <description>&lt;p&gt;This article contains my thought process behind this painting. Characters belong to
@@ -102,7 +102,7 @@ This process is easier to perform but lot of thought process and tinkering is re
     <item>
       <title>Representing Matrix in C++</title>
       <link>http://localhost:8080/articles/representing-matrix-in-cpp/</link>
-      <pubDate>Sat, 11 Nov 2017 05:30:00 +0630</pubDate>
+      <pubDate>Sat, 11 Nov 2017 00:00:00 +0000</pubDate>
       <guid isPermaLink="true">http://localhost:8080/articles/representing-matrix-in-cpp/</guid>
       <author></author>
       <description>&lt;p&gt;Prerequisites: moderate knowledge of C++.
@@ -134,7 +134,7 @@ Technologies:
 &lt;p&gt;I’m listing two of the most popular ways for representing matrix. One excels in readability while other in performance.&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;p&gt;First way is to use vector of vector.&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-cpp&quot;&gt;  &lt;span class=&quot;built_in&quot;&gt;vector&lt;/span&gt;&amp;lt;&lt;span class=&quot;built_in&quot;&gt;vector&lt;/span&gt;&amp;lt;&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt;&amp;gt;&amp;gt; matrix(rows, &lt;span class=&quot;built_in&quot;&gt;vector&lt;/span&gt;&amp;lt;&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt;&amp;gt;(cols));
+&lt;pre&gt;&lt;code class=&quot;language-cpp&quot;&gt;  &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;built_in&quot;&gt;vector&lt;/span&gt;&amp;lt;&lt;span class=&quot;built_in&quot;&gt;vector&lt;/span&gt;&amp;lt;&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt;&amp;gt;&amp;gt; &lt;span class=&quot;title&quot;&gt;matrix&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(rows, &lt;span class=&quot;built_in&quot;&gt;vector&lt;/span&gt;&amp;lt;&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt;&amp;gt;(cols))&lt;/span&gt;&lt;/span&gt;;
   &lt;span class=&quot;comment&quot;&gt;// do stuff&lt;/span&gt;
   &lt;span class=&quot;comment&quot;&gt;// access like matrix[y][x]&lt;/span&gt;
   &lt;span class=&quot;comment&quot;&gt;// no need to free. RAII rocks.&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
@@ -269,7 +269,7 @@ See this benchmark on &lt;a href=&quot;http://quick-bench.com/PXQl8uW3Dk1R_pBelX
     <item>
       <title>Falling animation in HTML5 using javascript</title>
       <link>http://localhost:8080/articles/falling-matrix/</link>
-      <pubDate>Mon, 24 Mar 2014 05:30:00 +0630</pubDate>
+      <pubDate>Mon, 24 Mar 2014 00:00:00 +0000</pubDate>
       <guid isPermaLink="true">http://localhost:8080/articles/falling-matrix/</guid>
       <author></author>
       <description>&lt;p&gt;Prerequisites: basic knowledge of javascript and computer graphics.
@@ -435,7 +435,7 @@ Live demo with code: &lt;a href=&quot;https://jsfiddle.net/welcometors/tz38d5vg/
     <item>
       <title>The Shadow</title>
       <link>http://localhost:8080/articles/the-shadow/</link>
-      <pubDate>Mon, 10 Feb 2014 05:30:00 +0630</pubDate>
+      <pubDate>Mon, 10 Feb 2014 00:00:00 +0000</pubDate>
       <guid isPermaLink="true">http://localhost:8080/articles/the-shadow/</guid>
       <author></author>
       <description>&lt;p&gt;This article contains my story of getting into art and drawings. Also contains most of my pencil drawings.&lt;/p&gt;
@@ -497,7 +497,7 @@ Jump to &lt;a href=&quot;#drawings&quot;&gt;drawings&lt;/a&gt;&lt;/p&gt;
     <item>
       <title>GATE 2011 Solution</title>
       <link>http://localhost:8080/articles/gate-2011-solution/</link>
-      <pubDate>Sun, 01 May 2011 15:00:00 +0630</pubDate>
+      <pubDate>Sun, 01 May 2011 15:00:00 +0000</pubDate>
       <guid isPermaLink="true">http://localhost:8080/articles/gate-2011-solution/</guid>
       <author></author>
       <description>&lt;script type=&quot;text/x-mathjax-config&quot;&gt;
@@ -1832,7 +1832,7 @@ If records are accessed in a range of values, ordered indexing will perform bett
     <item>
       <title>Markdown syntax</title>
       <link>http://localhost:8080/articles/markdown-syntax/</link>
-      <pubDate>Tue, 02 Feb 2010 05:30:00 +0630</pubDate>
+      <pubDate>Tue, 02 Feb 2010 00:00:00 +0000</pubDate>
       <guid isPermaLink="true">http://localhost:8080/articles/markdown-syntax/</guid>
       <author></author>
       <description>&lt;p&gt;Full markdown syntax taken from John Gruber’s &lt;a href=&quot;http://daringfireball.net/projects/markdown/syntax&quot;&gt;Daring Fireball&lt;/a&gt;.

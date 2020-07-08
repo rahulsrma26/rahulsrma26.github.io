@@ -61,7 +61,7 @@ Technologies:
 <p>I’m listing two of the most popular ways for representing matrix. One excels in readability while other in performance.</p>
 <ul>
 <li><p>First way is to use vector of vector.</p>
-<pre><code class="language-cpp">  <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; matrix(rows, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;(cols));
+<pre><code class="language-cpp">  <span class="function"><span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; <span class="title">matrix</span><span class="params">(rows, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;(cols))</span></span>;
   <span class="comment">// do stuff</span>
   <span class="comment">// access like matrix[y][x]</span>
   <span class="comment">// no need to free. RAII rocks.</span></code></pre>
