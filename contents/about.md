@@ -51,8 +51,6 @@ This site is created using WinterSmith in node-js and deployed using github acti
 <div id="social">
     <span>
         Find me on: </span>
-    <a href="mailto:welcometors@gmail.com" target="_top">
-        <i class="iconbtn fa fa-lg fa-envelope"></i></a>
     <a href="https://www.linkedin.com/in/rahulsrma26" target="_blank">
         <i class="iconbtn fa fa-lg fa-linkedin"></i></a>
     <a href="https://steamcommunity.com/id/rahulsrma26/" target="_blank">
