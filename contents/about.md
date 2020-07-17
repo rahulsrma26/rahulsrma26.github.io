@@ -42,7 +42,7 @@ template: menupage.pug
 
 As I started doing mini-projects of my own from 2003, I've worked on many languages and technologies. I've a professional experience in C++, Python, C#, Java and Javascript. However, I've also worked in C, Kotlin, Basic, Assembly(x86), Matlab and ActionScript for some of my own projects. Computer graphics and AI are my favorite fields. Sometimes, I code on hackerrank and projecteuler.
 
-Apart from computers and maths my hobbies are drawing, cycling, reading, gaming and watching IMDB top rated movies, TV shows and anime. I enjoy music of almost all the genres. Apart from that I'm interested in painting, playing music and learning new things.
+Apart from computers and maths my hobbies are drawing, cycling, reading, gaming and watching IMDB top rated movies, TV shows and anime. I enjoy music of almost all the genres. Apart from that, I'm interested in painting, playing music and learning new things.
 
 This site is created using WinterSmith in node-js and deployed using github actions. Check my github repositories for more details.
 
