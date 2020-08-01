@@ -166,9 +166,9 @@
        xlink:href="#linearGradient875"
        id="linearGradient877"
        x1="141.5831"
-       y1="143.85455"
+       y1="136.31358"
        x2="141.5831"
-       y2="129.95654"
+       y2="127.64268"
        gradientUnits="userSpaceOnUse" />
     <linearGradient
        inkscape:collect="always"
@@ -306,9 +306,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.4"
-     inkscape:cx="517.12131"
-     inkscape:cy="796.72632"
+     inkscape:zoom="9.6423841"
+     inkscape:cx="527.47274"
+     inkscape:cy="954.11569"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -335,7 +335,7 @@
        id="guide832"
        inkscape:locked="false" />
     <sodipodi:guide
-       position="142.18739,57.462949"
+       position="138.76839,72.643858"
        orientation="0,1"
        id="guide834"
        inkscape:locked="false" />
@@ -345,7 +345,7 @@
        id="guide853"
        inkscape:locked="false" />
     <sodipodi:guide
-       position="-12.027128,167.04346"
+       position="98.355184,169.35732"
        orientation="0,1"
        id="guide855"
        inkscape:locked="false" />
@@ -399,6 +399,36 @@
        orientation="0,1"
        id="guide1715"
        inkscape:locked="false" />
+    <sodipodi:guide
+       position="98.355184,184.68325"
+       orientation="1,0"
+       id="guide1074"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="98.355181,160.68641"
+       orientation="0,1"
+       id="guide1076"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="181.74328,184.95052"
+       orientation="1,0"
+       id="guide1078"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="94.447162,157.99732"
+       orientation="0,1"
+       id="guide1080"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="99.962913,70.470753"
+       orientation="0,1"
+       id="guide1082"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="131.24013,68.763312"
+       orientation="0,1"
+       id="guide1084"
+       inkscape:locked="false" />
   </sodipodi:namedview>
   <metadata
      id="metadata5">
@@ -418,7 +448,7 @@
      id="layer1">
     <path
        style="fill:#9e9695;fill-opacity:1;stroke:none;stroke-width:1.07000005;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
-       d="M 97.982211,35.134899 H 182.2022 c 2.12081,0 3.82818,1.294979 3.82818,2.90354 v 74.011051 c 4.24383,11.37329 3.58444,21.8551 0,31.80507 v 95.30629 c 0,1.60856 -1.70737,2.90354 -3.82818,2.90354 H 97.982211 c -2.120812,0 -3.828181,-1.29498 -3.828181,-2.90354 v -95.57356 c -3.63037,-9.39157 -2.758823,-20.28377 0,-31.80507 V 38.038439 c 0,-1.608561 1.707369,-2.90354 3.828181,-2.90354 z"
+       d="M 97.982211,34.076565 H 182.2022 c 2.12081,0 3.82818,1.294979 3.82818,2.90354 v 74.011045 c 4.24383,11.37329 3.58444,18.06156 0,28.01153 l 0,87.69102 c 0,1.60856 -1.70737,1.50459 -3.82818,1.50654 l -84.219989,0.0776 c -2.120811,0.002 -3.828181,-0.20842 -3.828181,-1.81698 l 0,-87.45819 c -3.355974,-7.08664 -4.021045,-18.0746 0,-28.2788 V 36.980105 c 0,-1.608561 1.707369,-2.90354 3.828181,-2.90354 z"
        id="rect815-3"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="sssccssssccss"
@@ -427,7 +457,7 @@
        inkscape:export-ydpi="133.79437" />
     <path
        style="fill:#bdb7b0;fill-opacity:1;stroke:none;stroke-width:1.00535142;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
-       d="m 101.82969,37.74855 h 76.43908 c 1.92488,0 3.47451,1.260257 3.47451,2.825689 v 71.475251 c 3.38451,14.0062 2.59183,22.17987 0,31.80507 v 92.4495 c 0,1.56543 -1.54963,2.82569 -3.47451,2.82569 h -76.43908 c -1.924875,0 -3.474504,-1.26026 -3.474504,-2.82569 v -92.18223 c -3.11386,-10.25571 -3.299502,-20.83677 0,-31.80507 V 40.574239 c 0,-1.565432 1.549629,-2.825689 3.474504,-2.825689 z"
+       d="m 101.82969,37.74855 h 76.43908 c 1.92488,0 3.47451,1.260257 3.47451,2.825689 v 71.475251 c 3.38451,14.0062 2.59183,14.6389 0,24.2641 l 0,88.1936 c 0,1.56543 -1.54963,2.04958 -3.47451,2.04958 l -76.20625,0 c -1.92487,0 -3.707334,-0.63937 -3.707334,-2.2048 l -2e-6,-88.03838 c -3.11386,-10.25571 -3.2995,-13.02853 2e-6,-23.99683 V 40.574239 c 0,-1.565432 1.549629,-2.825689 3.474504,-2.825689 z"
        id="rect815"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="sssccssssccss"
@@ -462,8 +492,8 @@
        inkscape:export-xdpi="133.79437"
        inkscape:export-ydpi="133.79437" />
     <path
-       style="fill:url(#linearGradient877);fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="M 96.016577,129.95654 H 184.1487 c -0.10684,5.21181 -1.25486,9.55597 -2.40542,13.89802 l -83.388094,0.26727 c -1.484822,-4.72176 -2.400272,-9.57716 -2.338609,-14.16529 z"
+       style="fill:url(#linearGradient877);fill-opacity:1;stroke:none;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 96.324652,127.64268 87.494768,0 c -0.21659,3.62031 -0.92558,6.13987 -2.07614,8.67091 H 98.355184 c -1.265305,-3.40466 -1.927554,-5.54279 -2.030532,-8.67091 z"
        id="path861"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="ccccc"
@@ -484,7 +514,7 @@
        inkscape:export-ydpi="133.79437" />
     <g
        id="g902"
-       transform="matrix(0.14435607,0,0,0.14435607,75.883836,36.942093)"
+       transform="matrix(0.14435607,0,0,0.14435607,74.825502,36.942093)"
        inkscape:export-filename="C:\Users\rahul\Desktop\text1783-4-1-0-2.png"
        inkscape:export-xdpi="133.79437"
        inkscape:export-ydpi="133.79437">
@@ -507,7 +537,7 @@
     </g>
     <g
        id="g902-0"
-       transform="matrix(0.14435607,0,0,0.14435607,75.965872,32.12855)"
+       transform="matrix(0.14435607,0,0,0.14435607,74.907538,32.12855)"
        inkscape:export-filename="C:\Users\rahul\Desktop\text1783-4-1-0-2.png"
        inkscape:export-xdpi="133.79437"
        inkscape:export-ydpi="133.79437">
@@ -530,7 +560,7 @@
     </g>
     <g
        id="g902-5"
-       transform="matrix(0.14435607,0,0,0.14435607,71.121333,36.942093)"
+       transform="matrix(0.14435607,0,0,0.14435607,70.062999,36.942093)"
        inkscape:export-filename="C:\Users\rahul\Desktop\text1783-4-1-0-2.png"
        inkscape:export-xdpi="133.79437"
        inkscape:export-ydpi="133.79437">
@@ -553,7 +583,7 @@
     </g>
     <g
        id="g902-5-5"
-       transform="matrix(0.14435607,0,0,0.14435607,71.121333,41.704596)"
+       transform="matrix(0.14435607,0,0,0.14435607,70.062999,41.704596)"
        inkscape:export-filename="C:\Users\rahul\Desktop\text1783-4-1-0-2.png"
        inkscape:export-xdpi="133.79437"
        inkscape:export-ydpi="133.79437">
@@ -576,7 +606,7 @@
     </g>
     <g
        id="g902-5-2"
-       transform="matrix(0.14435607,0,0,0.14435607,71.054794,55.021562)"
+       transform="matrix(0.14435607,0,0,0.14435607,69.99646,55.021562)"
        inkscape:export-filename="C:\Users\rahul\Desktop\text1783-4-1-0-2.png"
        inkscape:export-xdpi="133.79437"
        inkscape:export-ydpi="133.79437">
@@ -599,7 +629,7 @@
     </g>
     <g
        id="g902-5-5-1"
-       transform="matrix(0.14435607,0,0,0.14435607,71.054794,59.784065)"
+       transform="matrix(0.14435607,0,0,0.14435607,69.99646,59.784065)"
        inkscape:export-filename="C:\Users\rahul\Desktop\text1783-4-1-0-2.png"
        inkscape:export-xdpi="133.79437"
        inkscape:export-ydpi="133.79437">
@@ -622,7 +652,7 @@
     </g>
     <g
        id="g902-5-2-2"
-       transform="matrix(0.14435607,0,0,0.14435607,71.054794,50.259059)"
+       transform="matrix(0.14435607,0,0,0.14435607,69.99646,50.259059)"
        inkscape:export-filename="C:\Users\rahul\Desktop\text1783-4-1-0-2.png"
        inkscape:export-xdpi="133.79437"
        inkscape:export-ydpi="133.79437">
@@ -645,7 +675,7 @@
     </g>
     <g
        id="g902-5-2-7"
-       transform="matrix(0.14435607,0,0,0.14435607,75.817297,55.021562)"
+       transform="matrix(0.14435607,0,0,0.14435607,74.758963,55.021562)"
        inkscape:export-filename="C:\Users\rahul\Desktop\text1783-4-1-0-2.png"
        inkscape:export-xdpi="133.79437"
        inkscape:export-ydpi="133.79437">
@@ -668,7 +698,7 @@
     </g>
     <g
        id="g902-5-2-1"
-       transform="matrix(0.14435607,0,0,0.14435607,71.084719,73.131426)"
+       transform="matrix(0.14435607,0,0,0.14435607,70.026385,73.131426)"
        inkscape:export-filename="C:\Users\rahul\Desktop\text1783-4-1-0-2.png"
        inkscape:export-xdpi="133.79437"
        inkscape:export-ydpi="133.79437">
@@ -691,7 +721,7 @@
     </g>
     <g
        id="g902-5-2-2-5"
-       transform="matrix(0.14435607,0,0,0.14435607,71.084719,68.368921)"
+       transform="matrix(0.14435607,0,0,0.14435607,70.026385,68.368921)"
        inkscape:export-filename="C:\Users\rahul\Desktop\text1783-4-1-0-2.png"
        inkscape:export-xdpi="133.79437"
        inkscape:export-ydpi="133.79437">
@@ -714,7 +744,7 @@
     </g>
     <g
        id="g902-5-2-1-7"
-       transform="matrix(0.14435607,0,0,0.14435607,75.847222,73.131427)"
+       transform="matrix(0.14435607,0,0,0.14435607,74.788888,73.131427)"
        inkscape:export-filename="C:\Users\rahul\Desktop\text1783-4-1-0-2.png"
        inkscape:export-xdpi="133.79437"
        inkscape:export-ydpi="133.79437">
@@ -737,7 +767,7 @@
     </g>
     <g
        id="g902-5-2-2-5-8"
-       transform="matrix(0.14435607,0,0,0.14435607,75.847222,68.368921)"
+       transform="matrix(0.14435607,0,0,0.14435607,74.788888,68.368921)"
        inkscape:export-filename="C:\Users\rahul\Desktop\text1783-4-1-0-2.png"
        inkscape:export-xdpi="133.79437"
        inkscape:export-ydpi="133.79437">
@@ -760,7 +790,7 @@
     </g>
     <g
        id="g902-5-2-75"
-       transform="matrix(0.14435607,0,0,0.14435607,71.084719,81.581909)"
+       transform="matrix(0.14435607,0,0,0.14435607,70.026385,81.581909)"
        inkscape:export-filename="C:\Users\rahul\Desktop\text1783-4-1-0-2.png"
        inkscape:export-xdpi="133.79437"
        inkscape:export-ydpi="133.79437">
@@ -783,7 +813,7 @@
     </g>
     <g
        id="g902-5-5-1-6"
-       transform="matrix(0.14435607,0,0,0.14435607,71.084719,86.344412)"
+       transform="matrix(0.14435607,0,0,0.14435607,70.026385,86.344412)"
        inkscape:export-filename="C:\Users\rahul\Desktop\text1783-4-1-0-2.png"
        inkscape:export-xdpi="133.79437"
        inkscape:export-ydpi="133.79437">
@@ -806,7 +836,7 @@
     </g>
     <g
        id="g902-5-5-1-6-7"
-       transform="matrix(0.14435607,0,0,0.14435607,71.084719,91.106915)"
+       transform="matrix(0.14435607,0,0,0.14435607,70.026385,91.106915)"
        inkscape:export-filename="C:\Users\rahul\Desktop\text1783-4-1-0-2.png"
        inkscape:export-xdpi="133.79437"
        inkscape:export-ydpi="133.79437">
@@ -829,7 +859,7 @@
     </g>
     <g
        id="g902-5-2-1-3"
-       transform="matrix(0.14435607,0,0,0.14435607,134.60163,36.645264)"
+       transform="matrix(0.14435607,0,0,0.14435607,135.65997,36.645264)"
        inkscape:export-filename="C:\Users\rahul\Desktop\text1783-4-1-0-2.png"
        inkscape:export-xdpi="133.79437"
        inkscape:export-ydpi="133.79437">
@@ -852,7 +882,7 @@
     </g>
     <g
        id="g902-5-2-2-5-9"
-       transform="matrix(0.14435607,0,0,0.14435607,134.60163,31.882758)"
+       transform="matrix(0.14435607,0,0,0.14435607,135.65997,31.882758)"
        inkscape:export-filename="C:\Users\rahul\Desktop\text1783-4-1-0-2.png"
        inkscape:export-xdpi="133.79437"
        inkscape:export-ydpi="133.79437">
@@ -875,7 +905,7 @@
     </g>
     <g
        id="g902-5-2-1-7-8"
-       transform="matrix(0.14435607,0,0,0.14435607,139.36414,36.645266)"
+       transform="matrix(0.14435607,0,0,0.14435607,140.42248,36.645266)"
        inkscape:export-filename="C:\Users\rahul\Desktop\text1783-4-1-0-2.png"
        inkscape:export-xdpi="133.79437"
        inkscape:export-ydpi="133.79437">
@@ -898,7 +928,7 @@
     </g>
     <g
        id="g902-5-2-2-5-8-0"
-       transform="matrix(0.14435607,0,0,0.14435607,139.36414,31.882758)"
+       transform="matrix(0.14435607,0,0,0.14435607,140.42248,31.882758)"
        inkscape:export-filename="C:\Users\rahul\Desktop\text1783-4-1-0-2.png"
        inkscape:export-xdpi="133.79437"
        inkscape:export-ydpi="133.79437">
@@ -921,7 +951,7 @@
     </g>
     <g
        id="g902-5-2-0"
-       transform="matrix(0.14435607,0,0,0.14435607,134.60211,50.002)"
+       transform="matrix(0.14435607,0,0,0.14435607,135.66045,50.002)"
        inkscape:export-filename="C:\Users\rahul\Desktop\text1783-4-1-0-2.png"
        inkscape:export-xdpi="133.79437"
        inkscape:export-ydpi="133.79437">
@@ -944,7 +974,7 @@
     </g>
     <g
        id="g902-5-5-1-3"
-       transform="matrix(0.14435607,0,0,0.14435607,134.60211,54.764502)"
+       transform="matrix(0.14435607,0,0,0.14435607,135.66045,54.764502)"
        inkscape:export-filename="C:\Users\rahul\Desktop\text1783-4-1-0-2.png"
        inkscape:export-xdpi="133.79437"
        inkscape:export-ydpi="133.79437">
@@ -967,7 +997,7 @@
     </g>
     <g
        id="g902-5-2-2-0"
-       transform="matrix(0.14435607,0,0,0.14435607,134.60211,45.239494)"
+       transform="matrix(0.14435607,0,0,0.14435607,135.66045,45.239494)"
        inkscape:export-filename="C:\Users\rahul\Desktop\text1783-4-1-0-2.png"
        inkscape:export-xdpi="133.79437"
        inkscape:export-ydpi="133.79437">
@@ -990,7 +1020,7 @@
     </g>
     <g
        id="g902-5-2-7-0"
-       transform="matrix(0.14435607,0,0,0.14435607,139.36462,50.002)"
+       transform="matrix(0.14435607,0,0,0.14435607,140.42296,50.002)"
        inkscape:export-filename="C:\Users\rahul\Desktop\text1783-4-1-0-2.png"
        inkscape:export-xdpi="133.79437"
        inkscape:export-ydpi="133.79437">
@@ -1013,7 +1043,7 @@
     </g>
     <g
        id="g902-5-2-75-6"
-       transform="matrix(0.14435607,0,0,0.14435607,134.60211,67.866481)"
+       transform="matrix(0.14435607,0,0,0.14435607,135.66045,67.866481)"
        inkscape:export-filename="C:\Users\rahul\Desktop\text1783-4-1-0-2.png"
        inkscape:export-xdpi="133.79437"
        inkscape:export-ydpi="133.79437">
@@ -1036,7 +1066,7 @@
     </g>
     <g
        id="g902-5-5-1-6-74"
-       transform="matrix(0.14435607,0,0,0.14435607,134.60211,72.628983)"
+       transform="matrix(0.14435607,0,0,0.14435607,135.66045,72.628983)"
        inkscape:export-filename="C:\Users\rahul\Desktop\text1783-4-1-0-2.png"
        inkscape:export-xdpi="133.79437"
        inkscape:export-ydpi="133.79437">
@@ -1059,7 +1089,7 @@
     </g>
     <g
        id="g902-5-2-2-9-4"
-       transform="matrix(0.14435607,0,0,0.14435607,134.60211,63.103976)"
+       transform="matrix(0.14435607,0,0,0.14435607,135.66045,63.103976)"
        inkscape:export-filename="C:\Users\rahul\Desktop\text1783-4-1-0-2.png"
        inkscape:export-xdpi="133.79437"
        inkscape:export-ydpi="133.79437">
@@ -1082,7 +1112,7 @@
     </g>
     <g
        id="g902-5-5-1-6-7-1"
-       transform="matrix(0.14435607,0,0,0.14435607,139.36464,72.628983)"
+       transform="matrix(0.14435607,0,0,0.14435607,140.42298,72.628983)"
        inkscape:export-filename="C:\Users\rahul\Desktop\text1783-4-1-0-2.png"
        inkscape:export-xdpi="133.79437"
        inkscape:export-ydpi="133.79437">
@@ -1105,7 +1135,7 @@
     </g>
     <g
        id="g902-50"
-       transform="matrix(0.14435607,0,0,0.14435607,139.36462,85.765166)"
+       transform="matrix(0.14435607,0,0,0.14435607,140.42296,85.765166)"
        inkscape:export-filename="C:\Users\rahul\Desktop\text1783-4-1-0-2.png"
        inkscape:export-xdpi="133.79437"
        inkscape:export-ydpi="133.79437">
@@ -1128,7 +1158,7 @@
     </g>
     <g
        id="g902-0-5"
-       transform="matrix(0.14435607,0,0,0.14435607,139.44665,80.951622)"
+       transform="matrix(0.14435607,0,0,0.14435607,140.50499,80.951622)"
        inkscape:export-filename="C:\Users\rahul\Desktop\text1783-4-1-0-2.png"
        inkscape:export-xdpi="133.79437"
        inkscape:export-ydpi="133.79437">
@@ -1151,7 +1181,7 @@
     </g>
     <g
        id="g902-5-0"
-       transform="matrix(0.14435607,0,0,0.14435607,134.60211,85.765166)"
+       transform="matrix(0.14435607,0,0,0.14435607,135.66045,85.765166)"
        inkscape:export-filename="C:\Users\rahul\Desktop\text1783-4-1-0-2.png"
        inkscape:export-xdpi="133.79437"
        inkscape:export-ydpi="133.79437">
@@ -1174,7 +1204,7 @@
     </g>
     <g
        id="g902-5-5-3"
-       transform="matrix(0.14435607,0,0,0.14435607,134.60211,90.527668)"
+       transform="matrix(0.14435607,0,0,0.14435607,135.66045,90.527668)"
        inkscape:export-filename="C:\Users\rahul\Desktop\text1783-4-1-0-2.png"
        inkscape:export-xdpi="133.79437"
        inkscape:export-ydpi="133.79437">
@@ -1197,7 +1227,7 @@
     </g>
     <g
        id="g902-5-5-1-6-7-16"
-       transform="matrix(0.14435607,0,0,0.14435607,75.847222,91.106915)"
+       transform="matrix(0.14435607,0,0,0.14435607,74.788888,91.106915)"
        inkscape:export-filename="C:\Users\rahul\Desktop\text1783-4-1-0-2.png"
        inkscape:export-xdpi="133.79437"
        inkscape:export-ydpi="133.79437">
@@ -1220,24 +1250,24 @@
     </g>
     <text
        xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:6.32031012px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.15800774"
-       x="90.743958"
-       y="58.755512"
+       style="font-style:normal;font-weight:normal;font-size:6.00497723px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.15012442"
+       x="85.808151"
+       y="61.835819"
        id="text1525"
-       transform="scale(1.4225362,0.7029698)"
+       transform="scale(1.4972363,0.66789724)"
        inkscape:export-filename="C:\Users\rahul\Desktop\text1783-4-1-0-2.png"
        inkscape:export-xdpi="133.79437"
        inkscape:export-ydpi="133.79437"><tspan
          sodipodi:role="line"
          id="tspan1523"
-         x="90.743958"
-         y="58.755512"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'MS Gothic';-inkscape-font-specification:'MS Gothic';stroke-width:0.15800774">SUPER</tspan></text>
+         x="85.808151"
+         y="61.835819"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'MS Gothic';-inkscape-font-specification:'MS Gothic';stroke-width:0.15012442">SUPER</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:12.69999981px;line-height:1.25;font-family:MicroSquare;-inkscape-font-specification:'MicroSquare Bold';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
-       x="-19.623392"
-       y="246.97491"
+       x="-13.748549"
+       y="236.92426"
        id="text1529"
        transform="rotate(-30.307468)"
        inkscape:export-filename="C:\Users\rahul\Desktop\text1783-4-1-0-2.png"
@@ -1245,14 +1275,14 @@
        inkscape:export-ydpi="133.79437"><tspan
          sodipodi:role="line"
          id="tspan1527"
-         x="-19.623392"
-         y="246.97491"
+         x="-13.748549"
+         y="236.92426"
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:12.69999981px;font-family:MicroSquare;-inkscape-font-specification:'MicroSquare Bold';stroke-width:0.26458332">BRICK</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:12.69999981px;line-height:1.25;font-family:MicroSquare;-inkscape-font-specification:'MicroSquare Bold';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
-       x="-0.43531701"
-       y="257.11279"
+       x="5.4395361"
+       y="247.06213"
        id="text1533"
        transform="rotate(-30.307468)"
        inkscape:export-filename="C:\Users\rahul\Desktop\text1783-4-1-0-2.png"
@@ -1260,14 +1290,14 @@
        inkscape:export-ydpi="133.79437"><tspan
          sodipodi:role="line"
          id="tspan1531"
-         x="-0.43531701"
-         y="257.11279"
+         x="5.4395361"
+         y="247.06213"
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:12.69999981px;font-family:MicroSquare;-inkscape-font-specification:'MicroSquare Bold';stroke-width:0.26458332">GAME</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.91823244px;line-height:1.25;font-family:'Microsoft PhagsPa';-inkscape-font-specification:'Microsoft PhagsPa';letter-spacing:0px;word-spacing:0px;fill:#b82f1e;fill-opacity:1;stroke:none;stroke-width:0.17295581"
        x="185.8445"
-       y="187.42072"
+       y="177.6658"
        id="text1537"
        transform="scale(0.83792426,1.1934253)"
        inkscape:export-filename="C:\Users\rahul\Desktop\text1783-4-1-0-2.png"
@@ -1276,11 +1306,11 @@
          sodipodi:role="line"
          id="tspan1535"
          x="185.8445"
-         y="187.42072"
+         y="177.6658"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Microsoft PhagsPa';-inkscape-font-specification:'Microsoft PhagsPa';fill:#b82f1e;fill-opacity:1;stroke-width:0.17295581">2 in 1</tspan></text>
     <path
        style="fill:none;stroke:#b53b2c;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="m 103.18432,230.66518 h 73.7464"
+       d="m 103.18432,219.02344 h 73.7464"
        id="path1539"
        inkscape:connector-curvature="0"
        inkscape:export-filename="C:\Users\rahul\Desktop\text1783-4-1-0-2.png"
@@ -1288,7 +1318,7 @@
        inkscape:export-ydpi="133.79437" />
     <g
        id="g1583"
-       transform="translate(78.619048,-77.674107)"
+       transform="translate(78.619048,-89.315781)"
        inkscape:export-filename="C:\Users\rahul\Desktop\text1783-4-1-0-2.png"
        inkscape:export-xdpi="133.79437"
        inkscape:export-ydpi="133.79437">
@@ -1307,7 +1337,7 @@
     </g>
     <g
        id="g1583-3"
-       transform="matrix(0.69047615,0,0,0.69047615,46.490229,1.6237714)"
+       transform="matrix(0.69047615,0,0,0.69047615,46.490229,-10.017896)"
        inkscape:export-filename="C:\Users\rahul\Desktop\text1783-4-1-0-2.png"
        inkscape:export-xdpi="133.79437"
        inkscape:export-ydpi="133.79437">
@@ -1326,7 +1356,7 @@
     </g>
     <g
        id="g1583-3-2"
-       transform="matrix(0.69047614,0,0,0.69047614,57.640531,11.073179)"
+       transform="matrix(0.69047614,0,0,0.69047614,57.640531,-0.56848891)"
        inkscape:export-filename="C:\Users\rahul\Desktop\text1783-4-1-0-2.png"
        inkscape:export-xdpi="133.79437"
        inkscape:export-ydpi="133.79437">
@@ -1345,7 +1375,7 @@
     </g>
     <g
        id="g1583-3-2-3"
-       transform="matrix(0.69047614,0,0,0.69047614,68.292648,2.0017502)"
+       transform="matrix(0.69047614,0,0,0.69047614,68.292648,-9.639917)"
        inkscape:export-filename="C:\Users\rahul\Desktop\text1783-4-1-0-2.png"
        inkscape:export-xdpi="133.79437"
        inkscape:export-ydpi="133.79437">
@@ -1364,7 +1394,7 @@
     </g>
     <g
        id="g1583-3-3"
-       transform="matrix(0.32670487,0,0,0.32670487,92.19888,71.464818)"
+       transform="matrix(0.32670487,0,0,0.32670487,92.19888,59.823144)"
        inkscape:export-filename="C:\Users\rahul\Desktop\text1783-4-1-0-2.png"
        inkscape:export-xdpi="133.79437"
        inkscape:export-ydpi="133.79437">
@@ -1383,7 +1413,7 @@
     </g>
     <g
        id="g1583-3-3-0"
-       transform="matrix(0.32670488,0,0,0.32670488,109.96376,71.08684)"
+       transform="matrix(0.32670488,0,0,0.32670488,109.96376,59.445166)"
        inkscape:export-filename="C:\Users\rahul\Desktop\text1783-4-1-0-2.png"
        inkscape:export-xdpi="133.79437"
        inkscape:export-ydpi="133.79437">
@@ -1402,7 +1432,7 @@
     </g>
     <g
        id="g1583-3-3-0-4"
-       transform="matrix(0.32670488,0,0,0.32670488,126.59472,71.086839)"
+       transform="matrix(0.32670488,0,0,0.32670488,126.59472,59.445165)"
        inkscape:export-filename="C:\Users\rahul\Desktop\text1783-4-1-0-2.png"
        inkscape:export-xdpi="133.79437"
        inkscape:export-ydpi="133.79437">
@@ -1423,7 +1453,7 @@
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.58652663px;line-height:1.25;font-family:'MS Gothic';-inkscape-font-specification:'MS Gothic';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.06466316"
        x="89.764496"
-       y="205.98759"
+       y="190.82835"
        id="text1783"
        transform="scale(1.3021573,0.76795638)"
        inkscape:export-filename="C:\Users\rahul\Desktop\text1783-4-1-0-2.png"
@@ -1432,18 +1462,18 @@
          sodipodi:role="line"
          id="tspan1781"
          x="89.764496"
-         y="205.98759"
+         y="190.82835"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'MS Gothic';-inkscape-font-specification:'MS Gothic';stroke-width:0.06466316">PAUSE/</tspan><tspan
          sodipodi:role="line"
          x="89.764496"
-         y="209.22075"
+         y="194.06151"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'MS Gothic';-inkscape-font-specification:'MS Gothic';stroke-width:0.06466316"
          id="tspan1785">START</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.58652663px;line-height:1.25;font-family:'MS Gothic';-inkscape-font-specification:'MS Gothic';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.06466316"
        x="103.94017"
-       y="206.06067"
+       y="190.90143"
        id="text1783-4"
        transform="scale(1.3021573,0.76795638)"
        inkscape:export-filename="C:\Users\rahul\Desktop\text1783-4-1-0-2.png"
@@ -1451,14 +1481,14 @@
        inkscape:export-ydpi="133.79437"><tspan
          sodipodi:role="line"
          x="103.94017"
-         y="206.06067"
+         y="190.90143"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'MS Gothic';-inkscape-font-specification:'MS Gothic';stroke-width:0.06466316"
          id="tspan1785-0">ON/OFF</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.58652663px;line-height:1.25;font-family:'MS Gothic';-inkscape-font-specification:'MS Gothic';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.06466316"
        x="117.02744"
-       y="206.04913"
+       y="190.88989"
        id="text1783-4-4"
        transform="scale(1.3021573,0.76795638)"
        inkscape:export-filename="C:\Users\rahul\Desktop\text1783-4-1-0-2.png"
@@ -1466,12 +1496,12 @@
        inkscape:export-ydpi="133.79437"><tspan
          sodipodi:role="line"
          x="117.02744"
-         y="206.04913"
+         y="190.88989"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'MS Gothic';-inkscape-font-specification:'MS Gothic';stroke-width:0.06466316"
          id="tspan1785-0-5">SOUND</tspan></text>
     <path
        style="fill:none;stroke:#000000;stroke-width:0.30000001;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow2Mend)"
-       d="m 165.43984,164.76098 c -6.8543,3.33556 -6.81252,12.74669 -0.18328,16.0917"
+       d="m 165.43984,153.11924 c -6.8543,3.33556 -6.81252,12.74669 -0.18328,16.0917"
        id="path1043"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="cc"
@@ -1480,7 +1510,7 @@
        inkscape:export-ydpi="133.79437" />
     <path
        style="fill:none;stroke:#000000;stroke-width:0.30000001;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow2Mend-4)"
-       d="m 172.41928,164.76098 c 6.8543,3.33556 6.81252,12.74669 0.18328,16.0917"
+       d="m 172.41928,153.11924 c 6.8543,3.33556 6.81252,12.74669 0.18328,16.0917"
        id="path1043-9"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="cc"
@@ -1491,7 +1521,7 @@
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.58652663px;line-height:1.25;font-family:'MS Gothic';-inkscape-font-specification:'MS Gothic';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.06466316"
        x="126.15704"
-       y="240.97183"
+       y="225.81259"
        id="text1783-4-44"
        transform="scale(1.3021573,0.76795638)"
        inkscape:export-filename="C:\Users\rahul\Desktop\text1783-4-1-0-2.png"
@@ -1499,7 +1529,7 @@
        inkscape:export-ydpi="133.79437"><tspan
          sodipodi:role="line"
          x="126.15704"
-         y="240.97183"
+         y="225.81259"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'MS Gothic';-inkscape-font-specification:'MS Gothic';stroke-width:0.06466316"
          id="tspan1785-0-6">ROTATE</tspan></text>
     <path
@@ -1546,7 +1576,7 @@
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.58652663px;line-height:1.25;font-family:'MS Gothic';-inkscape-font-specification:'MS Gothic';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.06466316"
        x="81.309616"
-       y="237.49156"
+       y="222.33232"
        id="text1783-4-1"
        transform="scale(1.3021573,0.76795638)"
        inkscape:export-filename="C:\Users\rahul\Desktop\text1783-4-1-0-2.png"
@@ -1554,14 +1584,14 @@
        inkscape:export-ydpi="133.79437"><tspan
          sodipodi:role="line"
          x="81.309616"
-         y="237.49156"
+         y="222.33232"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'MS Gothic';-inkscape-font-specification:'MS Gothic';stroke-width:0.06466316"
          id="tspan1785-0-0">LEFT</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.58652663px;line-height:1.25;font-family:'MS Gothic';-inkscape-font-specification:'MS Gothic';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.06466316"
        x="89.827553"
-       y="250.54257"
+       y="235.38333"
        id="text1783-4-1-0"
        transform="scale(1.3021573,0.76795638)"
        inkscape:export-filename="C:\Users\rahul\Desktop\text1783-4-1-0-2.png"
@@ -1569,14 +1599,14 @@
        inkscape:export-ydpi="133.79437"><tspan
          sodipodi:role="line"
          x="89.827553"
-         y="250.54257"
+         y="235.38333"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'MS Gothic';-inkscape-font-specification:'MS Gothic';stroke-width:0.06466316"
          id="tspan1785-0-0-9">DOWN</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.58652663px;line-height:1.25;font-family:'MS Gothic';-inkscape-font-specification:'MS Gothic';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.06466316"
        x="97.729729"
-       y="238.0136"
+       y="222.85435"
        id="text1783-4-1-0-2"
        transform="scale(1.3021573,0.76795638)"
        inkscape:export-filename="C:\Users\rahul\Desktop\text1783-4-1-0-2.png"
@@ -1584,7 +1614,7 @@
        inkscape:export-ydpi="133.79437"><tspan
          sodipodi:role="line"
          x="97.729729"
-         y="238.0136"
+         y="222.85435"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'MS Gothic';-inkscape-font-specification:'MS Gothic';stroke-width:0.06466316"
          id="tspan1785-0-0-9-9">RIGHT</tspan></text>
   </g>
