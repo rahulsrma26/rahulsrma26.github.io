@@ -8,7 +8,7 @@ Gate 2011 detailed answers [Gate-2011-Solution][2]
 
 [Simulations/Turing Machine][3]
 
-[Coding funda][4]
+New website is coming soon
 
 [Research][5]
 
