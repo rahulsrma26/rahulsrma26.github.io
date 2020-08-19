@@ -120,7 +120,7 @@ Technologies:
 &lt;link href=&quot;/css/lightbox.min.css&quot; rel=&quot;stylesheet&quot;&gt;
 &lt;script src=&quot;/scripts/lightbox.min.js&quot;&gt;&lt;/script&gt;
 
-&lt;p&gt;This article shows a readable way of representing matrix without loosing performance in C++.&lt;/p&gt;
+&lt;p&gt;This article shows a readable way of representing a matrix without losing performance in C++.&lt;/p&gt;
 &lt;hr&gt;
 &lt;h2 id=&quot;table-of-content&quot;&gt;Table of content&lt;/h2&gt;
 &lt;ul&gt;
@@ -131,8 +131,8 @@ Technologies:
 &lt;hr&gt;
 &lt;h1 id=&quot;the-problem&quot;&gt;The Problem&lt;/h1&gt;
 
-&lt;p&gt;Most of people, who has to deal with the matrices in C++, would be familiar with this problem.&lt;/p&gt;
-&lt;p&gt;I’m listing two of the most popular ways for representing matrix. One excels in readability while other in performance.&lt;/p&gt;
+&lt;p&gt;Most people, who has to deal with the matrices in C++, would be familiar with this problem.&lt;/p&gt;
+&lt;p&gt;I’m listing two of the most popular ways for representing matrix. One excels in readability while others in performance.&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;p&gt;First way is to use vector of vector.&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&quot;language-cpp&quot;&gt;  &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;built_in&quot;&gt;vector&lt;/span&gt;&amp;lt;&lt;span class=&quot;built_in&quot;&gt;vector&lt;/span&gt;&amp;lt;&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt;&amp;gt;&amp;gt; &lt;span class=&quot;title&quot;&gt;matrix&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(rows, &lt;span class=&quot;built_in&quot;&gt;vector&lt;/span&gt;&amp;lt;&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt;&amp;gt;(cols))&lt;/span&gt;&lt;/span&gt;;
@@ -148,7 +148,7 @@ Technologies:
   &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt;(&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; i = &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;; i &amp;lt; rows; i++)
       &lt;span class=&quot;keyword&quot;&gt;delete&lt;/span&gt; [] matrix[i];
   &lt;span class=&quot;keyword&quot;&gt;delete&lt;/span&gt; [] matrix;&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;It’s basically an array of arrays. Every element of outer array points to another array of integers. That’s why you can reference it two times. But, since every array is separately allocated, to access the array we must have to go to the elements of outer array first and then inner ones. Also, there will be no guarantee that every row will be adjacent to each other in memory. They can be scattered across the heap.&lt;/p&gt;
+&lt;p&gt;It’s basically an array of arrays. Every element of the outer array points to another array of integers. That’s why you can reference it two times. But, since every array is separately allocated, to access the array we must have to go to the elements of the outer array first and then inner ones. Also, there will be no guarantee that every row will be adjacent to each other in memory. They can be scattered across the heap.&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p&gt;Second way is to use C style array.&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&quot;language-cpp&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt;* matrix = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt;[rows*cols];
@@ -159,9 +159,9 @@ Technologies:
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;h2 id=&quot;performance&quot;&gt;Performance&lt;/h2&gt;
-&lt;p&gt;C style array access should perform better than vector style access. As, vector style has to refer two times to access an element, the address of matrix (outer array) can be saved in register but elements has to come from memory (or cache). The other problem is that, at the end of a row next row could be anywhere, and pre-fetcher can not predict next fetch.&lt;/p&gt;
-&lt;p&gt;It’s hard to measure the general performance since the use case varies a lot. But to get some idea I’m considering two types of algorithm with square and rectangular matrices. All the results are compiler on GCC 7.2 with c++14 and -O3 flags on linux x86 machine.
-For the simplicity sake we have fixed number of rows and columns but it can be easily changed to general inputs.&lt;/p&gt;
+&lt;p&gt;C style array access should perform better than vector style access. As vector style has to refer two times to access an element, the address of matrix (outer array) can be saved in the register but elements have to come from memory (or cache). The other problem is that at the end of a row next row could be anywhere, and the pre-fetcher can not predict the next fetch.&lt;/p&gt;
+&lt;p&gt;It’s hard to measure general performance since the use case varies a lot. But to get some idea I’m considering two types of algorithms with square and rectangular matrices. All the results are compiler on GCC 7.2 with c++14 and -O3 flags on linux x86 machine.
+For simplicity’s sake, we have a fixed number of rows and columns but it can be easily changed to general inputs.&lt;/p&gt;
 &lt;h2 id=&quot;sum-of-all-elements&quot;&gt;Sum of all elements&lt;/h2&gt;
 &lt;p&gt;Let us take an example of calculating the sum of all the elements in a matrix. Here are our two popular approaches:&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&quot;language-cpp&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// Vector style code for a square matrix&lt;/span&gt;
@@ -189,9 +189,9 @@ See this benchmark on &lt;a href=&quot;http://quick-bench.com/GXUG06sZDLCrGsOogF
 &lt;a href=&quot;sum_rectangle_1.png&quot; data-lightbox=&quot;sum_1&quot; data-title=&quot;Sum of elements (1024x256)&quot;&gt;
 &lt;img src=&quot;/articles/representing-matrix-in-cpp/sum_rectangle_1.png&quot; alt=&quot;sum benchmark&quot;&gt;&lt;/a&gt;
 See this benchmark on &lt;a href=&quot;http://quick-bench.com/ekNZpPxwiw4wYtqOV51vPF8CXUo&quot; target=&quot;_blank&quot;&gt;quick-bench&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;As you can see the difference is not much. I can live with that for most of the programs. However, transpose yields a complete different story.&lt;/p&gt;
+&lt;p&gt;As you can see the difference is not much. I can live with that for most of the programs. However, transpose yields a completely different story.&lt;/p&gt;
 &lt;h2 id=&quot;transpose-of-all-elements&quot;&gt;Transpose of all elements&lt;/h2&gt;
-&lt;p&gt;Let us also take an example of transposing a matrix. Which will have completely different access pattern then sum. Here are our two popular approaches:&lt;/p&gt;
+&lt;p&gt;Let us also take an example of transposing a matrix. Which will have a completely different access pattern then sum. Here are our two popular approaches:&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&quot;language-cpp&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// Vector style code for a square matrix&lt;/span&gt;
 &lt;span class=&quot;comment&quot;&gt;// Similar thing can be achieved in C by int**&lt;/span&gt;
 &lt;span class=&quot;keyword&quot;&gt;using&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;namespace&lt;/span&gt; Matrix = &lt;span class=&quot;built_in&quot;&gt;vector&lt;/span&gt;&amp;lt;&lt;span class=&quot;built_in&quot;&gt;vector&lt;/span&gt;&amp;lt;&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt;&amp;gt;&amp;gt;;
@@ -243,7 +243,7 @@ See this benchmark on &lt;a href=&quot;http://quick-bench.com/IyZq2RwP_RtZJpC4B8
     }
 };
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Almost all the compilers today can optimize away the referencing and dereferencing of the same array. The assembly code generated by it is virtually same as the C style version.&lt;/p&gt;
+&lt;p&gt;Almost all the compilers today can optimize away the referencing and dereferencing of the same array. The assembly code generated by it is virtually the same as the C style version.&lt;/p&gt;
 &lt;p&gt;So, how well it performs.&lt;/p&gt;
 &lt;h2 id=&quot;sum-of-all-elements&quot;&gt;Sum of all elements&lt;/h2&gt;
 &lt;p&gt;Results for a square matrix of size 512*512
