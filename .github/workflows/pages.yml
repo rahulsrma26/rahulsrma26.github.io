@@ -18,15 +18,16 @@ jobs:
     - uses: actions/setup-node@v1
       with:
         node-version: '12'
-    - run: npm ci
-    - run: npm install -g wintersmith
     
-    - name: Wintersmith Build
-      run: wintersmith build
+    - run: npm install -g gatsby-cli
+    - run: npm ci
+    
+    - name: Gatsby Build
+      run: gatsby build
 
     - name: Deploy
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./build
+        publish_dir: ./public
         publish_branch: master  # deploying branch
