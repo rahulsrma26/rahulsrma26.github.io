@@ -1,0 +1,822 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="1024"
+   height="512"
+   version="1.1"
+   id="svg76"
+   sodipodi:docname="gate2011Q39b.svg"
+   inkscape:version="1.0 (1.0+r73+1)">
+  <metadata
+     id="metadata82">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs80" />
+  <sodipodi:namedview
+     inkscape:guide-bbox="true"
+     showguides="true"
+     inkscape:document-rotation="0"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="2560"
+     inkscape:window-height="1376"
+     id="namedview78"
+     showgrid="false"
+     inkscape:zoom="1.1552357"
+     inkscape:cx="328.93736"
+     inkscape:cy="251.09935"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg76" />
+  <g
+     style="stroke-width:3;stroke-miterlimit:4;stroke-dasharray:none"
+     transform="translate(-116.36813,-55.656754)"
+     id="g961">
+    <circle
+       style="stroke-width:3;stroke-miterlimit:4;stroke-dasharray:none"
+       r="30"
+       stroke="#000000"
+       stroke-width="1"
+       fill="none"
+       cx="212.5"
+       cy="153.5"
+       id="ellipse866" />
+    <text
+       style="stroke-width:3;stroke-miterlimit:4;stroke-dasharray:none"
+       x="207.5"
+       y="159.5"
+       font-family="'Times New Roman'"
+       font-size="20px"
+       id="text868">p</text>
+    <circle
+       style="stroke-width:3;stroke-miterlimit:4;stroke-dasharray:none"
+       r="30"
+       stroke="#000000"
+       stroke-width="1"
+       fill="none"
+       cx="378.5"
+       cy="153.5"
+       id="ellipse870" />
+    <text
+       style="stroke-width:3;stroke-miterlimit:4;stroke-dasharray:none"
+       x="373.5"
+       y="159.5"
+       font-family="'Times New Roman'"
+       font-size="20px"
+       id="text872">q</text>
+    <circle
+       style="stroke-width:3;stroke-miterlimit:4;stroke-dasharray:none"
+       r="30"
+       stroke="#000000"
+       stroke-width="1"
+       fill="none"
+       cx="547.5"
+       cy="153.5"
+       id="ellipse874" />
+    <text
+       style="stroke-width:3;stroke-miterlimit:4;stroke-dasharray:none"
+       x="544.5"
+       y="159.5"
+       font-family="'Times New Roman'"
+       font-size="20px"
+       id="text876">r</text>
+    <circle
+       style="stroke-width:3;stroke-miterlimit:4;stroke-dasharray:none"
+       r="30"
+       stroke="#000000"
+       stroke-width="1"
+       fill="none"
+       cx="302.5"
+       cy="271.5"
+       id="ellipse878" />
+    <text
+       style="stroke-width:3;stroke-miterlimit:4;stroke-dasharray:none"
+       x="298.5"
+       y="277.5"
+       font-family="'Times New Roman'"
+       font-size="20px"
+       id="text880">s</text>
+    <circle
+       style="stroke-width:3;stroke-miterlimit:4;stroke-dasharray:none"
+       r="24"
+       stroke="#000000"
+       stroke-width="1"
+       fill="none"
+       cx="302.5"
+       cy="271.5"
+       id="ellipse882" />
+    <polygon
+       style="stroke-width:3;stroke-miterlimit:4;stroke-dasharray:none"
+       stroke="#000000"
+       stroke-width="1"
+       points="348.5,153.5 242.5,153.5 "
+       id="polygon884" />
+    <polygon
+       style="stroke-width:3;stroke-miterlimit:4;stroke-dasharray:none"
+       fill="#000000"
+       stroke-width="1"
+       points="348.5,153.5 340.5,148.5 340.5,158.5 "
+       id="polygon886" />
+    <text
+       style="stroke-width:3;stroke-miterlimit:4;stroke-dasharray:none"
+       x="290.5"
+       y="174.5"
+       font-family="'Times New Roman'"
+       font-size="20px"
+       id="text888">b</text>
+    <polygon
+       style="stroke-width:3;stroke-miterlimit:4;stroke-dasharray:none"
+       stroke="#000000"
+       stroke-width="1"
+       points="517.5,153.5 408.5,153.5 "
+       id="polygon890" />
+    <polygon
+       style="stroke-width:3;stroke-miterlimit:4;stroke-dasharray:none"
+       fill="#000000"
+       stroke-width="1"
+       points="517.5,153.5 509.5,148.5 509.5,158.5 "
+       id="polygon892" />
+    <text
+       style="stroke-width:3;stroke-miterlimit:4;stroke-dasharray:none"
+       x="458.5"
+       y="174.5"
+       font-family="'Times New Roman'"
+       font-size="20px"
+       id="text894">b</text>
+    <path
+       style="stroke-width:3;stroke-miterlimit:4;stroke-dasharray:none"
+       stroke="#000000"
+       stroke-width="1"
+       fill="none"
+       d="m 554.645,124.484 a 22.5,22.5 0 1 1 20.232,17.037"
+       id="path896" />
+    <text
+       style="stroke-width:3;stroke-miterlimit:4;stroke-dasharray:none"
+       x="596.5"
+       y="92.5"
+       font-family="'Times New Roman'"
+       font-size="20px"
+       id="text898">a,b</text>
+    <polygon
+       style="stroke-width:3;stroke-miterlimit:4;stroke-dasharray:none"
+       fill="#000000"
+       stroke-width="1"
+       points="574.877,141.521 583.844,144.453 581.442,134.746 "
+       id="polygon900" />
+    <path
+       style="stroke-width:3;stroke-miterlimit:4;stroke-dasharray:none"
+       stroke="#000000"
+       stroke-width="1"
+       fill="none"
+       d="m 329.297,258.275 a 22.5,22.5 0 1 1 0,26.45"
+       id="path902" />
+    <text
+       style="stroke-width:3;stroke-miterlimit:4;stroke-dasharray:none"
+       x="375.5"
+       y="277.5"
+       font-family="'Times New Roman'"
+       font-size="20px"
+       id="text904">a,b</text>
+    <polygon
+       style="stroke-width:3;stroke-miterlimit:4;stroke-dasharray:none"
+       fill="#000000"
+       stroke-width="1"
+       points="329.297,284.725 332.83,293.473 338.708,285.382 "
+       id="polygon906" />
+    <polygon
+       style="stroke-width:3;stroke-miterlimit:4;stroke-dasharray:none"
+       stroke="#000000"
+       stroke-width="1"
+       points="284.307,247.646 230.693,177.354 "
+       id="polygon908" />
+    <polygon
+       style="stroke-width:3;stroke-miterlimit:4;stroke-dasharray:none"
+       fill="#000000"
+       stroke-width="1"
+       points="284.307,247.646 283.431,238.253 275.479,244.318 "
+       id="polygon910" />
+    <text
+       style="stroke-width:3;stroke-miterlimit:4;stroke-dasharray:none"
+       x="242.5"
+       y="232.5"
+       font-family="'Times New Roman'"
+       font-size="20px"
+       id="text912">a</text>
+    <polygon
+       style="stroke-width:3;stroke-miterlimit:4;stroke-dasharray:none"
+       stroke="#000000"
+       stroke-width="1"
+       points="185.913,139.602 168.5,130.5 "
+       id="polygon914" />
+    <polygon
+       style="stroke-width:3;stroke-miterlimit:4;stroke-dasharray:none"
+       fill="#000000"
+       stroke-width="1"
+       points="185.913,139.602 181.14,131.465 176.507,140.327 "
+       id="polygon916" />
+    <polygon
+       style="stroke-width:3;stroke-miterlimit:4;stroke-dasharray:none"
+       stroke="#000000"
+       stroke-width="1"
+       points="318.744,246.279 362.256,178.721 "
+       id="polygon918" />
+    <polygon
+       style="stroke-width:3;stroke-miterlimit:4;stroke-dasharray:none"
+       fill="#000000"
+       stroke-width="1"
+       points="318.744,246.279 327.28,242.26 318.873,236.845 "
+       id="polygon920" />
+    <text
+       style="stroke-width:3;stroke-miterlimit:4;stroke-dasharray:none"
+       x="325.5"
+       y="205.5"
+       font-family="'Times New Roman'"
+       font-size="20px"
+       id="text922">a</text>
+  </g>
+  <g
+     style="stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none"
+     transform="translate(416.68635,-3.612246)"
+     id="g1052">
+    <circle
+       style="stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none"
+       r="30"
+       stroke="#000000"
+       stroke-width="1"
+       fill="none"
+       cx="212.5"
+       cy="195.5"
+       id="ellipse963" />
+    <text
+       style="stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none"
+       x="207.5"
+       y="201.5"
+       font-family="'Times New Roman'"
+       font-size="20px"
+       id="text965">p</text>
+    <circle
+       style="stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none"
+       r="30"
+       stroke="#000000"
+       stroke-width="1"
+       fill="none"
+       cx="360.5"
+       cy="195.5"
+       id="ellipse967" />
+    <text
+       style="stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none"
+       x="355.5"
+       y="201.5"
+       font-family="'Times New Roman'"
+       font-size="20px"
+       id="text969">q</text>
+    <circle
+       style="stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none"
+       r="30"
+       stroke="#000000"
+       stroke-width="1"
+       fill="none"
+       cx="449.5"
+       cy="83.5"
+       id="ellipse971" />
+    <text
+       style="stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none"
+       x="445.5"
+       y="89.5"
+       font-family="'Times New Roman'"
+       font-size="20px"
+       id="text973">s</text>
+    <circle
+       style="stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none"
+       r="24"
+       stroke="#000000"
+       stroke-width="1"
+       fill="none"
+       cx="449.5"
+       cy="83.5"
+       id="ellipse975" />
+    <circle
+       style="stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none"
+       r="30"
+       stroke="#000000"
+       stroke-width="1"
+       fill="none"
+       cx="509.5"
+       cy="195.5"
+       id="ellipse977" />
+    <text
+       style="stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none"
+       x="506.5"
+       y="201.5"
+       font-family="'Times New Roman'"
+       font-size="20px"
+       id="text979">r</text>
+    <circle
+       style="stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none"
+       r="24"
+       stroke="#000000"
+       stroke-width="1"
+       fill="none"
+       cx="509.5"
+       cy="195.5"
+       id="ellipse981" />
+    <polygon
+       style="stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none"
+       stroke="#000000"
+       stroke-width="1"
+       points="242.5,195.5 330.5,195.5 "
+       id="polygon983" />
+    <polygon
+       style="stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none"
+       fill="#000000"
+       stroke-width="1"
+       points="322.5,200.5 330.5,195.5 322.5,190.5 "
+       id="polygon985" />
+    <text
+       style="stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none"
+       x="274.5"
+       y="216.5"
+       font-family="'Times New Roman'"
+       font-size="20px"
+       id="text987">a,b</text>
+    <path
+       style="stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none"
+       stroke="#000000"
+       stroke-width="1"
+       fill="none"
+       d="m 476.297,70.275 a 22.5,22.5 0 1 1 0,26.45"
+       id="path989" />
+    <text
+       style="stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none"
+       x="522.5"
+       y="89.5"
+       font-family="'Times New Roman'"
+       font-size="20px"
+       id="text991">a,b</text>
+    <polygon
+       style="stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none"
+       fill="#000000"
+       stroke-width="1"
+       points="485.708,97.382 476.297,96.725 479.83,105.473 "
+       id="polygon993" />
+    <polygon
+       style="stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none"
+       stroke="#000000"
+       stroke-width="1"
+       points="168.5,172.5 185.913,181.602 "
+       id="polygon995" />
+    <polygon
+       style="stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none"
+       fill="#000000"
+       stroke-width="1"
+       points="176.507,182.327 185.913,181.602 181.14,173.465 "
+       id="polygon997" />
+    <polygon
+       style="stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none"
+       stroke="#000000"
+       stroke-width="1"
+       points="379.164,172.013 430.836,106.987 "
+       id="polygon999" />
+    <polygon
+       style="stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none"
+       fill="#000000"
+       stroke-width="1"
+       points="429.773,116.361 430.836,106.987 421.944,110.14 "
+       id="polygon1001" />
+    <text
+       style="stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none"
+       x="410.5"
+       y="159.5"
+       font-family="'Times New Roman'"
+       font-size="20px"
+       id="text1003">b</text>
+    <path
+       style="stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none"
+       stroke="#000000"
+       stroke-width="1"
+       fill="none"
+       d="m 529.295,173.113 a 22.5,22.5 0 1 1 10.014,24.481"
+       id="path1005" />
+    <text
+       style="stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none"
+       x="579.5"
+       y="166.5"
+       font-family="'Times New Roman'"
+       font-size="20px"
+       id="text1007">a,b</text>
+    <polygon
+       style="stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none"
+       fill="#000000"
+       stroke-width="1"
+       points="548.269,194.639 539.309,197.594 545.892,204.353 "
+       id="polygon1009" />
+    <polygon
+       style="stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none"
+       stroke="#000000"
+       stroke-width="1"
+       points="390.5,195.5 479.5,195.5 "
+       id="polygon1011" />
+    <polygon
+       style="stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none"
+       fill="#000000"
+       stroke-width="1"
+       points="471.5,200.5 479.5,195.5 471.5,190.5 "
+       id="polygon1013" />
+    <text
+       style="stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none"
+       x="430.5"
+       y="216.5"
+       font-family="'Times New Roman'"
+       font-size="20px"
+       id="text1015">a</text>
+  </g>
+  <g
+     style="stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none"
+     transform="translate(-116.36813,262.34325)"
+     id="g1125">
+    <circle
+       style="stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none"
+       r="30"
+       stroke="#000000"
+       stroke-width="1"
+       fill="none"
+       cx="212.5"
+       cy="195.5"
+       id="ellipse1054" />
+    <text
+       style="stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none"
+       x="207.5"
+       y="201.5"
+       font-family="'Times New Roman'"
+       font-size="20px"
+       id="text1056">p</text>
+    <circle
+       style="stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none"
+       r="30"
+       stroke="#000000"
+       stroke-width="1"
+       fill="none"
+       cx="360.5"
+       cy="195.5"
+       id="ellipse1058" />
+    <text
+       style="stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none"
+       x="355.5"
+       y="201.5"
+       font-family="'Times New Roman'"
+       font-size="20px"
+       id="text1060">q</text>
+    <circle
+       style="stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none"
+       r="24"
+       stroke="#000000"
+       stroke-width="1"
+       fill="none"
+       cx="360.5"
+       cy="195.5"
+       id="ellipse1062" />
+    <circle
+       style="stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none"
+       r="30"
+       stroke="#000000"
+       stroke-width="1"
+       fill="none"
+       cx="509.5"
+       cy="195.5"
+       id="ellipse1064" />
+    <text
+       style="stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none"
+       x="506.5"
+       y="201.5"
+       font-family="'Times New Roman'"
+       font-size="20px"
+       id="text1066">r</text>
+    <polygon
+       style="stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none"
+       stroke="#000000"
+       stroke-width="1"
+       points="242.5,195.5 330.5,195.5 "
+       id="polygon1068" />
+    <polygon
+       style="stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none"
+       fill="#000000"
+       stroke-width="1"
+       points="330.5,195.5 322.5,190.5 322.5,200.5 "
+       id="polygon1070" />
+    <text
+       style="stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none"
+       x="274.5"
+       y="186.5"
+       font-family="'Times New Roman'"
+       font-size="20px"
+       id="text1072">a,b</text>
+    <polygon
+       style="stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none"
+       stroke="#000000"
+       stroke-width="1"
+       points="168.5,172.5 185.913,181.602 "
+       id="polygon1074" />
+    <polygon
+       style="stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none"
+       fill="#000000"
+       stroke-width="1"
+       points="185.913,181.602 181.14,173.465 176.507,182.327 "
+       id="polygon1076" />
+    <path
+       style="stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none"
+       stroke="#000000"
+       stroke-width="1"
+       fill="none"
+       d="m 496.275,168.703 a 22.5,22.5 0 1 1 26.45,0"
+       id="path1078" />
+    <text
+       style="stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none"
+       x="497.5"
+       y="119.5"
+       font-family="'Times New Roman'"
+       font-size="20px"
+       id="text1080">a,b</text>
+    <polygon
+       style="stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none"
+       fill="#000000"
+       stroke-width="1"
+       points="522.725,168.703 531.473,165.17 523.382,159.292 "
+       id="polygon1082" />
+    <polygon
+       style="stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none"
+       stroke="#000000"
+       stroke-width="1"
+       points="390.5,195.5 479.5,195.5 "
+       id="polygon1084" />
+    <polygon
+       style="stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none"
+       fill="#000000"
+       stroke-width="1"
+       points="479.5,195.5 471.5,190.5 471.5,200.5 "
+       id="polygon1086" />
+    <text
+       style="stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none"
+       x="430.5"
+       y="216.5"
+       font-family="'Times New Roman'"
+       font-size="20px"
+       id="text1088">a</text>
+    <path
+       style="stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none"
+       stroke="#000000"
+       stroke-width="1"
+       fill="none"
+       d="m 347.275,168.703 a 22.5,22.5 0 1 1 26.45,0"
+       id="path1090" />
+    <text
+       style="stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none"
+       x="348.5"
+       y="119.5"
+       font-family="'Times New Roman'"
+       font-size="20px"
+       id="text1092">a,b</text>
+    <polygon
+       style="stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none"
+       fill="#000000"
+       stroke-width="1"
+       points="373.725,168.703 382.473,165.17 374.382,159.292 "
+       id="polygon1094" />
+  </g>
+  <g
+     style="stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none"
+     transform="translate(417.14087,186.79025)"
+     id="g1209">
+    <circle
+       style="stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none"
+       r="30"
+       stroke="#000000"
+       stroke-width="1"
+       fill="none"
+       cx="212.5"
+       cy="153.5"
+       id="ellipse1129" />
+    <text
+       style="stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none"
+       x="207.5"
+       y="159.5"
+       font-family="'Times New Roman'"
+       font-size="20px"
+       id="text1131">p</text>
+    <circle
+       style="stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none"
+       r="30"
+       stroke="#000000"
+       stroke-width="1"
+       fill="none"
+       cx="378.5"
+       cy="153.5"
+       id="ellipse1133" />
+    <text
+       style="stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none"
+       x="373.5"
+       y="159.5"
+       font-family="'Times New Roman'"
+       font-size="20px"
+       id="text1135">q</text>
+    <circle
+       style="stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none"
+       r="30"
+       stroke="#000000"
+       stroke-width="1"
+       fill="none"
+       cx="302.5"
+       cy="271.5"
+       id="ellipse1137" />
+    <text
+       style="stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none"
+       x="298.5"
+       y="277.5"
+       font-family="'Times New Roman'"
+       font-size="20px"
+       id="text1139">s</text>
+    <circle
+       style="stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none"
+       r="24"
+       stroke="#000000"
+       stroke-width="1"
+       fill="none"
+       cx="302.5"
+       cy="271.5"
+       id="ellipse1141" />
+    <polygon
+       style="stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none"
+       stroke="#000000"
+       stroke-width="1"
+       points="242.5,153.5 348.5,153.5 "
+       id="polygon1143" />
+    <polygon
+       style="stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none"
+       fill="#000000"
+       stroke-width="1"
+       points="340.5,148.5 340.5,158.5 348.5,153.5 "
+       id="polygon1145" />
+    <text
+       style="stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none"
+       x="290.5"
+       y="174.5"
+       font-family="'Times New Roman'"
+       font-size="20px"
+       id="text1147">b</text>
+    <path
+       style="stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none"
+       stroke="#000000"
+       stroke-width="1"
+       fill="none"
+       d="m 329.297,258.275 a 22.5,22.5 0 1 1 0,26.45"
+       id="path1149" />
+    <text
+       style="stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none"
+       x="375.5"
+       y="277.5"
+       font-family="'Times New Roman'"
+       font-size="20px"
+       id="text1151">a,b</text>
+    <polygon
+       style="stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none"
+       fill="#000000"
+       stroke-width="1"
+       points="332.83,293.473 338.708,285.382 329.297,284.725 "
+       id="polygon1153" />
+    <polygon
+       style="stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none"
+       stroke="#000000"
+       stroke-width="1"
+       points="230.693,177.354 284.307,247.646 "
+       id="polygon1155" />
+    <polygon
+       style="stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none"
+       fill="#000000"
+       stroke-width="1"
+       points="283.431,238.253 275.479,244.318 284.307,247.646 "
+       id="polygon1157" />
+    <text
+       style="stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none"
+       x="242.5"
+       y="232.5"
+       font-family="'Times New Roman'"
+       font-size="20px"
+       id="text1159">a</text>
+    <polygon
+       style="stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none"
+       stroke="#000000"
+       stroke-width="1"
+       points="168.5,130.5 185.913,139.602 "
+       id="polygon1161" />
+    <polygon
+       style="stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none"
+       fill="#000000"
+       stroke-width="1"
+       points="181.14,131.465 176.507,140.327 185.913,139.602 "
+       id="polygon1163" />
+    <polygon
+       style="stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none"
+       stroke="#000000"
+       stroke-width="1"
+       points="362.256,178.721 318.744,246.279 "
+       id="polygon1165" />
+    <polygon
+       style="stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none"
+       fill="#000000"
+       stroke-width="1"
+       points="327.28,242.26 318.873,236.845 318.744,246.279 "
+       id="polygon1167" />
+    <text
+       style="stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none"
+       x="325.5"
+       y="205.5"
+       font-family="'Times New Roman'"
+       font-size="20px"
+       id="text1169">a</text>
+    <path
+       style="stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none"
+       stroke="#000000"
+       stroke-width="1"
+       fill="none"
+       d="M 397.921,130.788 A 22.5,22.5 0 1 1 408.34,155.1"
+       id="path1171" />
+    <text
+       style="stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none"
+       x="447.5"
+       y="123.5"
+       font-family="'Times New Roman'"
+       font-size="20px"
+       id="text1173">b</text>
+    <polygon
+       style="stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none"
+       fill="#000000"
+       stroke-width="1"
+       points="415.033,161.748 417.249,151.997 408.34,155.1 "
+       id="polygon1175" />
+  </g>
+  <text
+     id="text1215"
+     y="46.621071"
+     x="13.960817"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:27.9832px;line-height:1.25;font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman, ';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.699581"
+     xml:space="preserve"><tspan
+       style="stroke-width:0.699581"
+       y="46.621071"
+       x="13.960817"
+       id="tspan1213"
+       sodipodi:role="line">(A)</tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:27.9832px;line-height:1.25;font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman, ';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.699581"
+     x="14.5597"
+     y="307.84921"
+     id="text1215-3"><tspan
+       sodipodi:role="line"
+       id="tspan1213-6"
+       x="14.5597"
+       y="307.84921"
+       style="stroke-width:0.699581">(C)</tspan></text>
+  <text
+     id="text1215-3-7"
+     y="308.55664"
+     x="534.10657"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:27.9832px;line-height:1.25;font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman, ';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.699581"
+     xml:space="preserve"><tspan
+       style="stroke-width:0.699581"
+       y="308.55664"
+       x="534.10657"
+       id="tspan1213-6-5"
+       sodipodi:role="line">(D)</tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:27.9832px;line-height:1.25;font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman, ';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.699581"
+     x="533.56909"
+     y="46.541241"
+     id="text1215-35"><tspan
+       sodipodi:role="line"
+       id="tspan1213-62"
+       x="533.56909"
+       y="46.541241"
+       style="stroke-width:0.699581">(B)</tspan></text>
+</svg>
