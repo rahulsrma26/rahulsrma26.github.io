@@ -1,7 +1,7 @@
 ---
 title: Python 3 Course
 date: 2020-05-07
-image: csglitz.png
+image: csglitz.jpg
 template: tutorial
 ---
 
