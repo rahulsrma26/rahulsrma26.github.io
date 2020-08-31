@@ -20,6 +20,7 @@ const NavBar = ({isOpen, action}) => {
     return (
         <NavBarStyle isOpen={isOpen}>
             <button id="navMenu" onClick={action}>
+                <span>MENU</span>
                 <FontAwesomeIcon icon={isOpen? faTimes: faBars} />
             </button>
             <nav>

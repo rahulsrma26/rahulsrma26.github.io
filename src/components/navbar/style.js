@@ -35,6 +35,13 @@ const NavBarStyle = styled.div`
         border: none;
         outline: none;
         display: none;
+        span {
+            margin-right: 0.5em;
+        }
+    }
+
+    #navMenu:hover{
+        color: ${props => props.theme.textAccent};
     }
 
     @media (orientation: portrait) {
