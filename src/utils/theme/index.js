@@ -10,12 +10,13 @@ const ThemeContext = React.createContext({
 // component that wraps entire app in gatsby-browser.js
 class ThemeContextWrapper extends React.Component {
 
-    componentDidMount() {
-        const now = new Date()
-        const time = now.getHours()
-        if (time > 6 && time < 19)
-            this.toggleTheme()
-    }    
+    // this is creating flicker
+    // componentDidMount() {
+    //     const now = new Date()
+    //     const time = now.getHours()
+    //     if (time > 6 && time < 19)
+    //         this.toggleTheme()
+    // }    
 
     constructor(props) {
         super(props)
@@ -30,7 +31,7 @@ class ThemeContextWrapper extends React.Component {
         }
 
         this.state = {
-            currentTheme: darkTheme,
+            currentTheme: lightTheme,
             transition: '0.5s',
             toggleTheme: this.toggleTheme,
         }
