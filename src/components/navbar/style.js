@@ -26,6 +26,7 @@ const NavBarStyle = styled.div`
         }
     }
     #navMenu {
+        font-family: Arial, Helvetica, sans-serif;
         transition: ${props => props.theme.transition};
         position: fixed;
         top: 0.5em;
