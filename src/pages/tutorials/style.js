@@ -10,7 +10,7 @@ const TutorialsStyle = styled.div`
             align-content: space-around;
             justify-content: space-around;
             display: grid;
-            grid-template-columns: repeat(2, minmax(25em, 40vw));
+            grid-template-columns: repeat(1, minmax(25em, 40vw));
             grid-gap: 1em;
         }
     }
