@@ -1,6 +1,6 @@
 ---
 title: Checkers
-date: 2020-01-19
+date: 2019-07-30
 template: project
 ---
 
