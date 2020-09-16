@@ -13,6 +13,7 @@ const FooterStyle = styled.div`
         border-top: 0.1em solid ${props => props.theme.textColor};
 
         .buildDate {
+            font-size: 0.6em;
             color: ${props => props.theme.bgColor2};
         }
 
