@@ -31,7 +31,7 @@ class ThemeContextWrapper extends React.Component {
         }
 
         this.state = {
-            currentTheme: lightTheme,
+            currentTheme: darkTheme,
             transition: '0.5s',
             toggleTheme: this.toggleTheme,
         }
