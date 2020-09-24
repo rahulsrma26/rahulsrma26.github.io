@@ -73,7 +73,7 @@ const ArticleStyle = styled.div`
         align-items: center;
 
         button {
-            margin-top:0.5em;
+            margin-top:0.6em;
             border: none;
             outline: none;
             cursor: pointer;
@@ -152,6 +152,7 @@ const ArticleStyle = styled.div`
             font-weight: 600;
             text-decoration: none;
             color: ${props => props.theme.textAccent};
+            text-shadow: 2px 2px 5px ${props => (props.theme.name === 'light' ? 'white' : 'black')};
         }
         a:hover {
             color: ${props => props.theme.textColor};
