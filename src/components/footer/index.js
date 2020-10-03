@@ -6,7 +6,7 @@ import ReactSVG from '../../assets/svgs/react.svg'
 import GatsbySVG from '../../assets/svgs/gatsby.svg'
 import StyledComponentsSVG from '../../assets/svgs/styled-components.svg'
 import MarkdownSVG from '../../assets/svgs/markdown.svg'
-import GitHubSVG from '../../assets/svgs/github.png'
+import GitHubSVG from '../../assets/svgs/github.svg'
 
 const Icon = ({ to, src, title }) => {
     return (
