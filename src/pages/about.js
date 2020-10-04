@@ -28,7 +28,9 @@ const AboutStyle = styled.div`
         // padding: 0.25em;
         // border: 0.05em solid ${props => props.theme.textColor};
         width: 100%;
-        padding-bottom: 2em;
+        margin-bottom: 2em;
+        border-radius: 1em;
+        box-shadow: 0px 0px 0.3em black;
     }
 
     @media (orientation: landscape) {
