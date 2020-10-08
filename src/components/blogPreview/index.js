@@ -5,13 +5,12 @@ import { Link } from 'gatsby'
 import BlogPreviewStyle from './style'
 import CommentBox from '../commentBox'
 
-const BlogPreview = ({ data }) => {
+const BlogPreview = ({ data, showComments }) => {
 
     const postUrl = `/${data.fields.postType}/${data.fields.slug}/`
 
     return (
         <BlogPreviewStyle>
-        
             <div className="date">
                 <span><Moment date={data.frontmatter.date} format="MMMM DD, YYYY" /></span>
             </div>
@@ -29,7 +28,9 @@ const BlogPreview = ({ data }) => {
                 <Link to={postUrl}>
                     <button className="accentBtn readMore">Read More →</button>
                 </Link>
-                <CommentBox url={postUrl} title={data.frontmatter.title} countOnly={true}/>
+                {
+                    showComments? (<CommentBox url={postUrl} title={data.frontmatter.title} countOnly={true}/>): (null)
+                }
             </div>
         </BlogPreviewStyle>
     )
@@ -37,6 +38,7 @@ const BlogPreview = ({ data }) => {
 
 BlogPreview.propTypes = {
     data: PropTypes.object.isRequired,
+    showComments: PropTypes.bool.isRequired,
 }
 
 export default BlogPreview

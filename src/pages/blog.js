@@ -37,7 +37,7 @@ const Blog = () => {
             <h2>All Articles</h2>
             <div className="blogList">
                 {data.allMarkdownRemark.nodes.map(node => (
-                    <BlogPreview key={node.id} data={node} />
+                    <BlogPreview key={node.id} data={node} showComments={true}/>
                 ))}
             </div>
         </Layout>
