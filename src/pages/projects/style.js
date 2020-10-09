@@ -42,7 +42,8 @@ const ProjectStyle = styled.div`
     }
 
     .projectListItem{
-        border: 0.1em dotted ${props => props.theme.bgColor2};
+        border: 0.2em solid ${props => props.theme.bgColor2};
+        border-radius: 1em;
         padding: 1em;
     }
 `
