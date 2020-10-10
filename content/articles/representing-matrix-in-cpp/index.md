@@ -1,6 +1,6 @@
 ---
 title: Representing Matrix in C++
-description: Usually, we access elements of a 2D array, that is saved in a continuous memory like array[row*N+column]. Which is not as readable as array[row][column]. But a vector of vector has performance issues. This article shows an object-oriented way of representing a matrix as a C++ class without losing performance. Quick-Bench charts are included to show the performance gain over various methods.
+description: Usually, we access elements of a 2D array, that is saved in a continuous memory like array[row*N+column]. Which is not as readable as array[row][column]. But a vector of vector has performance issues. This article shows an object-oriented way of representing a matrix as a C++ class without losing performance.
 image: preview.png
 author: Rahul Sharma
 date: 2017-11-11
