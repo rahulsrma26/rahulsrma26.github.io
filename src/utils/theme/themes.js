@@ -5,6 +5,7 @@ const lightTheme = {
     bgColor2: '#d2eaea',
     textColor: '#080708',
     textAccent: 'Teal',
+    linkShadow: '#a0ffff',
     bgAccent: 'PowderBlue',
 }
 
@@ -15,6 +16,7 @@ const darkTheme = {
     bgColor2: '#365059',
     textColor: 'Snow',
     textAccent: 'PowderBlue',
+    linkShadow: 'black',
     bgAccent: '#315B7D',
 }
 
