@@ -5,7 +5,7 @@ const lightTheme = {
     bgColor2: '#d2eaea',
     textColor: '#080708',
     textAccent: 'Teal',
-    linkShadow: '#a0ffff',
+    linkShadow: '#fff',
     bgAccent: 'PowderBlue',
 }
 
