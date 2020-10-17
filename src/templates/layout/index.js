@@ -6,6 +6,10 @@ import Header from '../../components/header'
 import Footer from '../../components/footer'
 import ThemeButton from '../../components/themeButton'
 
+import { config } from "@fortawesome/fontawesome-svg-core"
+import "@fortawesome/fontawesome-svg-core/styles.css"
+config.autoAddCss = false
+
 const Layout = ({ children }) => {
     const theme = useContext(ThemeContext)
     let [navIsOpen, toggleNav] = useState(false)

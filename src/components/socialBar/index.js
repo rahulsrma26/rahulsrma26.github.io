@@ -1,10 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-
-import { config } from "@fortawesome/fontawesome-svg-core"
-import "@fortawesome/fontawesome-svg-core/styles.css"
-config.autoAddCss = false
-
 import { faLinkedin, faYoutube, faSteam, faGithub, faInstagram, faDeviantart } from '@fortawesome/free-brands-svg-icons'
 import SocialBarStyle from './style'
 import SocialLink from '../socialLink'
