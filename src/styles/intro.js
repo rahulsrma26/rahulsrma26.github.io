@@ -10,9 +10,25 @@ const IntroStyle = styled.div`
         justify-content: center;
         margin: 0 auto 0;
 
+        a {
+            font-weight: 600;
+            text-decoration: none;
+            color: ${props => props.theme.textAccent};
+            text-shadow: 0 0 0.2em ${props => props.theme.linkShadow};
+        }
+        a:hover {
+            color: ${props => props.theme.textColor};
+        }
+
         .headline {
             color: ${props => props.theme.textColor};
             // letter-spacing: 0.1em;
+            p {
+                font-weight: 600;
+                font-size: 2em;
+                margin: 0;
+            }
+            margin-bottom: 1em;
         }
         
         .double_down_arrow{
