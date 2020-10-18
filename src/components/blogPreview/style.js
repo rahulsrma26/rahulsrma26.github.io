@@ -11,7 +11,13 @@ const BlogPreviewStyle = styled.div`
     }
 
     a {
+        font-weight: 600;
         text-decoration: none;
+        color: ${props => props.theme.textAccent};
+        text-shadow: 0 0 0.2em ${props => props.theme.linkShadow};
+    }
+    a:hover {
+        color: ${props => props.theme.textColor};
     }
 
     h3{
@@ -84,7 +90,7 @@ const BlogPreviewStyle = styled.div`
 
     .links{
         margin-top: 1em;
-        margin-bottom: 0.5em;
+        margin-bottom: 1em;
         display: flex;
         flex-direction: row;
         justify-content: space-between;

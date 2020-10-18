@@ -26,7 +26,7 @@ const BlogPreview = ({ data, showComments }) => {
             <p className="description">{data.frontmatter.description}</p>
             <div className="links">
                 <Link to={postUrl}>
-                    <button className="accentBtn readMore">Read More →</button>
+                    Read More →
                 </Link>
                 {
                     showComments? (<CommentBox url={postUrl} title={data.frontmatter.title} countOnly={true}/>): (null)
