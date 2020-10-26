@@ -36,7 +36,7 @@ header {
     margin: 0 auto;
     transition: ${props => props.theme.transition};
     background-color: ${props => props.theme.bgColor};
-    box-shadow: ${props => (props.isScrolled ? ('0px 0px 1vh ' + props.theme.textColor) : 'none')};
+    box-shadow: ${props => (props.isScrolled ? ('0px 0px 1vh black') : 'none')};
 }
 `
 
