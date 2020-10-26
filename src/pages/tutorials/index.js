@@ -26,8 +26,12 @@ const Tutorials = () => {
         }
     `)
 
+    const seo = {
+        title: 'Tutorials',
+    }
+
     return (
-        <Layout>
+        <Layout seo={seo}>
             <TutorialsStyle>
                 <div className="tutorialList">
                     {data.allMarkdownRemark.nodes.map((node, index) => (

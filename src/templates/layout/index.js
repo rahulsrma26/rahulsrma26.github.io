@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react'
 import { ThemeContext } from '../../utils/theme'
 import { ThemeProvider } from 'styled-components'
+import SEO from '../../utils/seo'
 import LayoutStyle from './style'
 import Header from '../../components/header'
 import Footer from '../../components/footer'
@@ -10,7 +11,7 @@ import { config } from "@fortawesome/fontawesome-svg-core"
 import "@fortawesome/fontawesome-svg-core/styles.css"
 config.autoAddCss = false
 
-const Layout = ({ children }) => {
+const Layout = ({ children, seo }) => {
     const theme = useContext(ThemeContext)
     let [navIsOpen, toggleNav] = useState(false)
 
@@ -44,6 +45,7 @@ const Layout = ({ children }) => {
     return (
         <ThemeProvider theme={theme.currentTheme}>
             <LayoutStyle>
+                <SEO {...seo} />
                 <Header navIsOpen={navIsOpen} navAction={navAction} />
                 <main onClick={navClose} onKeyDown={navClose}>{children}</main>
                 <ThemeButton />

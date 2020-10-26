@@ -103,9 +103,13 @@ export default function Home() {
             }
         }
     `)
+    
+    const seo = {
+        title: 'Home',
+    }
 
     return (
-        <Layout>
+        <Layout seo={seo}>
             <Intro />
             <AreasOfInterest />
             <h2>Recent Articles</h2>

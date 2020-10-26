@@ -19,8 +19,12 @@ const Projects = () => {
         }
     `)
 
+    const seo = {
+        title: 'Projects',
+    }
+
     return (
-        <Layout>
+        <Layout seo={seo}>
             <ProjectStyle>
                 <div className="projectList">
                     {data.allMarkdownRemark.nodes.map((node, index) => (

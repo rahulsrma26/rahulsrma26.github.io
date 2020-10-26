@@ -38,8 +38,13 @@ const Article = props => {
 
     const postUrl = `/${props.data.markdownRemark.fields.postType}/${props.data.markdownRemark.fields.slug}/`
 
+    const seo = {
+        title: props.data.markdownRemark.frontmatter.title,
+        desc: props.data.markdownRemark.frontmatter.description,
+    }
+
     return (
-        <Layout>
+        <Layout seo={seo}>
             <ArticleStyle>
                 <div id="frontmatter">
                     <h1>{props.data.markdownRemark.frontmatter.title}</h1>

@@ -32,8 +32,12 @@ const Blog = () => {
         }
     `)
 
+    const seo = {
+        title: 'Blog',
+    }
+
     return (
-        <Layout>
+        <Layout seo={seo}>
             <h2>All Articles</h2>
             <div className="blogList">
                 {data.allMarkdownRemark.nodes.map(node => (

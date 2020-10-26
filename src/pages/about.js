@@ -55,8 +55,13 @@ const AboutStyle = styled.div`
 `
 
 const About = () => {
+
+    const seo = {
+        title: 'About',
+    }
+
     return (
-        <Layout>
+        <Layout seo={seo}>
             <AboutStyle>
                 <div id="aboutme">
                     <img className='pic' src={AboutPic} alt='ProfilePic' />
