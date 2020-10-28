@@ -41,6 +41,7 @@ const Article = props => {
     const seo = {
         title: props.data.markdownRemark.frontmatter.title,
         desc: props.data.markdownRemark.frontmatter.description,
+        type: 'article',
     }
 
     return (

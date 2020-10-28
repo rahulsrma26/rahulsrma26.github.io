@@ -4,21 +4,28 @@ import { Helmet } from 'react-helmet'
 
 const SEO = ({ title, desc, meta, lang, type }) => {
     
-    const metaDescription = desc || `A full-stack ML Engineer. Works with DL, RL, ML and AI.`
+    const metaDescription = desc || `A full-stack ML Engineer. Ex-Microsoft, IISC, Indian Institute of Science. Works with DL, RL, ML and AI. Youtube: CSGLITZ`
 
-    const defaultTitle = `Rahul Sharma - Full Stack ML Engineer`
+    const pageTitle = title + (type === 'article' ? ' - Rahul Sharma' : ' | Rahul Sharma - Full Stack ML Engineer')
 
     return (
         <Helmet
             htmlAttributes={{
                 lang,
             }}
-            title={title}
-            titleTemplate={`%s | ${defaultTitle}`}
+            title={pageTitle}
             meta={[
+                {
+                    name: `email`,
+                    content: 'rahulsrma26@gmail.com',
+                },
                 {
                     name: `google-site-verification`,
                     content: 'XGiC2A6JxvD9Dpd1z7dzwB6lHkt2xzI3d_5Uutepg2Y',
+                },
+                {
+                    name: `keywords`,
+                    content: 'csglitz, rahul sharma, iisc, microsoft, bangalore, coer, facebook, vgl',
                 },
                 {
                     name: `description`,
@@ -26,7 +33,11 @@ const SEO = ({ title, desc, meta, lang, type }) => {
                 },
                 {
                     property: `og:title`,
-                    content: title,
+                    content: pageTitle,
+                },
+                {
+                    property: `twitter:title`,
+                    content: title + ' - Rahul Sharma (Ex-Microsoft, IISc, AI expert)',
                 },
                 {
                     property: `og:description`,
@@ -35,6 +46,10 @@ const SEO = ({ title, desc, meta, lang, type }) => {
                 {
                     property: `og:type`,
                     content: type || `website`,
+                },
+                {
+                    property: `og:site_name`,
+                    content: 'rahulsrma26.github.io',
                 },
             ].concat(meta)}
         />
