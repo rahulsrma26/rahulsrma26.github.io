@@ -11,6 +11,10 @@ module.exports = {
         title: 'Rahul Sharma',
         siteUrl: 'https://rahulsrma26.github.io',
         author: 'Rahul Sharma',
+        info: 'Full Stack ML Engineer',
+        description: 'Ex-Microsoft, IISC, Indian Institute of Science. Works with DL, RL, ML and AI. Youtube: CSGLITZ',
+        keywords: ['csglitz', 'rahul sharma', 'iisc', 'microsoft', 'bangalore', 'coer', 'facebook', 'vgl', 'rahulsrma26', 'welcometors'],
+        verification: 'XGiC2A6JxvD9Dpd1z7dzwB6lHkt2xzI3d_5Uutepg2Y',
     },
 
     plugins: [

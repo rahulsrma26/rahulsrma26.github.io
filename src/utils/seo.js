@@ -1,12 +1,28 @@
 import React from 'react'
+import { graphql, useStaticQuery } from 'gatsby'
 import PropTypes from 'prop-types'
 import { Helmet } from 'react-helmet'
 
-const SEO = ({ title, desc, meta, lang, type }) => {
-    
-    const metaDescription = desc || `A full-stack ML Engineer. Ex-Microsoft, IISC, Indian Institute of Science. Works with DL, RL, ML and AI. Youtube: CSGLITZ`
+const SEO = ({ title, desc, meta, lang, type, image }) => {
 
-    const pageTitle = title + (type === 'article' ? ' - Rahul Sharma' : ' | Rahul Sharma - Full Stack ML Engineer')
+    const data = useStaticQuery(graphql`
+        query {
+            site {
+                siteMetadata {
+                    siteUrl
+                    author
+                    info
+                    description
+                    keywords
+                    verification
+                }
+            }
+        }
+    `)
+    const site = data.site.siteMetadata;
+
+    const metaDescription = desc || `${site.info}. ${site.description}`
+    const pageTitle = title + (type === 'article' ? ` - ${site.author}` : ` | ${site.author} - ${site.info}`)
 
     return (
         <Helmet
@@ -21,11 +37,11 @@ const SEO = ({ title, desc, meta, lang, type }) => {
                 },
                 {
                     name: `google-site-verification`,
-                    content: 'XGiC2A6JxvD9Dpd1z7dzwB6lHkt2xzI3d_5Uutepg2Y',
+                    content: site.verification,
                 },
                 {
                     name: `keywords`,
-                    content: 'csglitz, rahul sharma, iisc, microsoft, bangalore, coer, facebook, vgl',
+                    content: site.keywords.join(","),
                 },
                 {
                     name: `description`,
@@ -36,8 +52,12 @@ const SEO = ({ title, desc, meta, lang, type }) => {
                     content: pageTitle,
                 },
                 {
+                    property: `og:image`,
+                    content: site.siteUrl + (image || require('../assets/img/cover.jpg')),
+                },
+                {
                     property: `twitter:title`,
-                    content: title + ' - Rahul Sharma (Ex-Microsoft, IISc, AI expert)',
+                    content: pageTitle,
                 },
                 {
                     property: `og:description`,
@@ -49,7 +69,7 @@ const SEO = ({ title, desc, meta, lang, type }) => {
                 },
                 {
                     property: `og:site_name`,
-                    content: 'rahulsrma26.github.io',
+                    content: (new URL(site.siteUrl)).hostname,
                 },
             ].concat(meta)}
         />
@@ -61,6 +81,7 @@ SEO.defaultProps = {
     meta: [],
     desc: ``,
     type: ``,
+    image: ``,
 }
 
 SEO.propTypes = {
@@ -69,6 +90,7 @@ SEO.propTypes = {
     meta: PropTypes.arrayOf(PropTypes.object),
     lang: PropTypes.string,
     type: PropTypes.string,
+    image: PropTypes.string,
 }
 
 export default SEO
