@@ -2,6 +2,7 @@ import React from 'react'
 import { graphql, useStaticQuery } from 'gatsby'
 import PropTypes from 'prop-types'
 import { Helmet } from 'react-helmet'
+import { useLocation } from "@reach/router"
 
 const SEO = ({ title, desc, meta, lang, type, image }) => {
 
@@ -21,6 +22,7 @@ const SEO = ({ title, desc, meta, lang, type, image }) => {
     `)
     const site = data.site.siteMetadata;
 
+    const { pathname } = useLocation()
     const metaDescription = desc || `${site.info}. ${site.description}`
     const pageTitle = title + (type === 'article' ? ` - ${site.author}` : ` | ${site.author} - ${site.info}`)
 
@@ -70,6 +72,10 @@ const SEO = ({ title, desc, meta, lang, type, image }) => {
                 {
                     property: `og:site_name`,
                     content: (new URL(site.siteUrl)).hostname,
+                },
+                {
+                    property: `og:url`,
+                    content: site.siteUrl + pathname,
                 },
             ].concat(meta)}
         />
