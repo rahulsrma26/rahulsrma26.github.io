@@ -15,6 +15,10 @@ export const query = graphql`
                 description
                 tags
                 date
+                image {
+                    id
+                    publicURL
+                }
             }
             fields {
                 slug
@@ -42,6 +46,7 @@ const Article = props => {
         title: props.data.markdownRemark.frontmatter.title,
         desc: props.data.markdownRemark.frontmatter.description,
         type: 'article',
+        image: props.data.markdownRemark.frontmatter.image.publicURL,
     }
 
     return (
@@ -70,7 +75,7 @@ const Article = props => {
                     }}
                 ></div>
                 <div id="blogFooter">
-                    <button onClick={scrollToTop}>
+                    <button onClick={scrollToTop} aria-label="Scroll to top">
                         <div className="double_up_arrow">&raquo;</div>
                     </button>
                     <CommentBox url={postUrl} title={props.data.markdownRemark.frontmatter.title} countOnly={false}/>
