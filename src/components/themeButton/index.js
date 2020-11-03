@@ -9,7 +9,7 @@ const ThemeButton = () => {
 
     return (
         <ThemeButtonStyle>
-            <button id="themeButton" onClick={themeData.toggleTheme}>
+            <button id="themeButton" onClick={themeData.toggleTheme} aria-label="Change Theme">
                 <FontAwesomeIcon icon={faLightbulb} />
             </button>
         </ThemeButtonStyle>

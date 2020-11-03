@@ -19,7 +19,7 @@ const NavLink = ({children, to}) => {
 const NavBar = ({isOpen, action}) => {
     return (
         <NavBarStyle isOpen={isOpen}>
-            <button id="navMenu" onClick={action}>
+            <button id="navMenu" onClick={action} aria-label="Menu">
                 <span>MENU</span>
                 <FontAwesomeIcon icon={isOpen? faTimes: faBars} />
             </button>
