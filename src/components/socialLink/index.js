@@ -9,6 +9,7 @@ const SocialLink = ({to, icon, size}) => {
             <a target="_blank" 
                 href={to}
                 rel="noreferrer"
+                aria-label={to}
             >
                 <FontAwesomeIcon icon={icon} size={size} />
             </a>
