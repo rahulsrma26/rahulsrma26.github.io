@@ -14,7 +14,6 @@ const FooterStyle = styled.div`
 
         .buildDate {
             font-size: 0.6em;
-            color: ${props => props.theme.bgColor2};
         }
 
         .typoSpan {
