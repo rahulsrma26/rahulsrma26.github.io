@@ -1,6 +1,6 @@
 ---
 title: GATE 2011 Solution
-description: This is my attempt to answer the questions appeared in GATE 2011 Computer Science paper. I have also included some tips and reference books. I cleared the exam with 35th rank.
+description: This is my attempt to answer the questions appeared in GATE 2011 Computer Science paper. I cleared the exam with 35th rank. I have included some tips and reference books for the GATE aspirants. I have also tried to give an explanation for most of the solutions.
 image: preview.png
 author: rahulsharma
 date: 2011-05-01
