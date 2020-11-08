@@ -34,6 +34,9 @@ const NavBar = ({isOpen, action}) => {
                     <NavLink to="/projects">
                         Projects
                     </NavLink>
+                    <NavLink to="/gallery">
+                        Gallery
+                    </NavLink>
                     <NavLink to="/about">
                         About
                     </NavLink>

@@ -32,6 +32,7 @@ module.exports = {
                 path: path.join(__dirname, 'content'),
             },
         },
+        'gatsby-transformer-sharp',
         'gatsby-plugin-sharp',
         {
             resolve: 'gatsby-transformer-remark',
