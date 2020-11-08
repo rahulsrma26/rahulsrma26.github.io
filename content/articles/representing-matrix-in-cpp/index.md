@@ -201,4 +201,10 @@ Results for a rectangular matrix of size 1024*256
 ![sum benchmark](transpose_rectangle_2.png)
 See this benchmark on <a href="http://quick-bench.com/PXQl8uW3Dk1R_pBelXFlFCMRxEY" target="_blank">quick-bench</a>
 
+---
+
+<h1 id="conclusion">Conclusion</h1>
+
+In conclusion, it is a good representation of 2D matrices. However, it is hard to the extent the same logic to 3D matrices.
+
 Separate code can be found <a href="transpose.cpp" target="_blank">here</a>
