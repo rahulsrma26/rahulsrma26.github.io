@@ -3,7 +3,7 @@ import { lightTheme, darkTheme } from './themes'
 
 const ThemeContext = React.createContext({
     lightTheme,
-    transition: '0.5s',
+    transition: '0.37s',
     toggleTheme: () => {},
 })
 
@@ -32,7 +32,7 @@ class ThemeContextWrapper extends React.Component {
 
         this.state = {
             currentTheme: darkTheme,
-            transition: '0.5s',
+            transition: '0.37s',
             toggleTheme: this.toggleTheme,
         }
     }
