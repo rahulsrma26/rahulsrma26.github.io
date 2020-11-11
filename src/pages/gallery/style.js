@@ -1,7 +1,14 @@
 import styled from 'styled-components'
 
 const GalleryStyle = styled.div`
-    margin-top: 1em;
+    margin: 1em 0 1em;
+
+    .heading {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        // justify-content: center;
+    }
 
     .row {
         display: flex;

@@ -56,6 +56,9 @@ const Gallery = () => {
     return (
         <Layout seo={seo}>
             <GalleryStyle>
+                <h2 className="heading">
+                    Art Gallery
+                </h2>
                 <SimpleReactLightbox>
                     <SRLWrapper options={options}>
                         <div className="row">
