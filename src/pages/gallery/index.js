@@ -2,7 +2,6 @@ import React from 'react'
 import { graphql, useStaticQuery } from 'gatsby'
 import Layout from '../../templates/layout'
 import GalleryStyle from './style'
-// import  from "simple-react-lightbox";
 import SimpleReactLightbox, { SRLWrapper } from 'simple-react-lightbox'
 
 const Gallery = () => {
@@ -51,7 +50,7 @@ const Gallery = () => {
     }
 
     const seo = {
-        title: 'Gallery',
+        title: 'Art Gallery',
     }
 
     return (
