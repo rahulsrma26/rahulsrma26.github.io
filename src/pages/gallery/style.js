@@ -13,19 +13,21 @@ const GalleryStyle = styled.div`
     .row {
         display: flex;
         flex-wrap: wrap;
-        padding: 0 0.5em;
+        align-content: space-around;
+        justify-content: space-around;
+        // padding: 0 0.5em;
     }
       
     .column {
         flex: 30%;
         max-width: 30%;
-        padding: 0 0.5em;
     }
 
     .column img {
         margin-top: 1em;
         vertical-align: middle;
         width: 100%;
+        filter: drop-shadow(0 0 0.15em black);
     }
 
     @media (orientation: portrait) {
@@ -36,10 +38,13 @@ const GalleryStyle = styled.div`
     }
 
     @media (orientation: landscape) {
+        .column {
+            padding: 0 0.5em;
+        }
         @media (max-aspect-ratio: 17/10) {
             .column {
-                flex: 45%;
-                max-width: 45%;
+                flex: 47%;
+                max-width: 47%;
             }
         }
     }
