@@ -46,7 +46,7 @@ A good practice is don't go for a dynamic website unless need to. Some of the ad
 
 To use gatsby you will first need [node and npm](https://nodejs.org/en/). After that Gatsby can be installed using npm.
 
-```sh
+```bash
 npm install -g gatsby-cli
 ```
 
@@ -54,7 +54,7 @@ The above command will install Gatsby CLI globally on your machine. It is used t
 
 Now, you can use gatsby-cli to create a new react starter site for gatsby. There are plenty of starter/boilerplate projects available on the [gatsby-starter](https://www.gatsbyjs.com/starters/) section. We are using a simple blog boilerplate code.
 
-```sh
+```bash
 gatsby new my-blog https://github.com/gatsbyjs/gatsby-starter-blog
 cd my-blog
 ```
@@ -87,7 +87,7 @@ This will create a new project dir. The code structure is very similar to the re
 
 You can now start a development server. All the changes in the code will be reflected on the server in realtime.
 
-```sh
+```bash
 gasby develop
 ```
 
@@ -97,13 +97,13 @@ You can visit [http://localhost:8000/](http://localhost:8000/) to check your dev
 
 To deploy the site you first need to build the static pages using the build command.
 
-```sh
+```bash
 gatsby build
 ```
 
 This will generate the static site in the `public` directory. A local server can be used to test the generated site.
 
-```sh
+```bash
 gatsby serve
 ```
 
