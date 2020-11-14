@@ -7,7 +7,7 @@ import SimpleReactLightbox, { SRLWrapper } from 'simple-react-lightbox'
 const Gallery = () => {
     const data = useStaticQuery(graphql`
         query {
-            allFile(filter: {absolutePath: {regex: "/content/gallery/"}}) {
+            allFile(filter: {absolutePath: {regex: "/content/gallery/"}}, sort: {fields: name, order: DESC}) {
                 nodes {
                     name
                     absolutePath
@@ -16,20 +16,35 @@ const Gallery = () => {
                         fluid (maxWidth:768, quality: 75) {
                             src
                         }
+                        original {
+                            width
+                            height
+                        }
                     }
                 }
             }
         }
     `)
 
-    const images = data.allFile.nodes;
-    
-    const columns = [
-        images.slice(0, images.length / 3),
-        images.slice(images.length / 3, 2 * images.length / 3),
-        images.slice(2 * images.length / 3),
-    ]
-    console.log(columns)
+    const sortImagesIntoBuckets = (images, columns) => {
+        var buckets = []
+        for(var i = 0; i < columns; i++)
+            buckets.push([])
+        var heights = new Array(columns).fill(0.0)
+        for (const image of images) {
+            var minIdx = heights.indexOf(Math.min(...heights))
+            buckets[minIdx].push(image)
+            var adjHeight = image.childImageSharp.original.height / image.childImageSharp.original.width
+            heights[minIdx] += adjHeight
+        }
+        return buckets
+    }
+
+    const getTitle = (name) => {
+        return name.substring(name.indexOf('-') + 1).replace('-', ' ')
+    }
+
+    const columns = sortImagesIntoBuckets(data.allFile.nodes, 3)
 
     const options = {
         settings: {
@@ -62,15 +77,30 @@ const Gallery = () => {
                 <SimpleReactLightbox>
                     <SRLWrapper options={options}>
                         <div className="row">
-                        { columns.map( (column) => (
+                            {columns.map((column) => (
+                                <div className="column">
+                                    {column.map((node, index) => (
+                                        <div className="frame">
+                                            <a href={node.publicURL} data-attribute="SRL">
+                                                <img src={node.childImageSharp.fluid.src} alt={node.name} />
+                                            </a>
+                                            <span className="title">{getTitle(node.name)}</span>
+                                        </div>
+                                    ))}
+                                </div>
+                            ))}
+                        </div>
+                        <div className="single">
                             <div className="column">
-                                {column.map((node, index) => (
-                                    <a href={node.publicURL} data-attribute="SRL">
-                                        <img src={node.childImageSharp.fluid.src} alt={node.name} />
-                                    </a>
+                                {data.allFile.nodes.map((node, index) => (
+                                    <div className="frame">
+                                        <a href={node.publicURL} data-attribute="SRL">
+                                            <img src={node.childImageSharp.fluid.src} alt={node.name} />
+                                        </a>
+                                        <span className="title">{getTitle(node.name)}</span>
+                                    </div>
                                 ))}
                             </div>
-                        ))}
                         </div>
                     </SRLWrapper>
                 </SimpleReactLightbox>
