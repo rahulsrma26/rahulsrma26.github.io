@@ -25,6 +25,7 @@ const NavBarStyle = styled.div`
             }
         }
     }
+
     #navMenu {
         font-family: Arial, Helvetica, sans-serif;
         transition: ${props => props.theme.transition};
@@ -53,24 +54,26 @@ const NavBarStyle = styled.div`
         nav{
             // display: ${props => (props.isOpen ? 'block' : 'none')};
             transition: ${props => props.theme.transition};
-            font-size: 2.5vh;
+            font-size: 3vh;
             
             ul {
-                box-shadow: ${props => '2px 2px 8px ' + props.theme.textAccent};
+                box-shadow: -0.1em 0.1em 0.1em black;
                 transition: ${props => props.theme.transition};
                 position: fixed;
                 animation: ${props => (props.isOpen ? fadeInLeft : fadeOutLeft)} 0.5s;
-                top: 1.5em;
+                top: 1.4em;
                 // right: 0.5em;
-                right: ${props => (props.isOpen ? '0.5em' : '-7em')};
+                right: ${props => (props.isOpen ? '0em' : '-7em')};
                 background: ${props => props.theme.bgAccent};
                 display: flex;
                 flex-direction: column;
                 padding: 0;
                 margin: 0;
+                border-radius: 0em 0em 0em 0.5em;
+                // height: 80vh;
 
                 li {
-                    padding: 1em 0.5em 1em;
+                    padding: 1em 1em 1em;
                     margin: 0;
                     // width: 100%;
                     display: flex;
