@@ -47,7 +47,7 @@ const Layout = ({ children, seo }) => {
             <LayoutStyle>
                 <SEO {...seo} />
                 <Header navIsOpen={navIsOpen} navAction={navAction} />
-                <main onClick={navClose} onKeyDown={navClose}>{children}</main>
+                <main role="presentation" onClick={navClose} onKeyDown={navClose}>{children}</main>
                 <ThemeButton />
                 <Footer />
             </LayoutStyle>
