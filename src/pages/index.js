@@ -45,7 +45,7 @@ class Intro extends React.Component {
 const Area = ({icon, title, description}) => {
     return (
         <div className="area">
-            <img src={icon} title={title} width="100em"/>
+            <img src={icon} title={title} width="100em" alt={title}/>
             <h3>{title}</h3>
             <p>{description}</p>
         </div>
