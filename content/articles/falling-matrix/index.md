@@ -1,6 +1,6 @@
 ---
 title: Animation using HTML5 and javascript
-description: The HTML5 canvas element is very helpful in drawing graphics on the fly. Using javascript we can create various animations without relying on the flash or heavy GIF files. Due to security reasons Flash support is decreasing and canvas support is increasing. This article shows how to create falling text (matrix style) animation using HTML5 canvas and javascript.
+description: The HTML5 canvas element is very helpful in drawing graphics on the fly. Using javascript we can create various animations without relying on the flash or heavy GIF files. Due to security reasons Flash support is decreasing and canvas support is increasing. This article shows how to create matrix style animation.
 image: preview.png
 author: rahulsharma
 date: 2014-03-24
