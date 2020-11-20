@@ -1,5 +1,4 @@
 import styled from 'styled-components'
-import { fadeInUpward } from './fade'
 
 const AreasOfInterestStyle = styled.div`
     width: 100%;
