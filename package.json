@@ -22,6 +22,7 @@
     "gatsby": "^2.24.26",
     "gatsby-plugin-build-date": "^1.0.0",
     "gatsby-plugin-disqus": "^1.2.2",
+    "gatsby-plugin-google-fonts": "^1.0.1",
     "gatsby-plugin-react-helmet": "^3.3.10",
     "gatsby-plugin-sharp": "^2.6.28",
     "gatsby-plugin-sitemap": "^2.4.17",

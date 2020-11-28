@@ -18,6 +18,15 @@ module.exports = {
     },
 
     plugins: [
+        {
+            resolve: `gatsby-plugin-google-fonts`,
+            options: {
+                fonts: [
+                    `Dancing Script`,
+                ],
+                display: 'swap'
+            }
+        },
         'gatsby-plugin-react-helmet',
         {
             resolve: `gatsby-plugin-styled-components`,

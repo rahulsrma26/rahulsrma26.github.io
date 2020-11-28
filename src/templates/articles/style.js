@@ -157,6 +157,22 @@ const ArticleStyle = styled.div`
         a:hover {
             color: ${props => props.theme.textColor};
         }
+
+        .center {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .handwriting {
+            pre {
+                font-family: 'Dancing Script', cursive;
+                font-size: 1.2em;
+                line-height: 1.5em;
+                white-space: pre;
+            }
+        }
     }
 
     .invertable {
