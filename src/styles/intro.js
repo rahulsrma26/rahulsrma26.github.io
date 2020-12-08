@@ -31,7 +31,7 @@ const IntroStyle = styled.div`
             margin-bottom: 1em;
         }
         
-        .double_down_arrow{
+        .double_down_arrow {
             transform:rotate(90deg);
             display: block;
             color: ${props => props.theme.textAccent};
@@ -55,7 +55,7 @@ const IntroStyle = styled.div`
                 border-radius: 50%;
                 width: 2em;
                 
-                div{
+                div {
                     width: 100%;
                     transition: ${props => props.theme.transition};
                     animation-duration: 2s;
@@ -81,7 +81,7 @@ const IntroStyle = styled.div`
                 position: relative;
                 z-index: 1;
                 cursor: pointer;
-                svg{
+                svg {
                     animation-name: none;
                 }
             }

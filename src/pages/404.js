@@ -10,7 +10,7 @@ const PageNotFoundStyle = styled.div`
         color: #BBFFBB;
         text-shadow: 0 0 1em ${props => props.theme.textColor};
     }
-    .fnf{
+    .fnf {
         position: fixed;
         display: flex;
         align-items: center;
@@ -22,7 +22,7 @@ const PageNotFoundStyle = styled.div`
         border: none;
         outline: none;    
     }
-    .home{
+    .home {
         position: fixed;
         display: flex;
         align-items: center;

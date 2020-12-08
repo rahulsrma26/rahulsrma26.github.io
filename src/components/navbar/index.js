@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons'
 
 
-const NavLink = ({children, to}) => {
+const NavLink = ({ children, to }) => {
     return (
         <li>
             <Link activeClassName="activePage" to={to}>
@@ -16,12 +16,12 @@ const NavLink = ({children, to}) => {
     )
 }
 
-const NavBar = ({isOpen, action}) => {
+const NavBar = ({ isOpen, action }) => {
     return (
         <NavBarStyle isOpen={isOpen}>
             <button id="navMenu" onClick={action} aria-label="Menu">
                 <span>MENU</span>
-                <FontAwesomeIcon icon={isOpen? faTimes: faBars} />
+                <FontAwesomeIcon icon={isOpen ? faTimes : faBars} />
             </button>
             <nav>
                 <ul>

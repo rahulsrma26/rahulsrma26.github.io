@@ -29,7 +29,7 @@ const BlogPreview = ({ data, showComments }) => {
                     Read More →
                 </Link>
                 {
-                    showComments? (<CommentBox url={postUrl} title={data.frontmatter.title} countOnly={true}/>): (null)
+                    showComments ? (<CommentBox url={postUrl} title={data.frontmatter.title} countOnly={true} />) : (null)
                 }
             </div>
         </BlogPreviewStyle>

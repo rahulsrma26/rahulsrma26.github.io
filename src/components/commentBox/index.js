@@ -25,14 +25,14 @@ const CommentBox = ({ url, title, countOnly }) => {
 
     return countOnly ? (
         <CountStyle>
-            <FontAwesomeIcon icon={faComments}/>
+            <FontAwesomeIcon icon={faComments} />
             <CommentCount config={disqusConfig} placeholder={'...'} />
         </CountStyle>
     ) : (
-        <CommentStyle>
-            <Disqus config={disqusConfig} />
-        </CommentStyle>
-    )
+            <CommentStyle>
+                <Disqus config={disqusConfig} />
+            </CommentStyle>
+        )
 }
 
 CommentBox.propTypes = {

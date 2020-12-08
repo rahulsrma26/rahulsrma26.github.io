@@ -28,7 +28,7 @@ const Gallery = () => {
 
     const sortImagesIntoBuckets = (images, columns) => {
         var buckets = []
-        for(var i = 0; i < columns; i++)
+        for (var i = 0; i < columns; i++)
             buckets.push([])
         var heights = new Array(columns).fill(0.0)
         for (const image of images) {

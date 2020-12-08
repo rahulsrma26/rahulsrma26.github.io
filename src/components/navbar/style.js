@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import {fadeInLeft, fadeOutLeft} from '../../styles/fade'
+import { fadeInLeft, fadeOutLeft } from '../../styles/fade'
 
 const NavBarStyle = styled.div`
     justify-content: flex-end;

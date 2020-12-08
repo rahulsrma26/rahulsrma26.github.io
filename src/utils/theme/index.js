@@ -4,7 +4,7 @@ import { lightTheme, darkTheme } from './themes'
 const ThemeContext = React.createContext({
     lightTheme,
     transition: '0.37s',
-    toggleTheme: () => {},
+    toggleTheme: () => { },
 })
 
 // component that wraps entire app in gatsby-browser.js

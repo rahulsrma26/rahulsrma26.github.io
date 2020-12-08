@@ -3,10 +3,10 @@ import PropTypes from 'prop-types'
 import SocialLinkStyle from './style'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-const SocialLink = ({to, icon, size}) => {
+const SocialLink = ({ to, icon, size }) => {
     return (
         <SocialLinkStyle>
-            <a target="_blank" 
+            <a target="_blank"
                 href={to}
                 rel="noreferrer"
                 aria-label={to}
