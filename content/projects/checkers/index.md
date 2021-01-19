@@ -6,7 +6,7 @@ template: project
 
 ## Checkers
 
-A game that is created by me and my friend Prashant for a school project. Initially we made in TurboC. Now, I’ve ported it to OpenGL using LFBG.
+A game that is created by me and my friend Prashant for a school project. Initially we made it using TurboC (2005). Now, I’ve ported it to OpenGL using LFBG library.
 
 Source Code: <a href="https://github.com/rahulsrma26/lfbg/blob/master/tc_projects/checkers.cpp" target="_blank">Github</a>.
 
