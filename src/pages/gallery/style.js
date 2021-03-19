@@ -17,7 +17,7 @@ const GalleryStyle = styled.div`
     .row {
         display: none;
     }
-      
+
     .column {
         flex: 30%;
         max-width: 30%;

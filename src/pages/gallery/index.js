@@ -13,7 +13,7 @@ const Gallery = () => {
                     absolutePath
                     publicURL
                     childImageSharp {
-                        fluid (maxWidth:768, quality: 75) {
+                        fluid (maxWidth:768, quality: 80) {
                             src
                         }
                         original {
@@ -41,7 +41,7 @@ const Gallery = () => {
     }
 
     const getTitle = (name) => {
-        return name.substring(name.indexOf('-') + 1).replace('-', ' ')
+        return name.substring(name.indexOf('-') + 1).replaceAll('-', ' ')
     }
 
     const columns = sortImagesIntoBuckets(data.allFile.nodes, 3)
@@ -90,6 +90,8 @@ const Gallery = () => {
                                 </div>
                             ))}
                         </div>
+                    </SRLWrapper>
+                    <SRLWrapper options={options}>
                         <div className="single">
                             <div className="column">
                                 {data.allFile.nodes.map((node, index) => (
