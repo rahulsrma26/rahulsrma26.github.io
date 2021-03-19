@@ -41,7 +41,7 @@ const Gallery = () => {
     }
 
     const getTitle = (name) => {
-        return name.substring(name.indexOf('-') + 1).replaceAll('-', ' ')
+        return name.substring(name.indexOf('-') + 1).replace(/-/g, ' ')
     }
 
     const columns = sortImagesIntoBuckets(data.allFile.nodes, 3)
