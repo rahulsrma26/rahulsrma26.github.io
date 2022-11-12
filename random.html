@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Random</title>
+        <script src="./sha256.min.js"></script>
+        <script src="./base64.min.js"></script>
+    </head>
+
+    <body>
+        <input type="text" id="text" />
+        <br />
+        <button type="button" id="generate">Generate</button>
+        <br />
+        <input type="text" id="result" />
+    </body>
+    <script>
+        document
+            .getElementById('generate')
+            .addEventListener('click', function () {
+                var text = document.getElementById('text').value.toLowerCase()
+                console.log(text)
+                var hashed = sha256(text)
+                console.log(hashed)
+                var encoded = base64.encode(hashed)
+                console.log(encoded)
+                var uppers = ''
+                for (var i = 0; i < encoded.length; i++) {
+                    var char = encoded.charAt(i)
+                    if (char === char.toUpperCase()) {
+                        uppers = uppers.concat(char)
+                        if (uppers.length === 2) break
+                    }
+                }
+                console.log(uppers)
+                var lowers = ''
+                for (var i = 0; i < encoded.length; i++) {
+                    var char = encoded.charAt(i)
+                    if (char === char.toLowerCase()) {
+                        lowers = lowers.concat(char)
+                        if (lowers.length === 2) break
+                    }
+                }
+                console.log(lowers)
+                var digits = ''
+                for (var i = 0; i < encoded.length; i++) {
+                    var char = encoded.charAt(i)
+                    if (char >= '0' && char <= '9') {
+                        digits = digits.concat(char)
+                        if (digits.length === 2) break
+                    }
+                }
+                console.log(digits)
+                document.getElementById('result').value =
+                    uppers + ' ' + lowers + ' ' + digits
+            })
+    </script>
+</html>
