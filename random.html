@@ -24,32 +24,11 @@
                 console.log(hashed)
                 var encoded = base64.encode(hashed)
                 console.log(encoded)
-                var uppers = ''
-                for (var i = 0; i < encoded.length; i++) {
-                    var char = encoded.charAt(i)
-                    if (char === char.toUpperCase()) {
-                        uppers = uppers.concat(char)
-                        if (uppers.length === 2) break
-                    }
-                }
+                var uppers = encoded.replaceAll(/[a-z0-9]+/g, '').slice(0, 2)
                 console.log(uppers)
-                var lowers = ''
-                for (var i = 0; i < encoded.length; i++) {
-                    var char = encoded.charAt(i)
-                    if (char === char.toLowerCase()) {
-                        lowers = lowers.concat(char)
-                        if (lowers.length === 2) break
-                    }
-                }
+                var lowers = encoded.replaceAll(/[A-Z0-9]+/g, '').slice(0, 2)
                 console.log(lowers)
-                var digits = ''
-                for (var i = 0; i < encoded.length; i++) {
-                    var char = encoded.charAt(i)
-                    if (char >= '0' && char <= '9') {
-                        digits = digits.concat(char)
-                        if (digits.length === 2) break
-                    }
-                }
+                var digits = encoded.replaceAll(/[A-Za-z]+/g, '').slice(0, 2)
                 console.log(digits)
                 document.getElementById('result').value =
                     uppers + ' ' + lowers + ' ' + digits
