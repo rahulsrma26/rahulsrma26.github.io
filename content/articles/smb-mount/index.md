@@ -1,7 +1,7 @@
 ---
 title: Mounting SMB share on Ubuntu/Mint
 description: You might be running a NAS sever on your local network or sharing some drive on different windows PC that you want to access on your linux server/desktop.  In this post, we will learn how to auto mount on your machine with different access level.
-image: ../ssh-jump/preview.png
+image: ../ssh-jump/preview.jpg
 author: rahulsharma
 date: 2023-05-16
 template: article
