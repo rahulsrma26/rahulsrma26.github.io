@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Retro Cheats</title>
+    <!-- <script src="https://unpkg.com/petite-vue" defer init></script> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css">
+</head>
+
+<body>
+    <div class="container" v-scope="store">
+        <br><br>
+        <h1 class="header center orange-text">Retro Cheats</h1>
+        <div class="row center">
+            <h5 class="header col s12 light">Find <code>.cht</code> file for your favorite game</h5>
+            Thanks to <a target="_blank" href="https://github.com/libretro/libretro-database">libretro-database</a>
+        </div>
+        <br><br>
+        <div class="row">
+            <label>Choose Platform</label>
+            <select id="platform" class="u-full-width" @change="selectPlatform">
+                <option value="" disabled selected>Choose your option</option>
+                <template v-for="platform in platforms">
+                    <option :value=platform.index>{{platform.path}}</option>
+                </template>
+            </select>
+        </div>
+        <div id="gameDiv" class="row">
+            <label>Search game</label>
+            <input id="game" class="u-full-width" type="text" name="game" v-model="query" />
+            <button @click="searchGame" class="u-full-width">Find</button>
+        </div>
+        <table class="u-full-width">
+            <tbody>
+                <template v-for="result in results">
+                    <tr>
+                        <td><a target="_blank" v-bind:href=result.item.download>{{result.item.path}}</a></td>
+                        <td>{{result.item.size}}</td>
+                    </tr>
+                </template>
+            </tbody>
+        </table>
+    </div>
+</body>
+<script type="module">
+    // cached fetch
+    export default {
+        async fetch(request) {
+            const url = new URL(request.url);
+            const someCustomKey = `https://${url.hostname}${url.pathname}`;
+            let response = await fetch(request, {
+                cf: {
+                    cacheTtl: 5,
+                    cacheEverything: true,
+                    cacheKey: someCustomKey,
+                },
+            });
+            response = new Response(response.body, response);
+            response.headers.set("Cache-Control", "max-age=1500");
+            return response;
+        },
+    };
+</script>
+<script type="module">
+    import Fuse from 'https://cdn.jsdelivr.net/npm/fuse.js@6.6.2/dist/fuse.esm.js'
+    import { createApp, reactive } from 'https://unpkg.com/petite-vue?module'
+
+    const fuseOptions = {
+        keys: ["path"],
+        minMatchCharLength: 3,
+        threshold: 0.3
+    }
+    
+    fetch("https://api.github.com/repos/libretro/libretro-database/git/trees/0b4a48b7cccb46e38acdfe028b33eb1a3c154119"
+    ).then((response) => {
+        if (!response.ok) {
+            throw new Error(`HTTP error: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then((json) => {
+        const store = reactive({
+            query: "",
+            platforms: json.tree.map((v, i) => {v.index = i; return v}),
+            results: [],
+            fuse: null,
+            selectPlatform(e) {
+                const platform = this.platforms[e.target.value];
+                fetch(
+                    platform.url
+                ).then((response) => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then((json) => {
+                    const data = json.tree.map((v) => {
+                        v.download = `https://raw.githubusercontent.com/libretro/libretro-database/master/cht/${platform.path}/${v.path}`;
+                        return v;
+                    });
+                    this.fuse = new Fuse(data, fuseOptions);
+                })
+                .catch((err) => console.error(`Fetch problem: ${err.message}`));
+            },
+            searchGame() {
+                console.log(this.query);
+                this.results = this.fuse.search(this.query);
+            }
+        })
+        createApp({
+            store
+        }).mount()
+    })
+    .catch((err) => console.error(`Fetch problem: ${err.message}`));
+</script>
+
+<script>
+    if (window.matchMedia &&
+        window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }    
+</script>
+
+</html>
