@@ -28,7 +28,7 @@
         </div>
         <div id="gameDiv" class="row">
             <label>Search game</label>
-            <input id="game" class="u-full-width" type="text" name="game" v-model="query" />
+            <input id="game" class="u-full-width" type="text" name="game" v-model="query" v-on:keyup.enter="searchGame" />
             <button @click="searchGame" class="u-full-width">Find</button>
         </div>
         <table class="u-full-width">
@@ -87,6 +87,7 @@
             fuse: null,
             selectPlatform(e) {
                 const platform = this.platforms[e.target.value];
+                console.log(platform);
                 fetch(
                     platform.url
                 ).then((response) => {
@@ -103,6 +104,7 @@
                     this.fuse = new Fuse(data, fuseOptions);
                 })
                 .catch((err) => console.error(`Fetch problem: ${err.message}`));
+                document.getElementById("game").focus();
             },
             searchGame() {
                 console.log(this.query);
