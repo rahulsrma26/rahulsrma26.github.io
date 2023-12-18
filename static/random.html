@@ -2,13 +2,13 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
-        <title>Random</title>
+        <title>Random Charactor Generator</title>
         <script src="./sha256.min.js"></script>
         <script src="./base64.min.js"></script>
     </head>
 
     <body>
-        <input type="text" id="text" />
+        <input type="text" id="seed" autofocus />
         <br />
         <button type="button" id="generate">Generate</button>
         <br />
@@ -16,22 +16,32 @@
     </body>
     <script>
         document
-            .getElementById('generate')
-            .addEventListener('click', function () {
-                var text = document.getElementById('text').value.toLowerCase()
+            .getElementById("generate")
+            .addEventListener("click", function () {
+                var text = document.getElementById("seed").value.toLowerCase()
                 console.log(text)
                 var hashed = sha256(text)
                 console.log(hashed)
                 var encoded = base64.encode(hashed)
                 console.log(encoded)
-                var uppers = encoded.replaceAll(/[a-z0-9]+/g, '').slice(0, 2)
+                console.log(encoded.slice(0, 8))
+                console.log(encoded.slice(0, 16))
+                var uppers = encoded.replaceAll(/[a-z0-9]+/g, "").slice(0, 2)
                 console.log(uppers)
-                var lowers = encoded.replaceAll(/[A-Z0-9]+/g, '').slice(0, 2)
+                var lowers = encoded.replaceAll(/[A-Z0-9]+/g, "").slice(0, 2)
                 console.log(lowers)
-                var digits = encoded.replaceAll(/[A-Za-z]+/g, '').slice(0, 2)
+                var digits = encoded.replaceAll(/[A-Za-z]+/g, "").slice(0, 2)
                 console.log(digits)
-                document.getElementById('result').value =
-                    uppers + ' ' + lowers + ' ' + digits
+                document.getElementById("result").value =
+                    uppers + " " + lowers + " " + digits
+            })
+        document
+            .getElementById("seed")
+            .addEventListener("keypress", function(event) {
+                if (event.key === "Enter") {
+                    event.preventDefault()
+                    document.getElementById("generate").click()
+                }
             })
     </script>
 </html>
