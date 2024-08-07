@@ -48,6 +48,7 @@ sudo apt install zfsutils-linux
    Use the `lsblk` or `fdisk -l` command to identify your SATA SSDs. Assume they are `/dev/sdb` and `/dev/sdc`.
 
     `lsblk` should output something like this
+
     ```bash
     NAME        MAJ:MIN RM   SIZE RO TYPE MOUNTPOINTS
     sda           8:0    0   1.8T  0 disk 
@@ -60,6 +61,7 @@ sudo apt install zfsutils-linux
     ```
 
     or `fdisk -l` should have something like this
+
     ```bash
     Disk /dev/nvme0n1: 931.51 GiB, 1000204886016 bytes, 1953525168 sectors
     Disk model: CT1000P3SSD8                            
@@ -88,6 +90,7 @@ sudo zpool create mypool mirror /dev/sdb /dev/sdc
 ```
 
 In this command:
+
 - `mypool` is the name of your ZFS pool.
 - `mirror` specifies that the disks will be mirrored.
 - `/dev/sdb` and `/dev/sdc` are the SATA SSDs.
@@ -107,11 +110,11 @@ You should see output indicating that the pool `mypool` is created and the disks
  state: ONLINE
 config:
 
-	NAME      STATE     READ WRITE CKSUM
-	 mypool   ONLINE       0     0     0
-	mirror-0  ONLINE       0     0     0
+    NAME      STATE     READ WRITE CKSUM
+     mypool   ONLINE       0     0     0
+    mirror-0  ONLINE       0     0     0
       sdb     ONLINE       0     0     0
-	  sdc     ONLINE       0     0     0
+      sdc     ONLINE       0     0     0
 
 errors: No known data errors
 ```
@@ -158,18 +161,21 @@ sudo zpool list
 This command provides an overview of the pool’s capacity, including the total space, used space, and free space.
 
 Example Output:
+
 ```bash
 NAME    SIZE  ALLOC   FREE    CAP  DEDUP  HEALTH  ALTROOT
 mypool  1.00T  200G   800G    20%  1.00x  ONLINE  -
 ```
+
 In this example:
 
-* `SIZE` is the total size of the pool.
-* `ALLOC` is the amount of space currently allocated.
-* `FREE` is the amount of free space available.
-* `CAP` is the percentage of space used.
+- `SIZE` is the total size of the pool.
+- `ALLOC` is the amount of space currently allocated.
+- `FREE` is the amount of free space available.
+- `CAP` is the percentage of space used.
 
 To see space usage for a specific ZFS filesystem or dataset, use:
+
 ```bash
 sudo zfs list
 ```
@@ -199,6 +205,7 @@ Proper maintenance of your ZFS pool is crucial for ensuring long-term performanc
 **TRIM** is a command used to inform the SSD that certain blocks of data are no longer in use and can be cleaned up. This helps in maintaining SSD performance and prolonging the lifespan of the drives.
 
 #### **Why TRIM?**
+
 - **Performance:** Helps SSDs maintain their performance by freeing up unused blocks.
 - **Lifespan:** Reduces unnecessary write operations, which can extend the lifespan of the SSD.
 
@@ -239,6 +246,7 @@ Proper maintenance of your ZFS pool is crucial for ensuring long-term performanc
 **SCRUB** is a maintenance operation that checks the integrity of your ZFS pool’s data. It scans the pool for errors, verifies checksums, and attempts to correct any detected issues.
 
 #### **Why SCRUB?**
+
 - **Data Integrity:** Ensures that all data is accurate and free from corruption.
 - **Error Detection:** Identifies and repairs silent data corruption before it becomes a problem.
 
@@ -286,7 +294,47 @@ Proper maintenance of your ZFS pool is crucial for ensuring long-term performanc
 
 By regularly running TRIM and SCRUB operations, you ensure that your ZFS pool remains in optimal condition, providing reliable performance and data integrity for your storage needs.
 
-### 3. Properly Shut Down the PC
+### 3. Limiting RAM usage
+
+Managing RAM usage in ZFS is essential for systems with limited memory resources. ZFS utilizes a caching mechanism known as the Adaptive Replacement Cache (ARC) to keep frequently accessed data in RAM, enhancing access speed. By default, ZFS can use up to 50% of the system's memory for ARC. If the system requires additional memory for other tasks, ZFS will automatically release some of the ARC's memory to accommodate those needs, returning it to the pool of available memory. This behavior ensures efficient memory usage while maintaining ZFS performance.
+
+You can check how much arc is using by running `arc_summary` command. Which will show minimum and maximum amount of memory that will be used for caching:
+
+```code
+...
+ARC size (current):                                     1.4 %   56.3 MiB
+        Target size (adaptive):                        25.0 %    1.0 GiB
+        Min size (hard limit):                         25.0 %    1.0 GiB
+        Max size (high water):                           16:1   16.0 GiB
+...
+```
+
+A good rule of thumb will be setting up a minimum of `1GB` and maximum as:
+
+```txt
+1GB + [1 GB/TB of storage] + [5GB/TB for Dedupe]
+```
+
+Which in my case will approximates to 3.4GB. Since I've plenty of RAM I will be rounding this up to 4GB.
+
+```sh
+sudo echo "options zfs zfs_arc_max=4294967296" >> /etc/modprobe.d/zfs.conf
+```
+
+After this we need to either `reboot` the system or reload the zfs module.
+
+```sh
+sudo modprobe -r zfs
+sudo modprobe zfs
+```
+
+After `reboot` and rerunning `arc_summary`:
+
+```code
+        Max size (high water):                            4:1    4.0 GiB
+```
+
+### 4. Properly Shut Down the PC
 
 Before shutting down, ensure that all data has been correctly copied and that there are no ongoing write operations. You can verify the pool’s status:
 
@@ -296,7 +344,7 @@ sudo zpool status
 
 Since `zfs` has COW (Copy-On-Write) it should be fine even if you have a powerloss. In my case both of the disk also has enhanced power-loss data protection feature.
 
-### 4. Unmount the ZFS Filesystem (Optional)
+### 5. Unmount the ZFS Filesystem (Optional)
 
 While ZFS usually handles unmounting automatically, you can manually unmount the filesystem if needed:
 
