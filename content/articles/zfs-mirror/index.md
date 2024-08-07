@@ -192,7 +192,99 @@ sudo chown -R $USER /mypool/mydataset
 
 ### 2. Monitoring and Maintenance
 
-Regularly check the health of your ZFS pool using `zpool status` and `zpool scrub` to maintain data integrity.
+Proper maintenance of your ZFS pool is crucial for ensuring long-term performance and data integrity. Two important maintenance tasks are running TRIM and SCRUB operations. Here’s a guide on how to perform these tasks:
+
+### **2.1. Running TRIM**
+
+**TRIM** is a command used to inform the SSD that certain blocks of data are no longer in use and can be cleaned up. This helps in maintaining SSD performance and prolonging the lifespan of the drives.
+
+#### **Why TRIM?**
+- **Performance:** Helps SSDs maintain their performance by freeing up unused blocks.
+- **Lifespan:** Reduces unnecessary write operations, which can extend the lifespan of the SSD.
+
+#### **How to Enable and Run TRIM:**
+
+1. **Check if TRIM is Enabled:**
+
+   To ensure TRIM is enabled on your ZFS pool, check the `autotrim` property:
+
+   ```bash
+   sudo zpool get autotrim mypool
+   ```
+
+   If `autotrim` is set to `off`, you should enable it.
+
+2. **Enable TRIM:**
+
+   Enable TRIM on your ZFS pool with the following command:
+
+   ```bash
+   sudo zpool set autotrim=on mypool
+   ```
+
+   This will ensure that TRIM operations are automatically performed on your pool as needed.
+
+3. **Manual TRIM (Optional):**
+
+   If you want to manually trigger a TRIM operation, use:
+
+   ```bash
+   sudo zpool trim -a
+   ```
+
+   This command will run TRIM on all datasets in your pool. Depending on the size of your pool and the amount of data, this operation may take some time.
+
+### **2.2. Running SCRUB**
+
+**SCRUB** is a maintenance operation that checks the integrity of your ZFS pool’s data. It scans the pool for errors, verifies checksums, and attempts to correct any detected issues.
+
+#### **Why SCRUB?**
+- **Data Integrity:** Ensures that all data is accurate and free from corruption.
+- **Error Detection:** Identifies and repairs silent data corruption before it becomes a problem.
+
+#### **How to Perform a SCRUB:**
+
+1. **Start a SCRUB Operation:**
+
+   Initiate a SCRUB on your ZFS pool with the following command:
+
+   ```bash
+   sudo zpool scrub mypool
+   ```
+
+   This command starts the SCRUB process, which may take some time depending on the size and health of the pool.
+
+2. **Monitor SCRUB Progress:**
+
+   To check the status and progress of the SCRUB operation:
+
+   ```bash
+   sudo zpool status
+   ```
+
+   This command will show you detailed information about the SCRUB, including the progress and any errors detected.
+
+3. **Review Results:**
+
+   After the SCRUB is complete, review the output of the `zpool status` command. It will show if any errors were found and if they were repaired. Regularly reviewing these results helps ensure the ongoing health of your ZFS pool.
+
+   ```bash
+    ~ sudo zpool status -t mypool
+    pool: mypool
+    state: ONLINE
+    scan: scrub repaired 0B in 00:06:06 with 0 errors on Tue Aug 6 20:58:36 2024
+    config:
+
+        NAME      STATE     READ WRITE CKSUM
+          mypool  ONLINE       0     0     0
+        mirror-0  ONLINE       0     0     0
+          sdb     ONLINE       0     0     0  (100% trimmed, completed at Tue 06 Aug 2024 20:51:02)
+          sdc     ONLINE       0     0     0  (100% trimmed, completed at Tue 06 Aug 2024 20:51:02)
+
+    errors: No known data errors
+   ```
+
+By regularly running TRIM and SCRUB operations, you ensure that your ZFS pool remains in optimal condition, providing reliable performance and data integrity for your storage needs.
 
 ### 3. Properly Shut Down the PC
 
@@ -202,7 +294,7 @@ Before shutting down, ensure that all data has been correctly copied and that th
 sudo zpool status
 ```
 
-Since `zfs` has COW (Copy-On-Write) it should be fine even if you have a powerloss. In my case both of the disk has enhanced power-loss data protection feature.
+Since `zfs` has COW (Copy-On-Write) it should be fine even if you have a powerloss. In my case both of the disk also has enhanced power-loss data protection feature.
 
 ### 4. Unmount the ZFS Filesystem (Optional)
 
@@ -222,6 +314,7 @@ sudo zfs unmount -a
 
 By following these steps, you can create a mirrored ZFS pool on Ubuntu or Linux Mint using SATA SSDs. ZFS offers robust data protection features, and a mirrored setup ensures that your data is duplicated across multiple drives for enhanced reliability.
 
-Always back up important data. Remember the old saying [RAID is NOT a backup!](https://www.raidisnotabackup.com/).
+Always back up important data. Remember the old saying:
+> **[RAID is NOT a backup!](https://www.raidisnotabackup.com/)**
 
 Feel free to explore further ZFS features and configurations to optimize your setup based on your specific needs.
