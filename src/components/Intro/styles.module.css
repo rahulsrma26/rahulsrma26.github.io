@@ -1,0 +1,75 @@
+.intro {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 0 auto 0;
+  color: var(--ifm-color-content);
+}
+.intro a {
+  font-weight: 600;
+  color: var(--ifm-color-primary);
+  text-shadow: 0 0 0.2em var(--ifm-color-primary-lightest);
+}
+[data-theme="dark"] .intro a {
+  text-shadow: 0 0 0.2em var(--ifm-color-primary-darkest);
+}
+.headline {
+  margin-bottom: 1em;
+}
+.headline p {
+  font-weight: 600;
+  font-size: 2em;
+  margin: 0;
+}
+@keyframes buttonIconMove {
+  0% {
+    transform: rotate(90deg) translateX(-0.1em);
+    opacity: 0;
+ }
+  50% {
+    transform: rotate(90deg) translateX(0.1em);
+    opacity: 1;
+ }
+  100% {
+    transform: rotate(90deg) translateX(-0.1em);
+    opacity: 0;
+ }
+}
+.scroller {
+  margin-top: 1em;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+.scroller a {
+  text-decoration: none;
+  position: relative;
+  z-index: 1;
+  color: var(--ifm-color-content);
+  background-color: var(--ifm-background-color);
+  border: none;
+  outline: none;
+  border-radius: 50%;
+  width: 2em;
+}
+.scroller a div {
+  width: 100%;
+  animation-duration: 2s;
+  animation-name: buttonIconMove;
+  animation-iteration-count: infinite;
+}
+.scroller a:hover {
+  position: relative;
+  z-index: 1;
+  cursor: pointer;
+}
+.scroller a:hover svg {
+  animation-name: none;
+}
+.double_down_arrow {
+  color: var(--ifm-color-primary-lighter);
+  transform: rotate(90deg);
+  display: block;
+  font-size: 5em;
+}

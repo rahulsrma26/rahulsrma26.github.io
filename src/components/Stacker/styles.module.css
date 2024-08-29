@@ -1,0 +1,15 @@
+.stackerHorizontalS {
+  align-content: space-around;
+  justify-content: space-between;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 5em);
+  grid-gap: 0.5em;
+}
+
+.stackerHorizontalL {
+  align-content: space-around;
+  justify-content: space-between;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 10em);
+  grid-gap: 0.5em;
+}

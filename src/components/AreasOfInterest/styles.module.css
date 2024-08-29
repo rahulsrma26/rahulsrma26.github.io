@@ -1,0 +1,79 @@
+.AreaOfInterestStyle {
+  width: 100%;
+  font-size: 0.8em;
+  margin-top: 2em;
+  padding-bottom: 3em;
+  margin-bottom: 3em;
+  border-bottom: 0.1em solid var(--ifm-color-content);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.AreaOfInterestStyle h2, .AreaOfInterestStyle h3, .AreaOfInterestStyle p {
+  font-family: "Lora", "serif";
+}
+.introContents {
+  height: var(--ifm-navbar-height);
+  padding-top: var(--ifm-navbar-padding-vertical);
+  padding-bottom: var(--ifm-navbar-padding-vertical)1em;
+}
+.heading {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 0 auto 0;
+  align-items: center;
+  padding-bottom: 1em;
+}
+.heading h2 {
+  margin: 0;
+  font-size: 1.7em;
+}
+.heading p {
+  margin-top: 0.5em;
+  font-size: 0.7em;
+}
+.interests {
+  align-content: space-around;
+  justify-content: space-around;
+  display: grid;
+  grid-gap: 2em;
+}
+@media (orientation: landscape) {
+  .interests {
+    width: 52em;
+    grid-template-columns: repeat(3, minmax(12em, 20vw));
+    font-size: 0.8em;
+ }
+}
+@media (orientation: portrait) {
+  .interests {
+    width: 100%;
+    grid-template-columns: 1fr;
+ }
+}
+.interests h3 {
+  font-size: 1.2em;
+}
+.area {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 0 auto 0;
+  align-items: center;
+  border: 0.2em solid var(--ifm-color-content);
+  border-radius: 1em;
+  padding: 1em;
+}
+.area p {
+  font-size: 0.9em;
+  text-align: center;
+}
+.area svg {
+  width: auto;
+  height: 4em;
+}
+[data-theme="dark"] .area svg {
+  filter: invert(100%);
+}

@@ -1,0 +1,7 @@
+.SocialLinkStyle svg {
+  color: var(--ifm-color-primary);
+  filter: drop-shadow(0 0 0.1em var(--ifm-color-primary-lightest));
+}
+[data-theme="dark"] .SocialLinkStyle svg {
+  filter: drop-shadow(0 0 0.1em var(--ifm-color-primary-darkest));
+}

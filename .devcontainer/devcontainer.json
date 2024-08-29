@@ -1,20 +1,25 @@
-// For format details, see https://aka.ms/devcontainer.json. For config options, see the
-// README at: https://github.com/devcontainers/templates/tree/main/src/javascript-node
 {
     "name": "Node.js",
-    // Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
-    "image": "node:12-slim",
-    // Features to add to the dev container. More info: https://containers.dev/features.
-    // "features": {},
-    // Use 'forwardPorts' to make a list of ports inside the container available locally.
+    "build": {
+        "dockerfile": "Dockerfile"
+    },
     "forwardPorts": [
         8000,
         8001
     ],
-    // Use 'postCreateCommand' to run commands after the container is created.
-    "postCreateCommand": "npm install -g gatsby-cli@2.19.3"
-    // Configure tool-specific properties.
-    // "customizations": {},
-    // Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
-    // "remoteUser": "root"
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "GitHub.copilot",
+                "DavidAnson.vscode-markdownlint",
+                "esbenp.prettier-vscode",
+                "shardulm94.trailing-spaces",
+                "dbaeumer.vscode-eslint",
+                "formulahendry.auto-close-tag",
+                "unifiedjs.vscode-mdx",
+                "redhat.vscode-yaml",
+                "ms-azuretools.vscode-docker"
+            ]
+        }
+    }
 }

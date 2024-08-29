@@ -7,27 +7,24 @@ name: github pages
 on:
   push:
     branches: [ dev ]
-  pull_request:
-    branches: [ dev ]
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - uses: actions/setup-node@v1
+    - uses: actions/checkout@v4
+    - uses: actions/setup-node@v4
       with:
-        node-version: '12'
-    
-    - run: npm install -g gatsby-cli@2.19.3
+        node-version: '20'
+
     - run: npm ci
-    
-    - name: Gatsby Build
-      run: gatsby build
+
+    - name: Docusaurus Build
+      run: npm run build
 
     - name: Deploy
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./public
+        publish_dir: ./build
         publish_branch: master  # deploying branch

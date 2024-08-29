@@ -1,0 +1,19 @@
+.homeStyle {
+  margin-top: 3vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 0.5em;
+  font-family: "Lora", "serif";
+  width: 100%;
+}
+@media (orientation: landscape) {
+  .homeStyle {
+    font-size: calc(16px + (64 - 16) * ((100vw - 400px) / (4000 - 400)));
+ }
+}
+@media (orientation: portrait) {
+  .homeStyle {
+    font-size: calc(16px + (48 - 16) * ((100vh - 300px) / (3000 - 300)));
+ }
+}

@@ -1,114 +1,52 @@
-import React from 'react'
-import { graphql, useStaticQuery } from 'gatsby'
-import Layout from '../../templates/layout'
-import GalleryStyle from './style'
-import SimpleReactLightbox, { SRLWrapper } from 'simple-react-lightbox'
+import React, { useState } from "react";
+import Layout from "@theme/Layout";
 
-const Gallery = () => {
-    const data = useStaticQuery(graphql`
-        query {
-            allFile(filter: {absolutePath: {regex: "/content/gallery/"}}, sort: {fields: name, order: DESC}) {
-                nodes {
-                    name
-                    absolutePath
-                    publicURL
-                    childImageSharp {
-                        fluid (maxWidth:768, quality: 80) {
-                            src
-                        }
-                        original {
-                            width
-                            height
-                        }
-                    }
-                }
-            }
-        }
-    `)
+import { RowsPhotoAlbum } from "react-photo-album";
+import "react-photo-album/rows.css";
 
-    const sortImagesIntoBuckets = (images, columns) => {
-        var buckets = []
-        for (var i = 0; i < columns; i++)
-            buckets.push([])
-        var heights = new Array(columns).fill(0.0)
-        for (const image of images) {
-            var minIdx = heights.indexOf(Math.min(...heights))
-            buckets[minIdx].push(image)
-            var adjHeight = image.childImageSharp.original.height / image.childImageSharp.original.width
-            heights[minIdx] += adjHeight
-        }
-        return buckets
-    }
+import Lightbox from "yet-another-react-lightbox";
+import "yet-another-react-lightbox/styles.css";
 
-    const getTitle = (name) => {
-        return name.substring(name.indexOf('-') + 1).replace(/-/g, ' ')
-    }
+// import optional lightbox plugins
+import Fullscreen from "yet-another-react-lightbox/plugins/fullscreen";
+import Slideshow from "yet-another-react-lightbox/plugins/slideshow";
+import Thumbnails from "yet-another-react-lightbox/plugins/thumbnails";
+import Zoom from "yet-another-react-lightbox/plugins/zoom";
 
-    const columns = sortImagesIntoBuckets(data.allFile.nodes, 3)
+// Dynamically load all images from the /img folder in the static directory
+const importAll = (r) =>
+  r.keys().map((item) => {
+    return {
+      src: r(item).default,
+      // extract width and height from the filename as date-width-height-name.jpg
+      width: parseInt(item.split("-")[1]),
+      height: parseInt(item.split("-")[2]),
+      name: item.split("/")[1],
+    };
+  });
 
-    const options = {
-        settings: {
-            overlayColor: 'rgba(0, 0, 0, 0.9)',
-            autoplaySpeed: 0,
-            hideControlsAfter: false,
-            disablePanzoom: true,
-        },
-        buttons: {
-            showDownloadButton: false,
-        },
-        caption: {
-            showCaption: false,
-        },
-        thumbnails: {
-            showThumbnails: false,
-        },
-    }
+const imageData = importAll(
+  // eslint-disable-next-line no-undef
+  require.context("../../assets/art", false, /\.(png|jpe?g|svg)$/),
+);
 
-    const seo = {
-        title: 'Art Gallery',
-    }
+export default function Gallery() {
+  const [index, setIndex] = useState(-1);
 
-    return (
-        <Layout seo={seo}>
-            <GalleryStyle>
-                <h2 className="heading">
-                    Art Gallery
-                </h2>
-                <SimpleReactLightbox>
-                    <SRLWrapper options={options}>
-                        <div className="row">
-                            {columns.map((column) => (
-                                <div className="column">
-                                    {column.map((node, index) => (
-                                        <div className="frame">
-                                            <a href={node.publicURL} data-attribute="SRL">
-                                                <img src={node.childImageSharp.fluid.src} alt={node.name} />
-                                            </a>
-                                            <span className="title">{getTitle(node.name)}</span>
-                                        </div>
-                                    ))}
-                                </div>
-                            ))}
-                        </div>
-                    </SRLWrapper>
-                    <SRLWrapper options={options}>
-                        <div className="single">
-                            <div className="column">
-                                {data.allFile.nodes.map((node, index) => (
-                                    <div className="frame">
-                                        <a href={node.publicURL} data-attribute="SRL">
-                                            <img src={node.childImageSharp.fluid.src} alt={node.name} />
-                                        </a>
-                                        <span className="title">{getTitle(node.name)}</span>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                    </SRLWrapper>
-                </SimpleReactLightbox>
-            </GalleryStyle>
-        </Layout>
-    )
+  return (
+    <Layout title="Gallery" description="My art gallery">
+      <RowsPhotoAlbum
+        photos={imageData}
+        onClick={({ index }) => setIndex(index)}
+      />
+      <Lightbox
+        slides={imageData}
+        open={index >= 0}
+        index={index}
+        close={() => setIndex(-1)}
+        // enable optional lightbox plugins
+        plugins={[Fullscreen, Slideshow, Thumbnails, Zoom]}
+      />
+    </Layout>
+  );
 }
-
-export default Gallery

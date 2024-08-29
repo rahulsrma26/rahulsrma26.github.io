@@ -1,1 +1,80 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256" preserveAspectRatio="xMidYMid"><style>.a{fill:none;stroke-linejoin:round;stroke-width:5;stroke:#000;}.b{fill:none;stroke-width:3;stroke:#000;}.c{stroke-linejoin:round;stroke-width:3;stroke:#000;}</style><path d="M42.5 24.2H150.3c12.9 0 23.2 10.4 23.2 23.2l0.2 49.9C97.7 98.3 85.8 91.9 80.2 119.5H69.5L19.2 157.4 42.5 119.5c-12.9 0-23.2-10.4-23.2-23.2v-48.9c0-12.9 10.4-23.2 23.2-23.2z" class="a"/><path d="M211.2 97.2H103.4c-12.9 0-23.2 10.4-23.2 23.2v48.9c0 12.9 10.4 23.2 23.2 23.2h80.8l50.3 37.9-23.4-37.9c12.9 0 23.2-10.4 23.2-23.2v-48.9c0-12.9-10.4-23.2-23.2-23.2z" class="a"/><path d="M42.7 46.8H147.5" class="b"/><path d="M42.7 63.8H95.6" class="b"/><path d="m108.1 63.8h39.4" class="b"/><path d="M42.7 80.8H147.5" class="b"/><circle cx="120.3" cy="141.3" r="4.1" class="c"/><circle cx="158.8" cy="141.3" r="4.1" class="c"/><circle cx="197.3" cy="141.3" r="4.1" class="c"/></svg>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="256"
+   height="256"
+   viewBox="0 0 256 256"
+   preserveAspectRatio="xMidYMid"
+   version="1.1"
+   id="svg22"
+   sodipodi:docname="nlp.svg"
+   inkscape:version="1.1.2 (0a00cf5339, 2022-02-04)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs26" />
+  <sodipodi:namedview
+     id="namedview24"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     showgrid="false"
+     inkscape:zoom="2.8554688"
+     inkscape:cx="127.8249"
+     inkscape:cy="128"
+     inkscape:window-width="3840"
+     inkscape:window-height="2117"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg22" />
+  <style
+     id="style2">.a{fill:none;stroke-linejoin:round;stroke-width:5;stroke:#000;}.b{fill:none;stroke-width:3;stroke:#000;}.c{stroke-linejoin:round;stroke-width:3;stroke:#000;}</style>
+  <path
+     d="M42.5 24.2H150.3c12.9 0 23.2 10.4 23.2 23.2l0.2 49.9C97.7 98.3 85.8 91.9 80.2 119.5H69.5L19.2 157.4 42.5 119.5c-12.9 0-23.2-10.4-23.2-23.2v-48.9c0-12.9 10.4-23.2 23.2-23.2z"
+     class="a"
+     id="path4"
+     style="stroke-width:5;stroke-miterlimit:4;stroke-dasharray:none" />
+  <path
+     d="M211.2 97.2H103.4c-12.9 0-23.2 10.4-23.2 23.2v48.9c0 12.9 10.4 23.2 23.2 23.2h80.8l50.3 37.9-23.4-37.9c12.9 0 23.2-10.4 23.2-23.2v-48.9c0-12.9-10.4-23.2-23.2-23.2z"
+     class="a"
+     id="path6" />
+  <path
+     d="M42.7 46.8H147.5"
+     class="b"
+     id="path8" />
+  <path
+     d="M42.7 63.8H95.6"
+     class="b"
+     id="path10" />
+  <path
+     d="m108.1 63.8h39.4"
+     class="b"
+     id="path12" />
+  <path
+     d="M42.7 80.8H147.5"
+     class="b"
+     id="path14" />
+  <circle
+     cx="120.3"
+     cy="141.3"
+     r="4.1"
+     class="c"
+     id="circle16" />
+  <circle
+     cx="158.8"
+     cy="141.3"
+     r="4.1"
+     class="c"
+     id="circle18" />
+  <circle
+     cx="197.3"
+     cy="141.3"
+     r="4.1"
+     class="c"
+     id="circle20" />
+</svg>
