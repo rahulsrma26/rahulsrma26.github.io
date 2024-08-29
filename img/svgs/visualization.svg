@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg preserveAspectRatio="xMidYMid" version="1.1" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+<metadata>
+<rdf:RDF>
+<cc:Work rdf:about="">
+<dc:format>image/svg+xml</dc:format>
+<dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+<dc:title/>
+</cc:Work>
+</rdf:RDF>
+</metadata>
+<path d="m31.183 111.47v120" fill="none" stroke="#000" stroke-width="3"/>
+<path d="m243.15 211.94h-232.44" fill="none" stroke="#000" stroke-width="4.1753"/>
+<path d="m37.255 126.83c29.324 66.95 58.84 73.737 88.363 78.109" fill="none" stroke="#000" stroke-width="3"/>
+<path d="m37.255 126.83c30.958 56.92 71.313 69.031 90.188 61.839" fill="none" stroke="#000" stroke-width="3"/>
+<rect x="152.35" y="157.85" width="12.488" height="54.406" ry="0" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.512"/>
+<rect x="170.68" y="116.86" width="11.776" height="95.042" ry="0" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="3.2241"/>
+<rect x="188.35" y="172.49" width="12.825" height="39.718" ry="0" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.1751"/>
+<rect x="206.46" y="138.03" width="12.114" height="74.043" ry="0" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.8862"/>
+<path transform="scale(-1)" d="m-77.546-120.04 21.576 67.046-57.097 41.239-56.864-41.559 21.953-66.924z" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+<path transform="scale(-1)" d="m-91.103-101.49 13.302 41.336-35.202 25.425-35.058-25.622 13.535-41.26z" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+<path transform="scale(-1)" d="m-102.55-85.835 6.3179 19.632-16.719 12.075-16.651-12.169 6.4282-19.596z" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="m113.07 11.758-0.68189 60.018" fill="none" stroke="#000" stroke-width="1px"/>
+<path d="m169.93 53.317-57.546 18.458" fill="none" stroke="#000" stroke-width="1px"/>
+<path d="m147.98 120.24-35.593-48.465" fill="none" stroke="#000" stroke-width="1px"/>
+<path d="m112.38 71.775-56.415-18.779" fill="none" stroke="#000" stroke-width="1px"/>
+<path d="m112.38 71.775-34.839 48.267" fill="none" stroke="#000" stroke-width="1px"/>
+<path d="m112.95 27.785-23.083 36.447 21.078 9.3338 17.027 19.548 4.9844-28.255z" stroke="#000" stroke-width="1px"/>
+</svg>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg preserveAspectRatio="xMidYMid" version="1.1" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+<metadata>
+<rdf:RDF>
+<cc:Work rdf:about="">
+<dc:format>image/svg+xml</dc:format>
+<dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+<dc:title/>
+</cc:Work>
+</rdf:RDF>
+</metadata>
+<g transform="matrix(1.1263 0 0 1.1548 -15.139 -1.7859)">
+<circle cx="42.694" cy="56.356" r="14.39"/>
+<circle cx="42.694" cy="112.39" r="14.39"/>
+<circle cx="42.694" cy="168.42" r="14.39"/>
+</g>
+<g transform="matrix(1.1263 0 0 1.1548 174.97 -1.7859)">
+<circle cx="42.694" cy="56.356" r="14.39"/>
+<circle cx="42.694" cy="112.39" r="14.39"/>
+<circle cx="42.694" cy="168.42" r="14.39"/>
+</g>
+<g transform="matrix(1.1263 0 0 1.1548 -11.174 -35.642)">
+<circle cx="123.57" cy="56.236" r="14.39"/>
+<circle cx="123.57" cy="113.22" r="14.39"/>
+<circle cx="123.57" cy="170.2" r="14.39"/>
+<circle cx="123.57" cy="227.18" r="14.39"/>
+</g>
+<path d="m32.37 63.347 96.024-34.613" fill="none" stroke="#020000" stroke-width="5.7021"/>
+<path d="m32.37 128.6 96.024-34.613" fill="none" stroke="#020000" stroke-width="5.7021"/>
+<path d="m32.37 194.15 96.024-34.613" fill="none" stroke="#020000" stroke-width="5.7021"/>
+<path d="m224.42 63.347-96.024-34.613" fill="none" stroke="#020000" stroke-width="5.7021"/>
+<path d="m224.42 128.6-96.024-34.613" fill="none" stroke="#020000" stroke-width="5.7021"/>
+<path d="m224.42 194.15-96.024-34.613" fill="none" stroke="#020000" stroke-width="5.7021"/>
+<path d="m32.37 194.15 96.024 34.613" fill="none" stroke="#020000" stroke-width="5.7021"/>
+<path d="m32.37 128.9 96.024 34.613" fill="none" stroke="#020000" stroke-width="5.7021"/>
+<path d="m32.37 63.347 96.024 34.613" fill="none" stroke="#020000" stroke-width="5.7021"/>
+<path d="m224.42 194.15-96.024 34.613" fill="none" stroke="#020000" stroke-width="5.7021"/>
+<path d="m224.42 128.9-96.024 34.613" fill="none" stroke="#020000" stroke-width="5.7021"/>
+<path d="m224.42 63.347-96.024 34.613" fill="none" stroke="#020000" stroke-width="5.7021"/>
+</svg>
