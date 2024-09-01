@@ -1,7 +1,6 @@
 ---
 title: Mounting SMB share on Debian
 comments: true
-date: 2023-05-16
 tags: [linux, network]
 description: Learn how to mount and auto-mount SMB shares on Ubuntu or Linux Mint with this step-by-step guide. The tutorial covers everything from installing necessary packages to configuring auto-mounting using CIFS utilities, making it easy to access network drives on your Linux system.
 keywords:
@@ -120,3 +119,7 @@ Append the config in the file, save and exit.
 ```sh
 //192.168.123.456/sharedDir /media/share cifs rw,vers=3.0,credentials=/root/.servercred
 ```
+
+---
+
+First published on 2023-05-16

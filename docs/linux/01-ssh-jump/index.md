@@ -1,7 +1,6 @@
 ---
 title: Passwordless SSH and Jump servers
 comments: true
-date: 2020-09-09
 tags: [linux, network]
 description: Learn how to securely connect to remote servers using SSH without entering a password every time. This tutorial covers SSH key authentication, setting up SSH config files, managing multiple servers, and configuring a jump server for secure remote access. Enhance your server login security with our step-by-step guide.
 keywords:
@@ -146,3 +145,7 @@ ssh-copy-id -o ProxyJump=juser@jhost:jport user@host
 ```
 
 You can find more information about the config file [here](https://www.ssh.com/ssh/config/).
+
+---
+
+First published on 2020-09-09

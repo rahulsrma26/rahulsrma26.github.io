@@ -43,7 +43,6 @@ const config = {
       ({
         docs: {
           sidebarPath: "./sidebars.js",
-          showLastUpdateTime: true,
           sidebarCollapsible: true,
         },
         blog: {

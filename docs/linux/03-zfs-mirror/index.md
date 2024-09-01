@@ -1,7 +1,6 @@
 ---
 title: Creating mirrored zfs on Debian
 comments: true
-date: 2024-08-04
 tags: [linux, filesystem, ai-assisted]
 description: Learn how to create a mirrored ZFS pool on Debian or Ubuntu using SATA SSDs with this step-by-step guide. The article covers installation, pool creation, TRIM, SCRUB operations, and performance optimization, ensuring robust data integrity and reliability for your storage needs.
 keywords:
@@ -373,3 +372,7 @@ Always back up important data. Remember the old saying:
 > **[RAID is NOT a backup!](https://www.raidisnotabackup.com/)**
 
 Feel free to explore further ZFS features and configurations to optimize your setup based on your specific needs.
+
+---
+
+First published on 2024-08-04
