@@ -364,6 +364,124 @@ If you have multiple datasets, you might need to unmount them individually or us
 sudo zfs unmount -a
 ```
 
+## Snapshots and backup
+
+To take a `zfs` snapshot:
+
+```bash
+sudo zfs snapshot mypool/mydataset@backup_123
+```
+
+Snapshots can be listed using:
+
+```bash
+zfs list -t snapshot
+```
+
+Use `send` subcommand to copy the snapshot to another location:
+
+```bash
+sudo zfs send mypool/mydataset@backup_123 > /mnt/backups/backup_123.zfs
+```
+
+Snapshots can be deleted using:
+
+```bash
+sudo zfs destroy mypool/mydataset@backup_123
+```
+
+## Upgrading or replacing disks
+
+When I first wrote the article, I was only storing a few GitHub repositories in `mypool`. However, ever since I moved my Docker data location (`data-root`) to `mypool`, I've been running out of space very quickly. ZFS switches from performance mode to space-saving write mode once you hit around 90% of its capacity (source: [45drives](https://www.45drives.com/community/articles/zfs-80-percent-rule/)). To address this, I upgraded from 400GB disks to 960GB disks. Despite the upgrade, the process for replacing a bad or failed disk in ZFS remains the same. Make sure to take the backup of your data before doing this.
+
+Turn off computer and replace one disk. When you turn on it will be on DEGRADED state:
+
+```txt
+~ zfs status
+  pool: mypool
+ state: DEGRADED
+status: One or more devices could not be used because the label is missing or
+	invalid.  Sufficient replicas exist for the pool to continue
+	functioning in a degraded state.
+action: Replace the device using 'zpool replace'.
+   see: https://openzfs.github.io/openzfs-docs/msg/ZFS-8000-4J
+  scan: scrub repaired 0B in 00:10:04 with 0 errors on Mon Dec  2 21:39:41 2024
+config:
+
+	NAME                      STATE     READ WRITE CKSUM
+	mypool                    DEGRADED     0     0     0
+	  mirror-0                DEGRADED     0     0     0
+	    13722977832891186657  UNAVAIL      0     0     0  was /dev/sdb1
+	    sdc                   ONLINE       0     0     0
+```
+
+Here I've replaced the `sdb` disk. To resilver run
+
+```bash
+sudo zpool replace mypool sdb
+```
+
+Once resilvering processing started you can check the status using:
+
+```txt
+~ zpool status
+  pool: mypool
+ state: DEGRADED
+status: One or more devices is currently being resilvered.  The pool will
+	continue to function, possibly in a degraded state.
+action: Wait for the resilver to complete.
+  scan: resilver in progress since Tue Dec  3 10:58:34 2024
+	135G scanned at 555M/s, 55.0G issued at 226M/s, 135G total
+	55.8G resilvered, 40.78% done, 00:06:01 to go
+config:
+
+	NAME                        STATE     READ WRITE CKSUM
+	mypool                      DEGRADED     0     0     0
+	  mirror-0                  DEGRADED     0     0     0
+	    replacing-0             DEGRADED     0     0     0
+	      13722977832891186657  UNAVAIL      0     0     0  was /dev/sdb1/old
+	      sdb                   ONLINE       0     0     0  (resilvering)
+	    sdc                     ONLINE       0     0     0
+
+errors: No known data errors
+```
+
+If you are upgrading the disks to higher capacity then you need to repeat the process for all disks. Once done, the pool should automatically expand to new capacity if the `autoexpand` flag is set. You can check flag and set using:
+
+```txt
+~ zpool get autoexpand mypool
+NAME        PROPERTY    VALUE   SOURCE
+mypool      autoexpand  off     default
+
+~ sudo zpool set autoexpand=on mypool
+```
+
+If the `autoexpand` was off during the process then it won't expand automatically.
+
+```txt
+~ zpool list
+NAME     SIZE  ALLOC   FREE  CKPOINT  EXPANDSZ   FRAG    CAP  DEDUP    HEALTH  ALTROOT
+mypool   372G   135G   237G        -      520G     1%    36%  1.00x    ONLINE  -
+```
+
+But you can manually expand the pool after resilvering using:
+
+```bash
+sudo zpool online -e mypool /dev/sdb /dev/sdc
+```
+
+```txt
+~ zpool list
+NAME     SIZE  ALLOC   FREE  CKPOINT  EXPANDSZ   FRAG    CAP  DEDUP    HEALTH  ALTROOT
+mypool   894G   135G   759G        -         -     0%    15%  1.00x    ONLINE  -
+```
+
+You may need to rerun pool permissions once everything is done:
+
+```bash
+sudo chown -R $USER /mypool/mydataset
+```
+
 ## Conclusion
 
 By following these steps, you can create a mirrored ZFS pool on Ubuntu or Linux Mint using SATA SSDs. ZFS offers robust data protection features, and a mirrored setup ensures that your data is duplicated across multiple drives for enhanced reliability.
