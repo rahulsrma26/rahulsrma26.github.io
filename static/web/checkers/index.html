@@ -1,0 +1,757 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>Checkers 2005</title>
+  <style>
+    :root { color-scheme: dark; }
+
+    * { box-sizing: border-box; }
+
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      overflow: hidden;
+      background: #050507;
+    }
+
+    body {
+      display: grid;
+      place-items: center;
+      min-height: 100dvh;
+    }
+
+    canvas {
+      display: block;
+      width: 640px;
+      height: 480px;
+      max-width: 100vw;
+      max-height: 100dvh;
+      outline: 0;
+      touch-action: none;
+      user-select: none;
+      -webkit-user-select: none;
+      -webkit-tap-highlight-color: transparent;
+      image-rendering: pixelated;
+      cursor: default;
+    }
+  </style>
+</head>
+<body>
+  <canvas
+    id="game"
+    width="640"
+    height="480"
+    tabindex="0"
+    role="application"
+    aria-label="Checkers 2005. Press Space or click to continue from Welcome. Left click selects a piece and right click moves it. On touch screens, tap once to select and again to move."
+  ></canvas>
+
+  <script>
+    (() => {
+      'use strict';
+
+      const WIDTH = 640;
+      const HEIGHT = 480;
+      const SAVE_KEY = 'lfbg.checkers.game.dll.v1';
+      const WELCOME_FADE_MS = 9 * 33;
+      const ABOUT_FRAME_MS = 100;
+      const canvas = document.getElementById('game');
+      const ctx = canvas.getContext('2d', { alpha: false });
+      ctx.imageSmoothingEnabled = false;
+
+      const palette = Array.from({ length: 16 }, () => [0, 0, 0]);
+      const pointer = { x: -1, y: -1, inside: false };
+
+      let state = 'welcome';
+      let stateStarted = performance.now();
+      let lastFrame = stateStarted;
+      let pendingWelcomeAdvance = false;
+      let menuAmount = 0;
+      let selected = null;
+      let turn = 1;
+      let player1Count = 11;
+      let player2Count = 11;
+      let winner = 0;
+      let memorySave = null;
+      let animationFrame = 0;
+      let board = makeNewBoard();
+
+      // A compact, deterministic 5x7 font keeps the page standalone while
+      // retaining the sparse, raster character of the original BGI screens.
+      const FONT = {
+        ' ': ['00000','00000','00000','00000','00000','00000','00000'],
+        '-': ['00000','00000','00000','11111','00000','00000','00000'],
+        '.': ['00000','00000','00000','00000','00000','00110','00110'],
+        '0': ['01110','10001','10011','10101','11001','10001','01110'],
+        '1': ['00100','01100','00100','00100','00100','00100','01110'],
+        '2': ['01110','10001','00001','00010','00100','01000','11111'],
+        '3': ['11110','00001','00001','01110','00001','00001','11110'],
+        '4': ['00010','00110','01010','10010','11111','00010','00010'],
+        '5': ['11111','10000','10000','11110','00001','00001','11110'],
+        '6': ['01110','10000','10000','11110','10001','10001','01110'],
+        '7': ['11111','00001','00010','00100','01000','01000','01000'],
+        '8': ['01110','10001','10001','01110','10001','10001','01110'],
+        '9': ['01110','10001','10001','01111','00001','00001','01110'],
+        'A': ['01110','10001','10001','11111','10001','10001','10001'],
+        'B': ['11110','10001','10001','11110','10001','10001','11110'],
+        'C': ['01111','10000','10000','10000','10000','10000','01111'],
+        'D': ['11110','10001','10001','10001','10001','10001','11110'],
+        'E': ['11111','10000','10000','11110','10000','10000','11111'],
+        'F': ['11111','10000','10000','11110','10000','10000','10000'],
+        'G': ['01111','10000','10000','10111','10001','10001','01111'],
+        'H': ['10001','10001','10001','11111','10001','10001','10001'],
+        'I': ['01110','00100','00100','00100','00100','00100','01110'],
+        'J': ['00111','00010','00010','00010','10010','10010','01100'],
+        'K': ['10001','10010','10100','11000','10100','10010','10001'],
+        'L': ['10000','10000','10000','10000','10000','10000','11111'],
+        'M': ['10001','11011','10101','10101','10001','10001','10001'],
+        'N': ['10001','11001','10101','10011','10001','10001','10001'],
+        'O': ['01110','10001','10001','10001','10001','10001','01110'],
+        'P': ['11110','10001','10001','11110','10000','10000','10000'],
+        'Q': ['01110','10001','10001','10001','10101','10010','01101'],
+        'R': ['11110','10001','10001','11110','10100','10010','10001'],
+        'S': ['01111','10000','10000','01110','00001','00001','11110'],
+        'T': ['11111','00100','00100','00100','00100','00100','00100'],
+        'U': ['10001','10001','10001','10001','10001','10001','01110'],
+        'V': ['10001','10001','10001','10001','10001','01010','00100'],
+        'W': ['10001','10001','10001','10101','10101','10101','01010'],
+        'X': ['10001','10001','01010','00100','01010','10001','10001'],
+        'Y': ['10001','10001','01010','00100','00100','00100','00100'],
+        'Z': ['11111','00001','00010','00100','01000','10000','11111'],
+        'a': ['00000','00000','01110','00001','01111','10001','01111'],
+        'b': ['10000','10000','10110','11001','10001','10001','11110'],
+        'c': ['00000','00000','01111','10000','10000','10000','01111'],
+        'd': ['00001','00001','01101','10011','10001','10001','01111'],
+        'e': ['00000','00000','01110','10001','11111','10000','01111'],
+        'f': ['00110','01001','01000','11100','01000','01000','01000'],
+        'g': ['00000','01111','10001','01111','00001','10001','01110'],
+        'h': ['10000','10000','10110','11001','10001','10001','10001'],
+        'i': ['00100','00000','01100','00100','00100','00100','01110'],
+        'j': ['00010','00000','00110','00010','00010','10010','01100'],
+        'k': ['10000','10000','10010','10100','11000','10100','10010'],
+        'l': ['01100','00100','00100','00100','00100','00100','01110'],
+        'm': ['00000','00000','11010','10101','10101','10101','10101'],
+        'n': ['00000','00000','10110','11001','10001','10001','10001'],
+        'o': ['00000','00000','01110','10001','10001','10001','01110'],
+        'p': ['00000','00000','11110','10001','11110','10000','10000'],
+        'q': ['00000','00000','01101','10011','01111','00001','00001'],
+        'r': ['00000','00000','10111','11000','10000','10000','10000'],
+        's': ['00000','00000','01111','10000','01110','00001','11110'],
+        't': ['01000','01000','11100','01000','01000','01001','00110'],
+        'u': ['00000','00000','10001','10001','10001','10011','01101'],
+        'v': ['00000','00000','10001','10001','10001','01010','00100'],
+        'w': ['00000','00000','10001','10001','10101','10101','01010'],
+        'x': ['00000','00000','10001','01010','00100','01010','10001'],
+        'y': ['00000','00000','10001','10001','01111','00001','01110'],
+        'z': ['00000','00000','11111','00010','00100','01000','11111']
+      };
+
+      function makeNewBoard() {
+        const next = Array.from({ length: 7 }, () => Array(7).fill(0));
+        for (let i = 0; i < 22; i += 2) next[Math.floor(i / 7)][i % 7] = 1;
+        for (let i = 28; i < 49; i += 2) next[Math.floor(i / 7)][i % 7] = 2;
+        return next;
+      }
+
+      function portPal(index, red, green, blue) {
+        palette[index] = [red, green, blue].map(value => (Math.trunc(value) * 4) & 0xff);
+      }
+
+      function color(index) {
+        const [r, g, b] = palette[index] || [0, 0, 0];
+        return `rgb(${r} ${g} ${b})`;
+      }
+
+      function setAllBlack() {
+        for (let i = 0; i < 16; i += 1) portPal(i, 0, 0, 0);
+      }
+
+      function fill(index, x, y, width, height) {
+        ctx.fillStyle = color(index);
+        ctx.fillRect(x, y, width, height);
+      }
+
+      function line(index, x1, y1, x2, y2) {
+        ctx.strokeStyle = color(index);
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(x1 + 0.5, y1 + 0.5);
+        ctx.lineTo(x2 + 0.5, y2 + 0.5);
+        ctx.stroke();
+      }
+
+      function rectangle(index, left, top, right, bottom) {
+        line(index, left, top, right, top);
+        line(index, right, top, right, bottom);
+        line(index, right, bottom, left, bottom);
+        line(index, left, bottom, left, top);
+      }
+
+      function ellipse(index, x, y, rx, ry, filled = false) {
+        ctx.beginPath();
+        ctx.ellipse(x + 0.5, y + 0.5, rx, ry, 0, 0, Math.PI * 2);
+        if (filled) {
+          ctx.fillStyle = color(index);
+          ctx.fill();
+        } else {
+          ctx.strokeStyle = color(index);
+          ctx.lineWidth = 1;
+          ctx.stroke();
+        }
+      }
+
+      function textScale(font, size) {
+        if (font === 'triplex') return size >= 6 ? 6 : 3;
+        if (font === 'sans') return size >= 6 ? 5 : 2;
+        return size >= 7 ? 2 : 1;
+      }
+
+      function drawText(x, y, value, index, font, size) {
+        const scale = textScale(font, size);
+        const advance = 6 * scale;
+        ctx.fillStyle = color(index);
+
+        for (let characterIndex = 0; characterIndex < value.length; characterIndex += 1) {
+          const glyph = FONT[value[characterIndex]] || FONT[value[characterIndex].toUpperCase()] || FONT[' '];
+          for (let row = 0; row < 7; row += 1) {
+            for (let column = 0; column < 5; column += 1) {
+              if (glyph[row][column] === '1') {
+                ctx.fillRect(x + characterIndex * advance + column * scale, y + row * scale, scale, scale);
+              }
+            }
+          }
+        }
+      }
+
+      function fitToViewport() {
+        const viewport = window.visualViewport;
+        const availableWidth = viewport ? viewport.width : window.innerWidth;
+        const availableHeight = viewport ? viewport.height : window.innerHeight;
+        const scale = Math.max(0.01, Math.min(availableWidth / WIDTH, availableHeight / HEIGHT));
+        canvas.style.width = `${Math.floor(WIDTH * scale)}px`;
+        canvas.style.height = `${Math.floor(HEIGHT * scale)}px`;
+      }
+
+      function setState(nextState, now = performance.now()) {
+        state = nextState;
+        stateStarted = now;
+        if (nextState === 'welcome' || nextState === 'authors' || nextState === 'presents' || nextState === 'dedication') {
+          setAllBlack();
+        }
+      }
+
+      function newGame() {
+        board = makeNewBoard();
+        player1Count = 11;
+        player2Count = 11;
+        turn = 1;
+        selected = null;
+        winner = 0;
+      }
+
+      function enterGame({ clearWinner = false } = {}) {
+        turn = 1;
+        selected = null;
+        if (clearWinner) winner = 0;
+        setState('game');
+      }
+
+      function advanceWelcome() {
+        if (performance.now() - stateStarted >= WELCOME_FADE_MS) setState('authors');
+        else pendingWelcomeAdvance = true;
+      }
+
+      function restartAtWelcome() {
+        newGame();
+        menuAmount = 0;
+        pendingWelcomeAdvance = false;
+        setState('welcome');
+      }
+
+      function saveGame() {
+        const payload = JSON.stringify(board);
+        memorySave = payload;
+        try {
+          localStorage.setItem(SAVE_KEY, payload);
+        } catch (_) {
+          // Some file:// and privacy modes disable localStorage; the in-page
+          // fallback preserves the original session-level save behavior.
+        }
+        enterGame();
+      }
+
+      function loadGame() {
+        let payload = memorySave;
+        try {
+          payload = localStorage.getItem(SAVE_KEY) || payload;
+        } catch (_) {
+          // Use the in-page fallback.
+        }
+
+        if (payload) {
+          try {
+            const loaded = JSON.parse(payload);
+            const valid = Array.isArray(loaded) && loaded.length === 7 && loaded.every(column =>
+              Array.isArray(column) && column.length === 7 && column.every(cell => cell === 0 || cell === 1 || cell === 2)
+            );
+            if (valid) board = loaded.map(column => column.slice());
+          } catch (_) {
+            // A missing or corrupt game.dll was effectively a no-op in the source.
+          }
+        }
+
+        // Counts intentionally are not recomputed: game.dll stored only pos[7][7].
+        enterGame({ clearWinner: true });
+      }
+
+      function setGamePalette() {
+        const amount = Math.trunc(menuAmount);
+        const half = Math.trunc(amount / 2);
+        const hovered = menuIndexAt(pointer.x, pointer.y);
+
+        portPal(0, 20, 20, 20);
+        portPal(1, 20, 20, 20);
+        portPal(2, 42 - half, 20, 20);
+        portPal(3, 42 - half, 42 - half, half);
+        portPal(4, 40 - half, 40 - half, 40 - half);
+        portPal(5, half, half, half);
+        portPal(6, 30, 30, 50);
+        portPal(7, 20, 20 + amount, 20);
+        portPal(13, 20, 50, 50);
+        portPal(14, 50, 50, 60);
+        portPal(15, 0, 60, 0);
+
+        for (let i = 0; i < 5; i += 1) {
+          if (i === hovered) portPal(8 + i, 20 + amount, 20 + amount, 20 + amount);
+          else portPal(8 + i, 20 - half, 20 - half, 20 + amount);
+        }
+      }
+
+      function drawOuterFrame() {
+        fill(6, 0, 0, WIDTH, HEIGHT);
+        fill(0, 6, 26, 629, 449);
+
+        rectangle(6, 5, 25, 635, 475);
+        line(6, 0, 15, 0, 479);
+        line(6, 0, 479, 639, 479);
+        line(6, 639, 479, 639, 7);
+        line(6, 15, 0, 625, 0);
+
+        ctx.strokeStyle = color(6);
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.arc(15.5, 15.5, 15, Math.PI, Math.PI * 1.5);
+        ctx.arc(625.5, 15.5, 15, Math.PI * 1.5, Math.PI * 2);
+        ctx.stroke();
+      }
+
+      function drawBoard() {
+        for (let x = 0; x < 7; x += 1) {
+          for (let y = 0; y < 7; y += 1) {
+            fill((x * 7 + y) % 2 === 0 ? 2 : 3, 51 + x * 50, 101 + y * 50, 49, 49);
+          }
+        }
+
+        for (let i = 0; i < 8; i += 1) {
+          line(1, 50, 100 + i * 50, 400, 100 + i * 50);
+          line(1, 50 + i * 50, 100, 50 + i * 50, 450);
+        }
+
+        for (let x = 0; x < 7; x += 1) {
+          for (let y = 0; y < 7; y += 1) {
+            const piece = board[x][y];
+            if (piece !== 0) ellipse(3 + piece, x * 50 + 75, y * 50 + 125, 10, 10, true);
+          }
+        }
+      }
+
+      function drawWindowButtons() {
+        rectangle(14, 570, 7, 586, 21);
+        rectangle(14, 589, 7, 606, 21);
+        rectangle(14, 609, 7, 626, 21);
+        fill(2, 610, 8, 16, 13);
+        line(14, 613, 10, 621, 17);
+        line(14, 613, 17, 621, 10);
+        line(14, 614, 10, 622, 17);
+        line(14, 614, 17, 622, 10);
+        line(1, 573, 18, 582, 18);
+        line(1, 573, 17, 582, 17);
+        rectangle(1, 593, 9, 602, 18);
+        line(1, 593, 10, 602, 10);
+      }
+
+      function drawMenu() {
+        ctx.fillStyle = color(7);
+        ctx.strokeStyle = color(7);
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(460, 100.5);
+        ctx.lineTo(590, 100.5);
+        ctx.quadraticCurveTo(600, 100.5, 600, 110.5);
+        ctx.lineTo(600, 390.5);
+        ctx.quadraticCurveTo(600, 400.5, 590, 400.5);
+        ctx.lineTo(460, 400.5);
+        ctx.quadraticCurveTo(450, 400.5, 450, 390.5);
+        ctx.lineTo(450, 110.5);
+        ctx.quadraticCurveTo(450, 100.5, 460, 100.5);
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
+
+        drawText(500, 420, 'Menu', 7, 'triplex', 3);
+        drawText(460, 130, 'NEW  Game', 8, 'sans', 3);
+        drawText(460, 180, 'SAVE Game', 9, 'sans', 3);
+        drawText(460, 230, 'LOAD Game', 10, 'sans', 3);
+        drawText(460, 280, '  ABOUT  ', 11, 'sans', 3);
+        drawText(460, 330, 'EXIT Game', 12, 'sans', 3);
+      }
+
+      function drawScore() {
+        if (winner && (player1Count === 0 || player2Count === 0)) {
+          fill(0, 50, 40, 451, 41);
+          rectangle(7, 50, 40, 500, 80);
+          drawText(60, 50, `PLAYER ${winner} is winner`, 13, 'small', 7);
+          return;
+        }
+
+        if (player1Count !== 0 && player2Count !== 0) {
+          rectangle(7, 50, 40, 500, 80);
+          drawText(60, 50, 'Player 1 -', 13, 'small', 7);
+          drawText(270, 50, 'Player 2 -', 13, 'small', 7);
+          fill(0, 200, 50, 41, 21);
+          fill(0, 400, 50, 41, 21);
+          drawText(200, 50, String(player1Count), 13, 'small', 7);
+          drawText(400, 50, String(player2Count), 13, 'small', 7);
+        }
+      }
+
+      function renderGame() {
+        setGamePalette();
+        drawOuterFrame();
+        drawBoard();
+        drawMenu();
+        drawWindowButtons();
+        drawScore();
+      }
+
+      function renderWelcome(elapsed) {
+        const step = Math.min(8, Math.floor(elapsed / 33));
+        const divisor = 5 - step * 0.5;
+        portPal(0, 20 / divisor, 30 / divisor, 50 / divisor);
+        portPal(14, 30 / divisor, 40 / divisor, 55 / divisor);
+        portPal(15, 63 / divisor, 63 / divisor, 63 / divisor);
+        for (let i = 0; i < 13; i += 1) {
+          portPal(i + 1, 63 / divisor, 31 / divisor + 2 * i / divisor, 4 * i / divisor);
+        }
+
+        fill(0, 0, 0, WIDTH, HEIGHT);
+        for (let i = 0; i < WIDTH; i += 1) {
+          fill(Math.floor((320 - Math.abs(320 - i)) / 32), i, 45, 1, 1);
+          fill(Math.floor((320 - Math.abs(320 - i)) / 32), i, 436, 1, 1);
+        }
+        line(13, 320, 45, 320, 435);
+        drawText(20, 201, 'WELCOME', 14, 'triplex', 6);
+        drawText(20, 199, 'WELCOME', 14, 'triplex', 6);
+        drawText(21, 200, 'WELCOME', 14, 'triplex', 6);
+        drawText(19, 200, 'WELCOME', 14, 'triplex', 6);
+        drawText(22, 202, 'WELCOME', 15, 'triplex', 6);
+      }
+
+      function updateAuthorsPalette(elapsed) {
+        portPal(0, 0, 0, 0);
+        let value;
+        if (elapsed < 1280) value = Math.min(63, Math.floor(elapsed / 20));
+        else if (elapsed < 2280) value = 63;
+        else if (elapsed < 3560) value = Math.max(0, 63 - Math.floor((elapsed - 2280) / 20));
+        else value = 0;
+        portPal(1, value, value, 0);
+        portPal(2, value, value, value);
+        portPal(3, Math.floor(value / 2), Math.floor(value / 2), 0);
+        portPal(4, Math.floor(value / 2), Math.floor(value / 2), Math.floor(value / 2));
+      }
+
+      function renderAuthors(elapsed) {
+        updateAuthorsPalette(elapsed);
+        fill(0, 0, 0, WIDTH, HEIGHT);
+        drawText(50, 105, 'Prashant Verma', 3, 'triplex', 6);
+        drawText(50, 355, ' Rahul Sharma ', 3, 'triplex', 6);
+        drawText(300, 230, 'And', 4, 'triplex', 6);
+        drawText(50, 100, 'Prashant Verma', 1, 'triplex', 6);
+        drawText(50, 350, ' Rahul Sharma ', 1, 'triplex', 6);
+        drawText(300, 225, 'And', 2, 'triplex', 6);
+      }
+
+      function updatePresentsPalette(elapsed) {
+        let value;
+        if (elapsed < 2112) value = Math.min(63, Math.floor(elapsed / 33));
+        else if (elapsed < 2612) value = 63;
+        else if (elapsed < 4084) value = Math.max(0, 63 - Math.floor((elapsed - 2612) / 23));
+        else value = 0;
+        portPal(0, 0, 0, 0);
+        for (let k = 1; k < 16; k += 1) portPal(k, 0, Math.floor(k * value / 16), 0);
+      }
+
+      function renderPresents(elapsed) {
+        updatePresentsPalette(elapsed);
+        fill(0, 0, 0, WIDTH, HEIGHT);
+        for (let i = 0; i < 16; i += 1) {
+          drawText(150, 220 - Math.floor(i / 2), 'PRESENTS', i, 'triplex', 6);
+        }
+      }
+
+      const dedicationOrder = [1, 2, 3, 4, 9, 6, 7, 8, 5];
+      const dedicationStepDuration = 63 * 13;
+
+      function dedicationColor(index, value) {
+        if (index === 9) portPal(index, value, value, Math.floor(value / 2));
+        else portPal(index, Math.floor(value / 2), value, Math.floor(value / 2));
+      }
+
+      function updateDedicationPalette(elapsed) {
+        const fadeInDuration = dedicationOrder.length * dedicationStepDuration;
+        if (elapsed < fadeInDuration) {
+          dedicationOrder.forEach((index, order) => {
+            const local = elapsed - order * dedicationStepDuration;
+            const value = local <= 0 ? 0 : local >= dedicationStepDuration ? 63 : Math.max(1, Math.floor(local / 13) + 1);
+            dedicationColor(index, value);
+          });
+        } else {
+          const fadeElapsed = elapsed - fadeInDuration;
+          const value = Math.max(0, 64 - Math.floor(fadeElapsed / 15));
+          dedicationOrder.forEach(index => dedicationColor(index, value));
+        }
+      }
+
+      function renderDedication(elapsed) {
+        updateDedicationPalette(elapsed);
+        fill(0, 0, 0, WIDTH, HEIGHT);
+        drawText(150, 125, 'CHECKERS', 2, 'triplex', 6);
+        drawText(150, 200, '2005', 3, 'triplex', 6);
+        drawText(150, 275, 'Dedicated to', 4, 'triplex', 6);
+        drawText(150, 350, 'our respected parents', 9, 'small', 5);
+        drawText(150, 370, 'by virtue of whome', 6, 'small', 5);
+        drawText(150, 390, 'we have became able to ', 7, 'small', 5);
+        drawText(150, 410, 'See the world', 8, 'small', 5);
+        drawText(150, 430, 'Brighter and Brighter every day', 5, 'small', 5);
+      }
+
+      function renderAbout(elapsed) {
+        setAllBlack();
+        portPal(10, 54, 20, 43);
+        const cycle = [1, 5, 9, 13, 17, 17, 13, 9, 5, 1];
+        const position = cycle[Math.floor(elapsed / ABOUT_FRAME_MS) % cycle.length];
+        for (let number = 1; number <= 9; number += 1) {
+          const center = number * 2;
+          const divisor = Math.abs(position - center);
+          portPal(number, Math.floor(63 / (2 * divisor)), Math.floor(63 / divisor), Math.floor(63 / (2 * divisor)));
+        }
+
+        fill(0, 0, 0, WIDTH, HEIGHT);
+        const letters = 'PROGRAMER';
+        for (let i = 0; i < letters.length; i += 1) drawText(100 + i * 50, 50, letters[i], i + 1, 'sans', 6);
+        drawText(100, 200, 'PRASHANT VERMA', 10, 'sans', 6);
+        drawText(100, 300, 'RAHUL SHARMA', 10, 'sans', 6);
+      }
+
+      function render(now) {
+        const elapsed = now - stateStarted;
+        if (state === 'welcome') renderWelcome(elapsed);
+        else if (state === 'authors') renderAuthors(elapsed);
+        else if (state === 'presents') renderPresents(elapsed);
+        else if (state === 'dedication') renderDedication(elapsed);
+        else if (state === 'game') renderGame();
+        else if (state === 'about') renderAbout(elapsed);
+        else fill(0, 0, 0, WIDTH, HEIGHT);
+      }
+
+      function update(now, delta) {
+        const elapsed = now - stateStarted;
+
+        if (state === 'welcome' && elapsed >= WELCOME_FADE_MS && pendingWelcomeAdvance) {
+          pendingWelcomeAdvance = false;
+          setState('authors', now);
+        } else if (state === 'authors' && elapsed >= 4060) {
+          setState('presents', now);
+        } else if (state === 'presents' && elapsed >= 4584) {
+          setState('dedication', now);
+        } else if (state === 'dedication' && elapsed >= dedicationOrder.length * dedicationStepDuration + 64 * 15) {
+          enterGame({ clearWinner: true });
+        } else if (state === 'game') {
+          const inMenu = isInMenuPanel(pointer.x, pointer.y);
+          menuAmount += (inMenu ? 30 : -30) * (delta / 1000);
+          menuAmount = Math.max(0, Math.min(41, menuAmount));
+        }
+      }
+
+      function tick(now) {
+        const delta = Math.min(100, now - lastFrame);
+        lastFrame = now;
+        update(now, delta);
+        render(now);
+        animationFrame = requestAnimationFrame(tick);
+      }
+
+      function canvasPoint(event) {
+        const rect = canvas.getBoundingClientRect();
+        return {
+          x: (event.clientX - rect.left) * WIDTH / rect.width,
+          y: (event.clientY - rect.top) * HEIGHT / rect.height
+        };
+      }
+
+      function boardCellAt(x, y) {
+        if (!(x > 50 && x < 400 && y > 100 && y < 450)) return null;
+        return [Math.floor((x - 50) / 50), Math.floor((y - 100) / 50)];
+      }
+
+      function menuIndexAt(x, y) {
+        if (!(x > 450 && x < 600)) return -1;
+        for (let index = 0; index < 5; index += 1) {
+          if (y > 100 + index * 60 && y < 160 + index * 60) return index;
+        }
+        return -1;
+      }
+
+      function isInMenuPanel(x, y) {
+        return x > 450 && x < 600 && y > 100 && y < 400;
+      }
+
+      function actualCount(player) {
+        let count = 0;
+        for (let x = 0; x < 7; x += 1) {
+          for (let y = 0; y < 7; y += 1) if (board[x][y] === player) count += 1;
+        }
+        return count;
+      }
+
+      function tryMove(destinationX, destinationY) {
+        if (!selected) return;
+        const [sourceX, sourceY] = selected;
+        const piece = board[sourceX][sourceY];
+        const destination = board[destinationX][destinationY];
+        const diagonal = Math.abs(destinationX - sourceX) === 1 && Math.abs(destinationY - sourceY) === 1;
+
+        if (piece === turn && diagonal && destination !== piece) {
+          board[sourceX][sourceY] = 0;
+          if (destination === 2) player2Count -= 1;
+          if (destination === 1) player1Count -= 1;
+          board[destinationX][destinationY] = piece;
+          turn = turn === 1 ? 2 : 1;
+          if (actualCount(1) === 0) winner = 2;
+          if (actualCount(2) === 0) winner = 1;
+        }
+        selected = null;
+      }
+
+      function activateMenu(index) {
+        if (index === 0) {
+          newGame();
+          enterGame();
+        } else if (index === 1) {
+          saveGame();
+        } else if (index === 2) {
+          loadGame();
+        } else if (index === 3) {
+          selected = null;
+          setState('about');
+        } else if (index === 4) {
+          restartAtWelcome();
+        }
+      }
+
+      function onPointerMove(event) {
+        const point = canvasPoint(event);
+        pointer.x = point.x;
+        pointer.y = point.y;
+        pointer.inside = true;
+      }
+
+      function onPointerDown(event) {
+        event.preventDefault();
+        canvas.focus({ preventScroll: true });
+        const point = canvasPoint(event);
+        pointer.x = point.x;
+        pointer.y = point.y;
+        pointer.inside = true;
+
+        if (state === 'welcome') {
+          if (event.button === 0) advanceWelcome();
+          return;
+        }
+
+        if (state === 'about') {
+          if (event.button === 0) enterGame({ clearWinner: true });
+          return;
+        }
+
+        if (state === 'authors' || state === 'presents' || state === 'dedication') {
+          if (event.button === 0) enterGame({ clearWinner: true });
+          return;
+        }
+
+        if (state !== 'game') return;
+
+        const menuIndex = menuIndexAt(point.x, point.y);
+        if (event.button === 0 && menuIndex !== -1) {
+          activateMenu(menuIndex);
+          return;
+        }
+
+        const cell = boardCellAt(point.x, point.y);
+        if (!cell) return;
+
+        if (event.pointerType === 'touch') {
+          if (selected) tryMove(cell[0], cell[1]);
+          else selected = cell;
+        } else if (event.button === 0) {
+          selected = cell;
+        } else if (event.button === 2) {
+          tryMove(cell[0], cell[1]);
+        }
+      }
+
+      function onKeyDown(event) {
+        if (event.repeat) return;
+        if (state === 'welcome') {
+          if (event.key === 'Escape') enterGame({ clearWinner: true });
+          else if (event.code === 'Space' || event.key === ' ') {
+            event.preventDefault();
+            advanceWelcome();
+          }
+        } else if (state === 'authors' || state === 'presents' || state === 'dedication') {
+          enterGame({ clearWinner: true });
+        } else if (state === 'about' && event.key === 'Escape') {
+          enterGame({ clearWinner: true });
+        } else if (state === 'game' && event.key === 'Escape') {
+          activateMenu(4);
+        }
+      }
+
+      canvas.addEventListener('pointermove', onPointerMove);
+      canvas.addEventListener('pointerdown', onPointerDown);
+      canvas.addEventListener('pointerleave', () => {
+        pointer.x = -1;
+        pointer.y = -1;
+        pointer.inside = false;
+      });
+      canvas.addEventListener('contextmenu', event => event.preventDefault());
+      window.addEventListener('keydown', onKeyDown);
+      window.addEventListener('resize', fitToViewport, { passive: true });
+      window.visualViewport?.addEventListener('resize', fitToViewport, { passive: true });
+
+      // Lightweight invariants protect the unusual rules during future edits.
+      console.assert(actualCount(1) === 11 && actualCount(2) === 11, 'Initial piece counts must match checkers.cpp');
+      console.assert(boardCellAt(51, 101)?.join(',') === '0,0', 'Board coordinate mapping must stay source-compatible');
+      console.assert(menuIndexAt(451, 101) === 0 && menuIndexAt(599, 399) === 4, 'Menu hitboxes must stay source-compatible');
+
+      fitToViewport();
+      setAllBlack();
+      animationFrame = requestAnimationFrame(tick);
+    })();
+  </script>
+</body>
+</html>
