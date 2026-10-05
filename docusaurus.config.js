@@ -26,7 +26,11 @@ const config = {
   deploymentBranch: "master",
 
   onBrokenLinks: "throw",
-  onBrokenMarkdownLinks: "throw",
+  markdown: {
+    hooks: {
+      onBrokenMarkdownLinks: "throw",
+    },
+  },
 
   // Even if you don't use internationalization, you can use this field to set
   // useful metadata like html lang. For example, if your site is Chinese, you
@@ -50,6 +54,7 @@ const config = {
           routeBasePath: "articles",
           showReadingTime: true,
           blogSidebarCount: "ALL",
+          onInlineTags: "ignore",
           feedOptions: {
             type: ["rss", "atom"],
             xslt: true,
@@ -58,19 +63,10 @@ const config = {
           rehypePlugins: [rehypeKatex],
         },
         theme: {
-          customCss: "./src/css/custom.css",
+          customCss: ["./src/css/custom.css", "./node_modules/katex/dist/katex.min.css"],
         },
       }),
     ],
-  ],
-  stylesheets: [
-    {
-      href: "https://cdn.jsdelivr.net/npm/katex@0.13.24/dist/katex.min.css",
-      type: "text/css",
-      integrity:
-        "sha384-odtC+0UGzzFL/6PNoE8rX/SPcQDXBJ+uRepguP4QkPCm2LBxH3FA3y+fKSiJ+AmM",
-      crossorigin: "anonymous",
-    },
   ],
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
@@ -83,7 +79,6 @@ const config = {
           content: "XGiC2A6JxvD9Dpd1z7dzwB6lHkt2xzI3d_5Uutepg2Y",
         },
       ],
-      anncouncementBar: null,
       navbar: {
         title: "Rahul Sharma",
         items: [
